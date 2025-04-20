@@ -2,23 +2,23 @@
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace april
+namespace ArtStart
 {
-    public class EraserTool : Tool
+    public class PenTool : Tool
     {
-        private Polyline currentEraser;
+        private Polyline currentPolyline;
 
         public override Shape CreateShape(Color color, double thickness)
         {
-            currentEraser = new Polyline
+            currentPolyline = new Polyline
             {
-                Stroke = new SolidColorBrush(Colors.WhiteSmoke),
-                StrokeThickness = thickness * 2,
+                Stroke = new SolidColorBrush(color),
+                StrokeThickness = thickness,
                 StrokeLineJoin = PenLineJoin.Round,
                 StrokeStartLineCap = PenLineCap.Round,
                 StrokeEndLineCap = PenLineCap.Round
             };
-            return currentEraser;
+            return currentPolyline;
         }
 
         public override void OnMouseDown(Shape shape, Point startPoint)

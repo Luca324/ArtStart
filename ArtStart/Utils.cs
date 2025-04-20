@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace april
+namespace ArtStart
 {
     internal class Utils
     {

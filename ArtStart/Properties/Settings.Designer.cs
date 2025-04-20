@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace april.Properties
+namespace ArtStart.Properties
 {
 
 
