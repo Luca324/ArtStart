@@ -1,0 +1,95 @@
+﻿<Window x:Class="april.Paint"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:april"
+        mc:Ignorable="d"
+        Title="Paint" Height="600" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <ToolBar Grid.Row="0">
+            <!-- File Operations -->
+            <Button  Content="Challenges" Name="Challenges"  Width="100"/>
+            <Button  Content="ColorMix" Name="ColorMix"  Width="100"/>
+
+        </ToolBar>
+
+        <!-- Toolbar -->
+        <ToolBar Grid.Row="1">
+            <!-- File Operations -->
+            <Button Click="OpenButton_Click" Content="Open" Width="60"/>
+            <Button Click="SaveButton_Click" Content="Save" Width="60"/>
+
+            <!-- Tools -->
+            <ComboBox x:Name="toolsComboBox" Width="120" SelectionChanged="ToolsComboBox_SelectionChanged">
+                <ComboBoxItem Tag="Pen">Pen</ComboBoxItem>
+                <ComboBoxItem Tag="Line">Line</ComboBoxItem>
+                <ComboBoxItem Tag="Rectangle">Rectangle</ComboBoxItem>
+                <ComboBoxItem Tag="Ellipse">Ellipse</ComboBoxItem>
+                <ComboBoxItem Tag="Spray">Spray</ComboBoxItem>
+                <ComboBoxItem Tag="Eraser">Eraser</ComboBoxItem>
+            </ComboBox>
+
+            <!-- Colors -->
+            <ComboBox x:Name="colorsComboBox" Width="80" SelectionChanged="ColorsComboBox_SelectionChanged">
+                <ComboBoxItem Background="Black"/>
+                <ComboBoxItem Background="Red"/>
+                <ComboBoxItem Background="Green"/>
+                <ComboBoxItem Background="Blue"/>
+                <ComboBoxItem Background="Yellow"/>
+                <ComboBoxItem Background="Purple"/>
+                <ComboBoxItem Background="Orange"/>
+                <ComboBoxItem Background="Pink"/>
+            </ComboBox>
+
+            <!-- Line Thickness -->
+            <ComboBox x:Name="thicknessComboBox" Width="60" SelectionChanged="ThicknessComboBox_SelectionChanged">
+                <ComboBoxItem>1</ComboBoxItem>
+                <ComboBoxItem>3</ComboBoxItem>
+                <ComboBoxItem>5</ComboBoxItem>
+                <ComboBoxItem>8</ComboBoxItem>
+                <ComboBoxItem>12</ComboBoxItem>
+                <ComboBoxItem>20</ComboBoxItem>
+            </ComboBox>
+
+            <!-- Spray Density (only for Spray tool) -->
+            <StackPanel x:Name="sprayDensityPanel" Orientation="Horizontal" Visibility="Collapsed">
+                <TextBlock Text="Density:" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                <ComboBox x:Name="densityComboBox" Width="60" SelectionChanged="DensityComboBox_SelectionChanged">
+                    <ComboBoxItem>5</ComboBoxItem>
+                    <ComboBoxItem>10</ComboBoxItem>
+                    <ComboBoxItem>20</ComboBoxItem>
+                    <ComboBoxItem>30</ComboBoxItem>
+                    <ComboBoxItem>50</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+
+            <!-- Clear Button -->
+            <Button Click="ClearButton_Click" Content="Clear" Width="60"/>
+            <Grid x:Name="myTextBox"></Grid>
+
+        </ToolBar>
+
+        <!-- Drawing Canvas -->
+        <Canvas x:Name="drawingCanvas" Grid.Row="2" Background="WhiteSmoke"
+                MouseDown="DrawingCanvas_MouseDown"
+                MouseMove="DrawingCanvas_MouseMove"
+                MouseUp="DrawingCanvas_MouseUp" RenderTransformOrigin="0.5,0.5">
+            <Canvas.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-0.307"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-1.495"/>
+                </TransformGroup>
+            </Canvas.RenderTransform>
+        </Canvas>
+    </Grid>
+</Window>
