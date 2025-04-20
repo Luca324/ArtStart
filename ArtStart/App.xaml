@@ -1,7 +1,7 @@
-﻿<Application x:Class="april.App"
+﻿<Application x:Class="ArtStart.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:april"
+             xmlns:local="clr-namespace:ArtStart"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

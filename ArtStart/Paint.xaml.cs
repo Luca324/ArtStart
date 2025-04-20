@@ -1,4 +1,4 @@
-﻿using april;
+﻿using ArtStart;
 using Microsoft.Win32;
 using System;
 using System.Windows;
@@ -8,7 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace april
+namespace ArtStart
 {
     public partial class Paint : Window
     {

@@ -3,13 +3,13 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace april
+namespace ArtStart
 {
-    public class RectangleTool : Tool
+    public class EllipseTool : Tool
     {
         public override Shape CreateShape(Color color, double thickness)
         {
-            return new Rectangle
+            return new Ellipse
             {
                 Stroke = new SolidColorBrush(color),
                 StrokeThickness = thickness,
@@ -19,44 +19,44 @@ namespace april
 
         public override void OnMouseDown(Shape shape, Point startPoint)
         {
-            if (shape is Rectangle rectangle)
+            if (shape is Ellipse ellipse)
             {
-                Canvas.SetLeft(rectangle, startPoint.X);
-                Canvas.SetTop(rectangle, startPoint.Y);
-                rectangle.Width = 0;
-                rectangle.Height = 0;
+                Canvas.SetLeft(ellipse, startPoint.X);
+                Canvas.SetTop(ellipse, startPoint.Y);
+                ellipse.Width = 0;
+                ellipse.Height = 0;
             }
         }
 
         public override void OnMouseMove(Shape shape, Point startPoint, Point currentPoint)
         {
-            if (shape is Rectangle rectangle)
+            if (shape is Ellipse ellipse)
             {
                 double width = currentPoint.X - startPoint.X;
                 double height = currentPoint.Y - startPoint.Y;
 
                 if (width < 0)
                 {
-                    Canvas.SetLeft(rectangle, currentPoint.X);
+                    Canvas.SetLeft(ellipse, currentPoint.X);
                     width = -width;
                 }
                 else
                 {
-                    Canvas.SetLeft(rectangle, startPoint.X);
+                    Canvas.SetLeft(ellipse, startPoint.X);
                 }
 
                 if (height < 0)
                 {
-                    Canvas.SetTop(rectangle, currentPoint.Y);
+                    Canvas.SetTop(ellipse, currentPoint.Y);
                     height = -height;
                 }
                 else
                 {
-                    Canvas.SetTop(rectangle, startPoint.Y);
+                    Canvas.SetTop(ellipse, startPoint.Y);
                 }
 
-                rectangle.Width = width;
-                rectangle.Height = height;
+                ellipse.Width = width;
+                ellipse.Height = height;
             }
         }
     }

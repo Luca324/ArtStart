@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace april
+namespace ArtStart
 {
     /// <summary>
     /// Логика взаимодействия для Challenges.xaml
