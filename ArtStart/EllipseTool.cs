@@ -34,7 +34,6 @@ namespace ArtStart
             {
                 double width = currentPoint.X - startPoint.X;
                 double height = currentPoint.Y - startPoint.Y;
-
                 if (width < 0)
                 {
                     Canvas.SetLeft(ellipse, currentPoint.X);
@@ -44,7 +43,6 @@ namespace ArtStart
                 {
                     Canvas.SetLeft(ellipse, startPoint.X);
                 }
-
                 if (height < 0)
                 {
                     Canvas.SetTop(ellipse, currentPoint.Y);
@@ -54,7 +52,6 @@ namespace ArtStart
                 {
                     Canvas.SetTop(ellipse, startPoint.Y);
                 }
-
                 ellipse.Width = width;
                 ellipse.Height = height;
             }

@@ -22,13 +22,11 @@ namespace ArtStart
 
         public override Shape CreateShape(Color color, double thickness)
         {
-            // Not used for SprayTool
-            return null;
+            return null; // Not used
         }
 
         public override void OnMouseDown(Shape shape, Point startPoint)
         {
-            // Not used for SprayTool
         }
 
         public void OnMouseDown(Canvas canvas, Point startPoint)
@@ -43,7 +41,6 @@ namespace ArtStart
 
         public override void OnMouseMove(Shape shape, Point startPoint, Point currentPoint)
         {
-            // Not used for SprayTool
         }
 
         private void Spray(Canvas canvas, Point center)
@@ -52,17 +49,14 @@ namespace ArtStart
             {
                 double angle = random.NextDouble() * 2 * Math.PI;
                 double distance = random.NextDouble() * sprayRadius;
-
                 double x = center.X + distance * Math.Cos(angle);
                 double y = center.Y + distance * Math.Sin(angle);
-
                 Ellipse dot = new Ellipse
                 {
                     Width = 1,
                     Height = 1,
                     Fill = new SolidColorBrush(sprayColor)
                 };
-
                 Canvas.SetLeft(dot, x);
                 Canvas.SetTop(dot, y);
                 canvas.Children.Add(dot);
