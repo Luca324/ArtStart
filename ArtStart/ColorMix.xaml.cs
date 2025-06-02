@@ -5,6 +5,7 @@ using System;
 using Newtonsoft.Json;
 using System.IO;
 using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace ArtStart
 {
@@ -15,6 +16,9 @@ namespace ArtStart
             InitializeComponent();
             Challenges.Click += Utils.Navigation_Click;
             Paint.Click += Utils.Navigation_Click;
+
+
+            renderPalettesFromJSON();
         }
 
 
@@ -85,8 +89,34 @@ namespace ArtStart
 
             // Сохранение строки в файл
             File.WriteAllText(filepath, json);
+
+            // обновляем список палитр
+            renderPalettesFromJSON();
+
         }
-        
+
+        private void renderPalettesFromJSON()
+        {
+            Palettes.Children.Clear();
+            const string filepath = @"../../data.json";
+
+            // Чтение файла
+            var json = File.ReadAllText(filepath);
+
+            // Десериализация строки в объект
+            var data = JsonConvert.DeserializeObject<FileModel>(json);
+
+            foreach (var palette in data.Palettes)
+            {
+                Console.WriteLine(palette.Name);
+                TextBlock block = new TextBlock();
+                block.Text = palette.Name;
+                Palettes.Children.Add(block);
+            }
+
+        }
+
+
     }
     public class FileModel
     {
@@ -111,4 +141,5 @@ namespace ArtStart
         public string Name;
         public List<string> Colors;
     }
+
 }
