@@ -40,6 +40,10 @@ namespace ArtStart
             thicknessSlider.Value = selectedThickness;
             this.KeyDown += Paint_KeyDown;
             drawingCanvas.Children.Add(textCanvas);
+
+            InitializeComponent();
+            Challenges.Click += Utils.Navigation_Click;
+            ColorMix.Click += Utils.Navigation_Click;
         }
 
         private void InitializeTools()
