@@ -122,8 +122,20 @@ namespace ArtStart
                 TextBlock block = new TextBlock();
                 block.Text = palette.Name;
 
-                panel.Children.Add(button);
+                WrapPanel colors = new WrapPanel();
+                foreach (var color in palette.Colors)
+                {
+                    TextBlock colorBlock = new TextBlock();
+                    colorBlock.Background = new SolidColorBrush((Color)System.Windows.Media.ColorConverter.ConvertFromString(color));
+                    colorBlock.Width = 20;
+                    colorBlock.Height = 20;
+                    colors.Children.Add(colorBlock);
+
+                }
+
                 panel.Children.Add(block);
+                panel.Children.Add(colors);
+                panel.Children.Add(button);
                 Palettes.Children.Add(panel);
             }
 
