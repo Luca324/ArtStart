@@ -1,6 +1,9 @@
 ﻿using System.Windows;
 using Scrtwpns.Mixbox;
 using System.Windows.Media;
+using System;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace ArtStart
 {
@@ -50,5 +53,37 @@ namespace ArtStart
                 drawingColor.G,
                 drawingColor.B);
         }
+
+        private void CreateNewPalette_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine(NewPaletteName.Text);
+
+            const string filepath = @"../../data.json";
+
+            // Чтение файла
+            var json = File.ReadAllText(filepath);
+
+            // Десериализация строки в объект
+            var data = JsonConvert.DeserializeObject<FileModel>(json);
+
+            // Изменение данных
+            data.StringValue = "new value";
+            data.IntValue++;
+
+            // Сериализация объекта в строку
+            json = JsonConvert.SerializeObject(data);
+
+            // Сохранение строки в файл
+            File.WriteAllText(filepath, json);
+        }
+        
+    }
+    public class FileModel
+    {
+        [JsonProperty("stringValue")]
+        public string StringValue { get; set; }
+
+        [JsonProperty("numberValue")]
+        public int IntValue { get; set; }
     }
 }
