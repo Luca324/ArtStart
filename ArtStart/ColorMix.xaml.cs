@@ -4,6 +4,7 @@ using System.Windows.Media;
 using System;
 using Newtonsoft.Json;
 using System.IO;
+using System.Collections.Generic;
 
 namespace ArtStart
 {
@@ -66,9 +67,18 @@ namespace ArtStart
             // Десериализация строки в объект
             var data = JsonConvert.DeserializeObject<FileModel>(json);
 
-            // Изменение данных
+            // Изменение данных (пример)
             data.StringValue = "new value";
             data.IntValue++;
+            data.ListValue.Add(NewPaletteName.Text);
+
+            // создание новой палитры
+            Palette newPalette = new Palette();
+
+            newPalette.Name = NewPaletteName.Text;
+            newPalette.Colors = new List<string>();
+            data.Palettes.Add(newPalette);
+
 
             // Сериализация объекта в строку
             json = JsonConvert.SerializeObject(data);
@@ -80,10 +90,25 @@ namespace ArtStart
     }
     public class FileModel
     {
+        // примеры разных типов полей
         [JsonProperty("stringValue")]
         public string StringValue { get; set; }
 
         [JsonProperty("numberValue")]
         public int IntValue { get; set; }
+
+        [JsonProperty("listValue")]
+        public List<object> ListValue { get; set; }
+
+        // список палитр
+        [JsonProperty("palettes")]
+        public List<Palette> Palettes { get; set; }
+
+    }
+
+    public class Palette
+    {
+        public string Name;
+        public List<string> Colors;
     }
 }
