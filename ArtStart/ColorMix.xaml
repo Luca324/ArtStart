@@ -4,8 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ArtStart"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="ColorMix" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="colorPicker">
+            <Setter Property="Control.Width" Value="100" />
+            <Setter Property="Control.Height" Value="100" />
+
+        </Style>
+        <Style x:Key="result">
+            <Setter Property="Control.Width" Value="100" />
+            <Setter Property="Control.Height" Value="100" />
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+
+
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -17,22 +34,26 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ToolBar Grid.Row="0">
-            <!-- File Operations -->
+        
+        <ToolBar Grid.Row="0"  Grid.ColumnSpan="3">
             <Button  Content="Challenges" Name="Challenges" Width="100"/>
             <Button  Content="Paint" Name="Paint"  Width="100"/>
-
         </ToolBar>
+
+
         <StackPanel Grid.Row="1" Grid.Column="0">
-            <Button Name="button1"  Content="Левая кнопка" Click="button1_Click" />
-            <TextBlock Name="text1">Текст1</TextBlock>
-            <TextBlock Name="text2">Текст2</TextBlock>
-            <TextBlock Name="text3">Текст2</TextBlock>
-            <TextBlock Name="text4">Текст2</TextBlock>
+            <WrapPanel HorizontalAlignment="Center" >
+                <xctk:ColorPicker x:Name="ColorPicker1" Style="{StaticResource colorPicker}"/>
+                <xctk:ColorPicker x:Name="ColorPicker2" Style="{StaticResource colorPicker}"/>
+            </WrapPanel>
+            <Button Name="button1"  Content="Получить результат" Click="button1_Click" />
+            <TextBlock Name="result"  Style="{StaticResource result}">Результат</TextBlock>
         </StackPanel>
 
         <GridSplitter  Grid.Row="1" Grid.Column="1" ShowsPreview="False" Width="3"
         HorizontalAlignment="Center" VerticalAlignment="Stretch" />
-        <Button  Grid.Row="1" Grid.Column="2" Content="Правая кнопка" />
+        
+        <StackPanel Grid.Row="1" Grid.Column="2">
+        </StackPanel>
     </Grid>
 </Window>
