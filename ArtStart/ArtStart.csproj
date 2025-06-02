@@ -55,6 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Challenges.xaml.cs">
+      <DependentUpon>Challenges.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Question.cs" />
     <Compile Include="Utils.cs" />
     <Page Include="Challenges.xaml">
       <SubType>Designer</SubType>
@@ -75,9 +79,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Challenges.xaml.cs">
-      <DependentUpon>Challenges.xaml</DependentUpon>
     </Compile>
     <Compile Include="ColorMix.xaml.cs">
       <DependentUpon>ColorMix.xaml</DependentUpon>
@@ -122,6 +123,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ChallengeFolder\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

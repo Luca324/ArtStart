@@ -6,12 +6,14 @@
         xmlns:local="clr-namespace:ArtStart"
         mc:Ignorable="d"
         Title="Challenges" Height="450" Width="800">
-    <Grid>
-        <ToolBar Grid.Row="0">
-            <!-- File Operations -->
-            <Button  Content="Paint" Name="Paint"  Width="100"/>
-            <Button  Content="ColorMix" Name="ColorMix"  Width="100"/>
+    <DockPanel>
+        <!-- Итоговый результат -->
+        <TextBlock x:Name="ResultTextBlock" DockPanel.Dock="Bottom" FontSize="20" 
+                   FontWeight="Bold" HorizontalAlignment="Center" Margin="10" />
 
-        </ToolBar>
-    </Grid>
+        <!-- Список вопросов со скроллингом -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="QuestionsPanel" Margin="10"/>
+        </ScrollViewer>
+    </DockPanel>
 </Window>
