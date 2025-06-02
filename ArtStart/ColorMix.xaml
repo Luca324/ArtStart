@@ -54,6 +54,9 @@
         HorizontalAlignment="Center" VerticalAlignment="Stretch" />
         
         <StackPanel Grid.Row="1" Grid.Column="2">
+            <TextBlock>Палитры</TextBlock>
+            <Button Name="CreateNewPalette" Click="CreateNewPalette_Click">Создать палитру</Button>
+            <TextBox Name="NewPaletteName"></TextBox>
         </StackPanel>
     </Grid>
 </Window>
