@@ -1,4 +1,9 @@
 ﻿using System.Windows;
+using Scrtwpns.Mixbox;
+using System.Windows.Media;
+using System;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace ArtStart
 {
@@ -9,8 +14,76 @@ namespace ArtStart
             InitializeComponent();
             Challenges.Click += Utils.Navigation_Click;
             Paint.Click += Utils.Navigation_Click;
-
         }
 
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            // Проверяем, что оба цвета выбраны
+            if (ColorPicker1.SelectedColor.HasValue && ColorPicker2.SelectedColor.HasValue)
+            {
+                // Преобразуем WPF-цвета в ARGB
+                var color1 = ToDrawingColor(ColorPicker1.SelectedColor.Value);
+                var color2 = ToDrawingColor(ColorPicker2.SelectedColor.Value);
+
+                // Смешиваем цвета (50/50)
+                int mixedArgb = Mixbox.Lerp(color1.ToArgb(), color2.ToArgb(), 0.5f);
+                var mixedColor = ToMediaColor(System.Drawing.Color.FromArgb(mixedArgb));
+
+                // Устанавливаем фон кнопки
+                result.Background = new SolidColorBrush(mixedColor);
+            }
+        }
+
+        // Вспомогательные методы для конвертации цветов
+        private System.Drawing.Color ToDrawingColor(Color mediaColor)
+        {
+            return System.Drawing.Color.FromArgb(
+                mediaColor.A,
+                mediaColor.R,
+                mediaColor.G,
+                mediaColor.B);
+        }
+
+        private Color ToMediaColor(System.Drawing.Color drawingColor)
+        {
+            return Color.FromArgb(
+                drawingColor.A,
+                drawingColor.R,
+                drawingColor.G,
+                drawingColor.B);
+        }
+
+        private void CreateNewPalette_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine(NewPaletteName.Text);
+
+            const string filepath = @"../../data.json";
+
+            // Чтение файла
+            var json = File.ReadAllText(filepath);
+
+            // Десериализация строки в объект
+            var data = JsonConvert.DeserializeObject<FileModel>(json);
+
+            // Изменение данных
+            data.StringValue = "new value";
+            data.IntValue++;
+
+            // Сериализация объекта в строку
+            json = JsonConvert.SerializeObject(data);
+
+            // Сохранение строки в файл
+            File.WriteAllText(filepath, json);
+        }
+        
+    }
+    public class FileModel
+    {
+        [JsonProperty("stringValue")]
+        public string StringValue { get; set; }
+
+        [JsonProperty("numberValue")]
+        public int IntValue { get; set; }
     }
 }
