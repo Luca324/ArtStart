@@ -11,6 +11,9 @@ namespace ArtStart
 {
     public partial class ColorMix : Window
     {
+    private const string filepath = @"../../data.json";
+        private System.Windows.Media.Color currentColor = new System.Windows.Media.Color();
+        //private SolidColorBrush currentColor = new SolidColorBrush();
         public ColorMix()
         {
             InitializeComponent();
@@ -35,6 +38,8 @@ namespace ArtStart
                 int mixedArgb = Mixbox.Lerp(color1.ToArgb(), color2.ToArgb(), 0.5f);
                 var mixedColor = ToMediaColor(System.Drawing.Color.FromArgb(mixedArgb));
 
+                currentColor = mixedColor;
+                Console.WriteLine("new color:", mixedColor);
                 // Устанавливаем фон кнопки
                 result.Background = new SolidColorBrush(mixedColor);
             }
@@ -62,8 +67,6 @@ namespace ArtStart
         private void CreateNewPalette_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine(NewPaletteName.Text);
-
-            const string filepath = @"../../data.json";
 
             // Чтение файла
             var json = File.ReadAllText(filepath);
@@ -98,7 +101,7 @@ namespace ArtStart
         private void renderPalettesFromJSON()
         {
             Palettes.Children.Clear();
-            const string filepath = @"../../data.json";
+            
 
             // Чтение файла
             var json = File.ReadAllText(filepath);
@@ -109,10 +112,42 @@ namespace ArtStart
             foreach (var palette in data.Palettes)
             {
                 Console.WriteLine(palette.Name);
+                WrapPanel panel = new WrapPanel();
+                Button button = new Button();
+                button.Content = "+";
+                button.Click += (sender, e) => {
+                    AddCurrentColor(palette.Name);
+                    };
+
                 TextBlock block = new TextBlock();
                 block.Text = palette.Name;
-                Palettes.Children.Add(block);
+
+                panel.Children.Add(button);
+                panel.Children.Add(block);
+                Palettes.Children.Add(panel);
             }
+
+        }
+
+        private void AddCurrentColor(string palette)
+        {
+            Console.WriteLine(palette, currentColor.ToString());
+            // Чтение файла
+            var json = File.ReadAllText(filepath);
+
+            // Десериализация строки в объект
+            var data = JsonConvert.DeserializeObject<FileModel>(json);
+            
+            data.Palettes.Find(p => p.Name == palette).Colors.Add(currentColor.ToString());
+
+            // Сериализация объекта в строку
+            json = JsonConvert.SerializeObject(data);
+
+            // Сохранение строки в файл
+            File.WriteAllText(filepath, json);
+
+            // обновляем список палитр
+            renderPalettesFromJSON();
 
         }
 
