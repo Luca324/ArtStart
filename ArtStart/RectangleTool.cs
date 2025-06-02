@@ -34,7 +34,6 @@ namespace ArtStart
             {
                 double width = currentPoint.X - startPoint.X;
                 double height = currentPoint.Y - startPoint.Y;
-
                 if (width < 0)
                 {
                     Canvas.SetLeft(rectangle, currentPoint.X);
@@ -44,7 +43,6 @@ namespace ArtStart
                 {
                     Canvas.SetLeft(rectangle, startPoint.X);
                 }
-
                 if (height < 0)
                 {
                     Canvas.SetTop(rectangle, currentPoint.Y);
@@ -54,7 +52,6 @@ namespace ArtStart
                 {
                     Canvas.SetTop(rectangle, startPoint.Y);
                 }
-
                 rectangle.Width = width;
                 rectangle.Height = height;
             }
