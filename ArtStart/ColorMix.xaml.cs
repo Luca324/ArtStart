@@ -4,16 +4,24 @@ using System.Windows.Media;
 using System;
 using Newtonsoft.Json;
 using System.IO;
+using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace ArtStart
 {
     public partial class ColorMix : Window
     {
+    private const string filepath = @"../../data.json";
+        private System.Windows.Media.Color currentColor = new System.Windows.Media.Color();
+        //private SolidColorBrush currentColor = new SolidColorBrush();
         public ColorMix()
         {
             InitializeComponent();
             Challenges.Click += Utils.Navigation_Click;
             Paint.Click += Utils.Navigation_Click;
+
+
+            renderPalettesFromJSON();
         }
 
 
@@ -30,6 +38,8 @@ namespace ArtStart
                 int mixedArgb = Mixbox.Lerp(color1.ToArgb(), color2.ToArgb(), 0.5f);
                 var mixedColor = ToMediaColor(System.Drawing.Color.FromArgb(mixedArgb));
 
+                currentColor = mixedColor;
+                Console.WriteLine("new color:", mixedColor);
                 // Устанавливаем фон кнопки
                 result.Background = new SolidColorBrush(mixedColor);
             }
@@ -58,7 +68,40 @@ namespace ArtStart
         {
             Console.WriteLine(NewPaletteName.Text);
 
-            const string filepath = @"../../data.json";
+            // Чтение файла
+            var json = File.ReadAllText(filepath);
+
+            // Десериализация строки в объект
+            var data = JsonConvert.DeserializeObject<FileModel>(json);
+
+            // Изменение данных (пример)
+            data.StringValue = "new value";
+            data.IntValue++;
+            data.ListValue.Add(NewPaletteName.Text);
+
+            // создание новой палитры
+            Palette newPalette = new Palette();
+
+            newPalette.Name = NewPaletteName.Text;
+            newPalette.Colors = new List<string>();
+            data.Palettes.Add(newPalette);
+
+
+            // Сериализация объекта в строку
+            json = JsonConvert.SerializeObject(data);
+
+            // Сохранение строки в файл
+            File.WriteAllText(filepath, json);
+
+            // обновляем список палитр
+            renderPalettesFromJSON();
+
+        }
+
+        private void renderPalettesFromJSON()
+        {
+            Palettes.Children.Clear();
+            
 
             // Чтение файла
             var json = File.ReadAllText(filepath);
@@ -66,24 +109,84 @@ namespace ArtStart
             // Десериализация строки в объект
             var data = JsonConvert.DeserializeObject<FileModel>(json);
 
-            // Изменение данных
-            data.StringValue = "new value";
-            data.IntValue++;
+            foreach (var palette in data.Palettes)
+            {
+                Console.WriteLine(palette.Name);
+                WrapPanel panel = new WrapPanel();
+                Button button = new Button();
+                button.Content = "+";
+                button.Click += (sender, e) => {
+                    AddCurrentColor(palette.Name);
+                    };
+
+                TextBlock block = new TextBlock();
+                block.Text = palette.Name;
+
+                WrapPanel colors = new WrapPanel();
+                foreach (var color in palette.Colors)
+                {
+                    TextBlock colorBlock = new TextBlock();
+                    colorBlock.Background = new SolidColorBrush((Color)System.Windows.Media.ColorConverter.ConvertFromString(color));
+                    colorBlock.Width = 20;
+                    colorBlock.Height = 20;
+                    colors.Children.Add(colorBlock);
+
+                }
+
+                panel.Children.Add(block);
+                panel.Children.Add(colors);
+                panel.Children.Add(button);
+                Palettes.Children.Add(panel);
+            }
+
+        }
+
+        private void AddCurrentColor(string palette)
+        {
+            Console.WriteLine(palette, currentColor.ToString());
+            // Чтение файла
+            var json = File.ReadAllText(filepath);
+
+            // Десериализация строки в объект
+            var data = JsonConvert.DeserializeObject<FileModel>(json);
+            
+            data.Palettes.Find(p => p.Name == palette).Colors.Add(currentColor.ToString());
 
             // Сериализация объекта в строку
             json = JsonConvert.SerializeObject(data);
 
             // Сохранение строки в файл
             File.WriteAllText(filepath, json);
+
+            // обновляем список палитр
+            renderPalettesFromJSON();
+
         }
-        
+
+
     }
     public class FileModel
     {
+        // примеры разных типов полей
         [JsonProperty("stringValue")]
         public string StringValue { get; set; }
 
         [JsonProperty("numberValue")]
         public int IntValue { get; set; }
+
+        [JsonProperty("listValue")]
+        public List<object> ListValue { get; set; }
+
+        // список палитр
+        [JsonProperty("palettes")]
+        public List<Palette> Palettes { get; set; }
+
     }
+
+    public class Palette
+    {
+        public string Name;
+        public List<string> Colors;
+    }
+
 }
