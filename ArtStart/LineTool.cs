@@ -1,39 +1,42 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-public class LineTool : Tool
+namespace ArtStart
 {
-    private Point? startPoint;
-    private Line currentLine;
-
-    public override void OnMouseDown(Canvas canvas, MouseButtonEventArgs e)
+    public class LineTool : Tool
     {
-        startPoint = e.GetPosition(canvas);
-        currentLine = new Line
+        public override Shape CreateShape(Color color, double thickness)
         {
-            X1 = startPoint.Value.X,
-            Y1 = startPoint.Value.Y,
-            Stroke = new SolidColorBrush(Color),
-            StrokeThickness = Thickness
-        };
-        canvas.Children.Add(currentLine);
-    }
-
-    public override void OnMouseMove(Canvas canvas, MouseEventArgs e)
-    {
-        if (e.LeftButton == MouseButtonState.Pressed && currentLine != null)
-        {
-            var point = e.GetPosition(canvas);
-            currentLine.X2 = point.X;
-            currentLine.Y2 = point.Y;
+            return new Line
+            {
+                Stroke = new SolidColorBrush(color),
+                StrokeThickness = thickness,
+                X1 = 0,
+                Y1 = 0,
+                X2 = 0,
+                Y2 = 0
+            };
         }
-    }
 
-    public override void OnMouseUp(Canvas canvas, MouseButtonEventArgs e)
-    {
-        currentLine = null;
+        public override void OnMouseDown(Shape shape, Point startPoint)
+        {
+            if (shape is Line line)
+            {
+                line.X1 = startPoint.X;
+                line.Y1 = startPoint.Y;
+                line.X2 = startPoint.X;
+                line.Y2 = startPoint.Y;
+            }
+        }
+
+        public override void OnMouseMove(Shape shape, Point startPoint, Point currentPoint)
+        {
+            if (shape is Line line)
+            {
+                line.X2 = currentPoint.X;
+                line.Y2 = currentPoint.Y;
+            }
+        }
     }
 }
