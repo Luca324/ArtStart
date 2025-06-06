@@ -1,40 +1,39 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace ArtStart
+public class PenTool : Tool
 {
-    public class PenTool : Tool
+    private Point? previousPoint;
+
+    public override void OnMouseDown(Canvas canvas, MouseButtonEventArgs e)
     {
-        private Polyline currentPolyline;
+        previousPoint = e.GetPosition(canvas);
+    }
 
-        public override Shape CreateShape(Color color, double thickness)
+    public override void OnMouseMove(Canvas canvas, MouseEventArgs e)
+    {
+        if (e.LeftButton == MouseButtonState.Pressed && previousPoint.HasValue)
         {
-            currentPolyline = new Polyline
+            var currentPoint = e.GetPosition(canvas);
+            var line = new Line
             {
-                Stroke = new SolidColorBrush(color),
-                StrokeThickness = thickness,
-                StrokeLineJoin = PenLineJoin.Round,
-                StrokeStartLineCap = PenLineCap.Round,
-                StrokeEndLineCap = PenLineCap.Round
+                X1 = previousPoint.Value.X,
+                Y1 = previousPoint.Value.Y,
+                X2 = currentPoint.X,
+                Y2 = currentPoint.Y,
+                Stroke = new SolidColorBrush(Color),
+                StrokeThickness = Thickness
             };
-            return currentPolyline;
+            canvas.Children.Add(line);
+            previousPoint = currentPoint;
         }
+    }
 
-        public override void OnMouseDown(Shape shape, Point startPoint)
-        {
-            if (shape is Polyline polyline)
-            {
-                polyline.Points.Add(startPoint);
-            }
-        }
-
-        public override void OnMouseMove(Shape shape, Point startPoint, Point currentPoint)
-        {
-            if (shape is Polyline polyline)
-            {
-                polyline.Points.Add(currentPoint);
-            }
-        }
+    public override void OnMouseUp(Canvas canvas, MouseButtonEventArgs e)
+    {
+        previousPoint = null;
     }
 }
