@@ -1,60 +1,45 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace ArtStart
+public class RectangleTool : Tool
 {
-    public class RectangleTool : Tool
+    private Point startPoint;
+    private Rectangle currentRect;
+
+    public override void OnMouseDown(Canvas canvas, MouseButtonEventArgs e)
     {
-        public override Shape CreateShape(Color color, double thickness)
+        startPoint = e.GetPosition(canvas);
+        currentRect = new Rectangle
         {
-            return new Rectangle
-            {
-                Stroke = new SolidColorBrush(color),
-                StrokeThickness = thickness,
-                Fill = Brushes.Transparent
-            };
-        }
+            Stroke = new SolidColorBrush(Color),
+            StrokeThickness = Thickness,
+            Fill = Brushes.Transparent
+        };
+        Canvas.SetLeft(currentRect, startPoint.X);
+        Canvas.SetTop(currentRect, startPoint.Y);
+        canvas.Children.Add(currentRect);
+    }
 
-        public override void OnMouseDown(Shape shape, Point startPoint)
+    public override void OnMouseMove(Canvas canvas, MouseEventArgs e)
+    {
+        if (e.LeftButton == MouseButtonState.Pressed && currentRect != null)
         {
-            if (shape is Rectangle rectangle)
-            {
-                Canvas.SetLeft(rectangle, startPoint.X);
-                Canvas.SetTop(rectangle, startPoint.Y);
-                rectangle.Width = 0;
-                rectangle.Height = 0;
-            }
+            var point = e.GetPosition(canvas);
+            double width = point.X - startPoint.X;
+            double height = point.Y - startPoint.Y;
+            currentRect.Width = Math.Abs(width);
+            currentRect.Height = Math.Abs(height);
+            Canvas.SetLeft(currentRect, width < 0 ? point.X : startPoint.X);
+            Canvas.SetTop(currentRect, height < 0 ? point.Y : startPoint.Y);
         }
+    }
 
-        public override void OnMouseMove(Shape shape, Point startPoint, Point currentPoint)
-        {
-            if (shape is Rectangle rectangle)
-            {
-                double width = currentPoint.X - startPoint.X;
-                double height = currentPoint.Y - startPoint.Y;
-                if (width < 0)
-                {
-                    Canvas.SetLeft(rectangle, currentPoint.X);
-                    width = -width;
-                }
-                else
-                {
-                    Canvas.SetLeft(rectangle, startPoint.X);
-                }
-                if (height < 0)
-                {
-                    Canvas.SetTop(rectangle, currentPoint.Y);
-                    height = -height;
-                }
-                else
-                {
-                    Canvas.SetTop(rectangle, startPoint.Y);
-                }
-                rectangle.Width = width;
-                rectangle.Height = height;
-            }
-        }
+    public override void OnMouseUp(Canvas canvas, MouseButtonEventArgs e)
+    {
+        currentRect = null;
     }
 }

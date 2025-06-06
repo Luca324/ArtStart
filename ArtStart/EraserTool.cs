@@ -1,39 +1,28 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace ArtStart
+public class EraserTool : Tool
 {
-    public class EraserTool : Tool
+    public override void OnMouseDown(Canvas canvas, MouseButtonEventArgs e)
     {
-        private Polyline currentEraser;
-
-        public override Shape CreateShape(Color color, double thickness)
+        UIElement element = canvas.InputHitTest(e.GetPosition(canvas)) as UIElement;
+        if (element != null && !(element is TextBlock))
         {
-            currentEraser = new Polyline
-            {
-                Stroke = new SolidColorBrush(Colors.WhiteSmoke),
-                StrokeThickness = thickness * 2,
-                StrokeLineJoin = PenLineJoin.Round,
-                StrokeStartLineCap = PenLineCap.Round,
-                StrokeEndLineCap = PenLineCap.Round
-            };
-            return currentEraser;
+            canvas.Children.Remove(element);
         }
+    }
 
-        public override void OnMouseDown(Shape shape, Point startPoint)
+    public override void OnMouseMove(Canvas canvas, MouseEventArgs e)
+    {
+        if (e.LeftButton == MouseButtonState.Pressed)
         {
-            if (shape is Polyline polyline)
+            UIElement element = canvas.InputHitTest(e.GetPosition(canvas)) as UIElement;
+            if (element != null && !(element is TextBlock))
             {
-                polyline.Points.Add(startPoint);
-            }
-        }
-
-        public override void OnMouseMove(Shape shape, Point startPoint, Point currentPoint)
-        {
-            if (shape is Polyline polyline)
-            {
-                polyline.Points.Add(currentPoint);
+                canvas.Children.Remove(element);
             }
         }
     }
