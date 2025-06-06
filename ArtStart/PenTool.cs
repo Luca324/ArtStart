@@ -1,39 +1,40 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-public class PenTool : Tool
+namespace ArtStart
 {
-    private Point? previousPoint;
-
-    public override void OnMouseDown(Canvas canvas, MouseButtonEventArgs e)
+    public class PenTool : Tool
     {
-        previousPoint = e.GetPosition(canvas);
-    }
+        private Polyline currentPolyline;
 
-    public override void OnMouseMove(Canvas canvas, MouseEventArgs e)
-    {
-        if (e.LeftButton == MouseButtonState.Pressed && previousPoint.HasValue)
+        public override Shape CreateShape(Color color, double thickness)
         {
-            var currentPoint = e.GetPosition(canvas);
-            var line = new Line
+            currentPolyline = new Polyline
             {
-                X1 = previousPoint.Value.X,
-                Y1 = previousPoint.Value.Y,
-                X2 = currentPoint.X,
-                Y2 = currentPoint.Y,
-                Stroke = new SolidColorBrush(Color),
-                StrokeThickness = Thickness
+                Stroke = new SolidColorBrush(color),
+                StrokeThickness = thickness,
+                StrokeLineJoin = PenLineJoin.Round,
+                StrokeStartLineCap = PenLineCap.Round,
+                StrokeEndLineCap = PenLineCap.Round
             };
-            canvas.Children.Add(line);
-            previousPoint = currentPoint;
+            return currentPolyline;
         }
-    }
 
-    public override void OnMouseUp(Canvas canvas, MouseButtonEventArgs e)
-    {
-        previousPoint = null;
+        public override void OnMouseDown(Shape shape, Point startPoint)
+        {
+            if (shape is Polyline polyline)
+            {
+                polyline.Points.Add(startPoint);
+            }
+        }
+
+        public override void OnMouseMove(Shape shape, Point startPoint, Point currentPoint)
+        {
+            if (shape is Polyline polyline)
+            {
+                polyline.Points.Add(currentPoint);
+            }
+        }
     }
 }

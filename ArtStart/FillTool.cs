@@ -1,75 +1,80 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-public class FillTool : Tool
+namespace ArtStart
 {
-    private Point? startPoint;
-    private Rectangle fillRectangle;
-
-    public override void OnMouseDown(Canvas canvas, MouseButtonEventArgs e)
+    public class FillTool : Tool
     {
-        // Получаем координаты клика
-        var clickPoint = e.GetPosition(canvas);
+        public override Shape CreateShape(Color color, double thickness) => null;
 
-        // Проверяем, на каком элементе был клик
-        UIElement target = canvas.InputHitTest(clickPoint) as UIElement;
+        public override void OnMouseDown(Shape shape, Point startPoint) { }
 
-        if (target is Shape shape)
+        public override void OnMouseMove(Shape shape, Point startPoint, Point currentPoint) { }
+
+        public void FloodFill(Canvas canvas, Point startPoint, Color targetColor, Color replacementColor)
         {
-            // Заливаем фигуру выбранным цветом
-            shape.Fill = new SolidColorBrush(Color);
-        }
-        else
-        {
-            // Если клик вне фигуры — создаём новую заливку
-            CreateFillOverlay(canvas, clickPoint);
-        }
-    }
+            if (targetColor == replacementColor) return;
 
-    private void CreateFillOverlay(Canvas canvas, Point point)
-    {
-        // Создаём полупрозрачный прямоугольник для визуализации заливки
-        fillRectangle = new Rectangle
-        {
-            Width = 0,
-            Height = 0,
-            Fill = new SolidColorBrush(Color),
-            Opacity = 0.5
-        };
+            var bitmap = new RenderTargetBitmap((int)canvas.ActualWidth, (int)canvas.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+            bitmap.Render(canvas);
+            var pixels = new byte[bitmap.PixelWidth * bitmap.PixelHeight * 4];
+            bitmap.CopyPixels(pixels, bitmap.PixelWidth * 4, 0);
 
-        Canvas.SetLeft(fillRectangle, point.X);
-        Canvas.SetTop(fillRectangle, point.Y);
-        canvas.Children.Add(fillRectangle);
-        startPoint = point;
-    }
+            int x = (int)startPoint.X;
+            int y = (int)startPoint.Y;
 
-    public override void OnMouseMove(Canvas canvas, MouseEventArgs e)
-    {
-        if (e.LeftButton == MouseButtonState.Pressed && fillRectangle != null)
-        {
-            var currentPoint = e.GetPosition(canvas);
-            double width = currentPoint.X - startPoint.Value.X;
-            double height = currentPoint.Y - startPoint.Value.Y;
+            if (x < 0 || x >= bitmap.PixelWidth || y < 0 || y >= bitmap.PixelHeight)
+                return;
 
-            fillRectangle.Width = Math.Abs(width);
-            fillRectangle.Height = Math.Abs(height);
+            int index = (y * bitmap.PixelWidth + x) * 4;
+            Color pixelColor = Color.FromArgb(pixels[index + 3], pixels[index + 2], pixels[index + 1], pixels[index]);
 
-            Canvas.SetLeft(fillRectangle, width < 0 ? currentPoint.X : startPoint.Value.X);
-            Canvas.SetTop(fillRectangle, height < 0 ? currentPoint.Y : startPoint.Value.Y);
-        }
-    }
+            if (pixelColor != targetColor) return;
 
-    public override void OnMouseUp(Canvas canvas, MouseButtonEventArgs e)
-    {
-        if (fillRectangle != null)
-        {
-            // Убираем прозрачность после отпускания мыши
-            fillRectangle.Opacity = 1.0;
-            fillRectangle = null;
+            var queue = new Queue<Point>();
+            queue.Enqueue(startPoint);
+
+            while (queue.Count > 0)
+            {
+                var point = queue.Dequeue();
+                x = (int)point.X;
+                y = (int)point.Y;
+
+                if (x < 0 || x >= bitmap.PixelWidth || y < 0 || y >= bitmap.PixelHeight)
+                    continue;
+
+                index = (y * bitmap.PixelWidth + x) * 4;
+                pixelColor = Color.FromArgb(pixels[index + 3], pixels[index + 2], pixels[index + 1], pixels[index]);
+
+                if (pixelColor != targetColor)
+                    continue;
+
+                var rect = new Rectangle
+                {
+                    Width = 1,
+                    Height = 1,
+                    Fill = new SolidColorBrush(replacementColor)
+                };
+
+                Canvas.SetLeft(rect, x);
+                Canvas.SetTop(rect, y);
+                canvas.Children.Add(rect);
+
+                pixels[index] = replacementColor.B;
+                pixels[index + 1] = replacementColor.G;
+                pixels[index + 2] = replacementColor.R;
+                pixels[index + 3] = replacementColor.A;
+
+                queue.Enqueue(new Point(x + 1, y));
+                queue.Enqueue(new Point(x - 1, y));
+                queue.Enqueue(new Point(x, y + 1));
+                queue.Enqueue(new Point(x, y - 1));
+            }
         }
     }
 }

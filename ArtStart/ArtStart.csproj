@@ -59,7 +59,6 @@
     <Compile Include="FillTool.cs" />
     <Compile Include="ShapeExtensions.cs" />
     <Compile Include="StarTool.cs" />
-    <Compile Include="TextElement.cs" />
     <Compile Include="Utils.cs" />
     <Page Include="Challenges.xaml">
       <SubType>Designer</SubType>

@@ -1,33 +1,59 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-public class StarTool : Tool
+namespace ArtStart
 {
-    private Polygon star;
-
-    public override void OnMouseDown(Canvas canvas, MouseButtonEventArgs e)
+    public class StarTool : Tool
     {
-        var center = e.GetPosition(canvas);
-        star = new Polygon
+        public override Shape CreateShape(Color color, double thickness)
         {
-            Points = new PointCollection
+            return new Polygon
             {
-                new Point(center.X, center.Y - 30),
-                new Point(center.X + 9.27f, center.Y - 9.27f),
-                new Point(center.X + 30, center.Y),
-                new Point(center.X + 9.27f, center.Y + 9.27f),
-                new Point(center.X, center.Y + 30),
-                new Point(center.X - 9.27f, center.Y + 9.27f),
-                new Point(center.X - 30, center.Y),
-                new Point(center.X + 9.27f, center.Y - 9.27f)
-            },
-            Stroke = new SolidColorBrush(Color),
-            StrokeThickness = Thickness,
-            Fill = new SolidColorBrush(Color)
-        };
-        canvas.Children.Add(star);
+                Stroke = new SolidColorBrush(color),
+                StrokeThickness = thickness,
+                Fill = Brushes.Transparent
+            };
+        }
+
+        public override void OnMouseDown(Shape shape, Point startPoint)
+        {
+            if (shape is Polygon polygon)
+            {
+                Canvas.SetLeft(polygon, startPoint.X);
+                Canvas.SetTop(polygon, startPoint.Y);
+            }
+        }
+
+        public override void OnMouseMove(Shape shape, Point startPoint, Point currentPoint)
+        {
+            if (shape is Polygon polygon)
+            {
+                double width = currentPoint.X - startPoint.X;
+                double height = currentPoint.Y - startPoint.Y;
+                double radius = Math.Min(Math.Abs(width), Math.Abs(height)) / 2;
+                polygon.Points = CreateStarPoints(5, radius, radius / 2, startPoint);
+            }
+        }
+
+        private PointCollection CreateStarPoints(int numPoints, double outerRadius, double innerRadius, Point center)
+        {
+            PointCollection points = new PointCollection();
+            double angle = 0;
+            double angleIncrement = Math.PI / numPoints;
+
+            for (int i = 0; i < 2 * numPoints; i++)
+            {
+                double r = (i % 2 == 0) ? outerRadius : innerRadius;
+                double x = center.X + r * Math.Sin(angle);
+                double y = center.Y + r * Math.Cos(angle);
+                points.Add(new Point(x, y));
+                angle += angleIncrement;
+            }
+
+            return points;
+        }
     }
 }

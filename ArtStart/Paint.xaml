@@ -1,80 +1,177 @@
 ﻿<Window x:Class="ArtStart.Paint"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ArtStart - Рисование" Height="800" Width="1200">
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Paint" Height="700" Width="1000">
     <Grid>
-        <!-- Верхнее меню -->
-        <DockPanel Background="#E6D5F1" Height="40">
-            <Button Content="ColorMix" Background="White" Foreground="Black" BorderBrush="Black" Margin="5,0"/>
-            <Button Content="Challenges" Background="White" Foreground="Black" BorderBrush="Black" Margin="5,0"/>
-        </DockPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <!-- Панель управления -->
-        <StackPanel Orientation="Horizontal" Background="White" Height="120" VerticalAlignment="Top" Margin="0,40,0,0">
-            <!-- File -->
-            <StackPanel Margin="10,0">
-                <Label Content="File" FontWeight="Bold"/>
-                <Button Content="Open" Background="#AD48B7" Foreground="White" Click="OpenImage_Click" Margin="0,3"/>
-                <Button Content="Save" Background="#AD48B7" Foreground="White" Click="SaveImage_Click" Margin="0,3"/>
+        <!-- Top Menu -->
+        <Border Grid.Row="0" Background="#E6D5F1" BorderBrush="Black" BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button Content="Challenges" Name="Challenges" Width="100" Background="White" Foreground="Black" Margin="10,0"/>
+                <Button Content="ColorMix" Name="ColorMix" Width="100" Background="White" Foreground="Black" Margin="10,0"/>
             </StackPanel>
+        </Border>
 
-            <!-- Tools -->
-            <StackPanel Margin="20,0">
-                <Label Content="Tool" FontWeight="Bold"/>
-                <ComboBox x:Name="toolComboBox" Background="#AD48B7" Foreground="White" SelectedIndex="0" Width="120">
-                    <ComboBoxItem Content="Pen"/>
-                    <ComboBoxItem Content="Line"/>
-                    <ComboBoxItem Content="Rectangle"/>
-                    <ComboBoxItem Content="Ellipse"/>
-                    <ComboBoxItem Content="Eraser"/>
-                    <ComboBoxItem Content="Spray"/>
-                    <ComboBoxItem Content="Fill"/>
-                    <ComboBoxItem Content="Star"/>
-                </ComboBox>
+        <!-- Toolbar -->
+        <Border Grid.Row="1" Background="White">
+            <StackPanel Orientation="Horizontal" Margin="5" VerticalAlignment="Center">
+
+                <!-- File Buttons -->
+                <StackPanel Margin="5" Width="80">
+                    <TextBlock Text="File" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <Button Content="Open" Click="OpenButton_Click" Background="#AD48B7" Foreground="White" Margin="0,5,0,0"/>
+                    <Button Content="Save" Click="SaveButton_Click" Background="#AD48B7" Foreground="White" Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <!-- Tools -->
+                <StackPanel Margin="10,0" Width="120">
+                    <TextBlock Text="Tool" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <ComboBox x:Name="toolsComboBox" Background="#AD48B7" Foreground="White"
+                              SelectionChanged="ToolsComboBox_SelectionChanged">
+                        <ComboBoxItem Tag="Pen">Pen</ComboBoxItem>
+                        <ComboBoxItem Tag="Line">Line</ComboBoxItem>
+                        <ComboBoxItem Tag="Rectangle">Rectangle</ComboBoxItem>
+                        <ComboBoxItem Tag="Ellipse">Ellipse</ComboBoxItem>
+                        <ComboBoxItem Tag="Spray">Spray</ComboBoxItem>
+                        <ComboBoxItem Tag="Eraser">Eraser</ComboBoxItem>
+                        <ComboBoxItem Tag="Fill">Fill</ComboBoxItem>
+                        <ComboBoxItem Tag="Star">Star</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Colors -->
+                <StackPanel Margin="10,0" Width="140">
+                    <TextBlock Text="Color" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="100">
+                        <ComboBox x:Name="colorsComboBox" Background="#AD48B7" Foreground="White"
+                                  SelectionChanged="ColorsComboBox_SelectionChanged">
+                            <ComboBoxItem Background="DarkRed"/>
+                            <ComboBoxItem Background="Maroon"/>
+                            <ComboBoxItem Background="Firebrick"/>
+                            <ComboBoxItem Background="Red"/>
+                            <ComboBoxItem Background="IndianRed"/>
+                            <ComboBoxItem Background="LightCoral"/>
+                            <ComboBoxItem Background="Salmon"/>
+                            <ComboBoxItem Background="Crimson"/>
+                            <ComboBoxItem Background="Tomato"/>
+                            <ComboBoxItem Background="OrangeRed"/>
+                            <ComboBoxItem Background="DarkOrange"/>
+                            <ComboBoxItem Background="Orange"/>
+                            <ComboBoxItem Background="Coral"/>
+                            <ComboBoxItem Background="SandyBrown"/>
+                            <ComboBoxItem Background="DarkSalmon"/>
+                            <ComboBoxItem Background="LightSalmon"/>
+                            <ComboBoxItem Background="Peru"/>
+                            <ComboBoxItem Background="Chocolate"/>
+                            <ComboBoxItem Background="Sienna"/>
+                            <ComboBoxItem Background="Goldenrod"/>
+                            <ComboBoxItem Background="DarkGoldenrod"/>
+                            <ComboBoxItem Background="Gold"/>
+                            <ComboBoxItem Background="Yellow"/>
+                            <ComboBoxItem Background="Khaki"/>
+                            <ComboBoxItem Background="LemonChiffon"/>
+                            <ComboBoxItem Background="LightYellow"/>
+                            <ComboBoxItem Background="PaleGoldenrod"/>
+                            <ComboBoxItem Background="Moccasin"/>
+                            <ComboBoxItem Background="PeachPuff"/>
+                            <ComboBoxItem Background="NavajoWhite"/>
+                            <ComboBoxItem Background="DarkGreen"/>
+                            <ComboBoxItem Background="Green"/>
+                            <ComboBoxItem Background="ForestGreen"/>
+                            <ComboBoxItem Background="LimeGreen"/>
+                            <ComboBoxItem Background="Lime"/>
+                            <ComboBoxItem Background="SpringGreen"/>
+                            <ComboBoxItem Background="MediumSpringGreen"/>
+                            <ComboBoxItem Background="LightGreen"/>
+                            <ComboBoxItem Background="PaleGreen"/>
+                            <ComboBoxItem Background="SeaGreen"/>
+                            <ComboBoxItem Background="Teal"/>
+                            <ComboBoxItem Background="DarkCyan"/>
+                            <ComboBoxItem Background="LightSeaGreen"/>
+                            <ComboBoxItem Background="CadetBlue"/>
+                            <ComboBoxItem Background="DarkTurquoise"/>
+                            <ComboBoxItem Background="Turquoise"/>
+                            <ComboBoxItem Background="Aqua"/>
+                            <ComboBoxItem Background="Cyan"/>
+                            <ComboBoxItem Background="DeepSkyBlue"/>
+                            <ComboBoxItem Background="DodgerBlue"/>
+                            <ComboBoxItem Background="DarkSlateBlue"/>
+                            <ComboBoxItem Background="MediumSlateBlue"/>
+                            <ComboBoxItem Background="SlateBlue"/>
+                            <ComboBoxItem Background="BlueViolet"/>
+                            <ComboBoxItem Background="DarkOrchid"/>
+                            <ComboBoxItem Background="MediumOrchid"/>
+                            <ComboBoxItem Background="Orchid"/>
+                            <ComboBoxItem Background="Violet"/>
+                            <ComboBoxItem Background="Plum"/>
+                            <ComboBoxItem Background="Magenta"/>
+                            <ComboBoxItem Background="Black"/>
+                            <ComboBoxItem Background="DimGray"/>
+                            <ComboBoxItem Background="Gray"/>
+                            <ComboBoxItem Background="DarkGray"/>
+                            <ComboBoxItem Background="Silver"/>
+                            <ComboBoxItem Background="LightGray"/>
+                            <ComboBoxItem Background="Gainsboro"/>
+                            <ComboBoxItem Background="WhiteSmoke"/>
+                            <ComboBoxItem Background="White"/>
+                        </ComboBox>
+                    </ScrollViewer>
+                </StackPanel>
+
+                <!-- MyColor Placeholder -->
+                <StackPanel Margin="10,0" Width="100">
+                    <TextBlock Text="MyColor" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <Border Width="50" Height="50" Background="LightGray" BorderBrush="Black" BorderThickness="1"
+                            HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <!-- Thickness Slider -->
+                <StackPanel Margin="10,0" Width="120">
+                    <TextBlock Text="Thickness" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <Slider x:Name="thicknessSlider" Minimum="1" Maximum="20" Value="5" Margin="0,5,0,0"
+                            ValueChanged="ThicknessSlider_ValueChanged"/>
+                    <TextBlock x:Name="thicknessValueText" Text="5" HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Text Options -->
+                <StackPanel Margin="10,0" Width="150">
+                    <TextBlock Text="Text" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <ComboBox x:Name="fontsComboBox" Background="#AD48B7" Foreground="White" Margin="0,5,0,0"
+                              SelectionChanged="FontsComboBox_SelectionChanged">
+                        <ComboBoxItem>Arial</ComboBoxItem>
+                        <ComboBoxItem>Times New Roman</ComboBoxItem>
+                        <ComboBoxItem>Courier New</ComboBoxItem>
+                        <ComboBoxItem>Verdana</ComboBoxItem>
+                        <ComboBoxItem>Comic Sans MS</ComboBoxItem>
+                    </ComboBox>
+                    <Button Content="Add Text" Click="AddTextButton_Click" Background="#AD48B7" Foreground="White" Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <!-- Clear Button -->
+                <StackPanel Margin="10,0" Width="80">
+                    <TextBlock Text="Actions" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <Button Content="Clear" Click="ClearButton_Click" Background="#AD48B7" Foreground="White" Margin="0,5,0,0"/>
+                </StackPanel>
             </StackPanel>
+        </Border>
 
-            <!-- Colors -->
-            <StackPanel Margin="20,0">
-                <Label Content="Colors" FontWeight="Bold"/>
-                <Button x:Name="colorButton" Content="Выбрать цвет" Background="#AD48B7" Foreground="White" Click="ColorButton_Click" Width="120" />
-            </StackPanel>
-
-            <!-- MyColor (заглушка) -->
-            <StackPanel Margin="20,0">
-                <Label Content="MyColor" FontWeight="Bold"/>
-                <Border Background="#FFDDAA" Width="120" Height="25"/>
-            </StackPanel>
-
-            <!-- Thickness -->
-            <StackPanel Margin="20,0">
-                <Label Content="Thickness" FontWeight="Bold"/>
-                <Slider x:Name="thicknessSlider" Minimum="1" Maximum="50" Value="5" Width="120"/>
-                <TextBlock Text="{Binding ElementName=thicknessSlider, Path=Value}" HorizontalAlignment="Center"/>
-            </StackPanel>
-
-            <!-- Text -->
-            <StackPanel Margin="20,0">
-                <Label Content="Text" FontWeight="Bold"/>
-                <ComboBox x:Name="fontComboBox" Background="#AD48B7" Foreground="White" Width="120">
-                    <ComboBoxItem Content="Arial"/>
-                    <ComboBoxItem Content="Times New Roman"/>
-                    <ComboBoxItem Content="Courier New"/>
-                    <ComboBoxItem Content="Verdana"/>
-                    <ComboBoxItem Content="Georgia"/>
-                </ComboBox>
-                <Button Content="Add Text" Background="#AD48B7" Foreground="White" Click="AddText_Click" Margin="0,3"/>
-            </StackPanel>
-
-            <!-- Clear -->
-            <Button Content="Clear" Background="#AD48B7" Foreground="White" Click="ClearCanvas_Click"
-                    HorizontalAlignment="Right" Margin="20,30,10,0" Padding="10,5"/>
-        </StackPanel>
-
-        <!-- Холст -->
-        <Border Background="#E6D5F1" Margin="0,160,0,0">
-            <Canvas x:Name="drawingCanvas" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Width="1000" Height="600" MouseDown="Canvas_MouseDown" MouseMove="Canvas_MouseMove"
-                    MouseUp="Canvas_MouseUp" KeyDown="Canvas_KeyDown" Focusable="True"/>
+        <!-- Drawing Area -->
+        <Border Grid.Row="2" Background="#E6D5F1">
+            <Canvas x:Name="drawingCanvas" Background="White" Width="800" Height="500"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    MouseDown="DrawingCanvas_MouseDown"
+                    MouseMove="DrawingCanvas_MouseMove"
+                    MouseUp="DrawingCanvas_MouseUp">
+            </Canvas>
         </Border>
     </Grid>
 </Window>
+    
