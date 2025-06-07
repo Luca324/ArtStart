@@ -1,1 +1,11 @@
-{"stringValue":null,"numberValue":0,"listValue":null,"palettes":[{"Name":"palette1","Colors":["#FFC6A2BC","#FFF57E96","#FFA61D7D"]},{"Name":"","Colors":[]},{"Name":"hi","Colors":["#00000000","#00000000","#00000000","#00000000","#00000000","#00000000","#00000000"]}]}
+{
+    "stringValue": null,
+    "numberValue": 0,
+    "listValue": null,
+    "palettes": [
+        {
+            "Name": "palette1",
+            "Colors": [ "#FFC6A2BC", "#FFF57E96", "#FFA61D7D", "#FF6EFF04", "#FF008539", "#FFF57E96", "#FFA61D7D", "#FF6EFF04", "#FF008539", "#FFF57E96", "#FFA61D7D", "#FF6EFF04", "#FF008539", "#FFF57E96", "#FFA61D7D", "#FF6EFF04", "#FF008539", "#FFF57E96", "#FFA61D7D", "#FF6EFF04", "#FF008539" ]
+        }
+    ]
+}

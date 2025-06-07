@@ -3,8 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Paint" Height="700" Width="1000">
+    <Window.Resources>
+        <Style x:Key="colorPicker">
+            <Setter Property="Control.Width" Value="50" />
+            <Setter Property="Control.Height" Value="50" />
+
+        </Style>
+        
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -48,83 +57,7 @@
                 </StackPanel>
 
                 <!-- Colors -->
-                <StackPanel Margin="10,0" Width="140">
-                    <TextBlock Text="Color" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="100">
-                        <ComboBox x:Name="colorsComboBox" Background="#AD48B7" Foreground="White"
-                                  SelectionChanged="ColorsComboBox_SelectionChanged">
-                            <ComboBoxItem Background="DarkRed"/>
-                            <ComboBoxItem Background="Maroon"/>
-                            <ComboBoxItem Background="Firebrick"/>
-                            <ComboBoxItem Background="Red"/>
-                            <ComboBoxItem Background="IndianRed"/>
-                            <ComboBoxItem Background="LightCoral"/>
-                            <ComboBoxItem Background="Salmon"/>
-                            <ComboBoxItem Background="Crimson"/>
-                            <ComboBoxItem Background="Tomato"/>
-                            <ComboBoxItem Background="OrangeRed"/>
-                            <ComboBoxItem Background="DarkOrange"/>
-                            <ComboBoxItem Background="Orange"/>
-                            <ComboBoxItem Background="Coral"/>
-                            <ComboBoxItem Background="SandyBrown"/>
-                            <ComboBoxItem Background="DarkSalmon"/>
-                            <ComboBoxItem Background="LightSalmon"/>
-                            <ComboBoxItem Background="Peru"/>
-                            <ComboBoxItem Background="Chocolate"/>
-                            <ComboBoxItem Background="Sienna"/>
-                            <ComboBoxItem Background="Goldenrod"/>
-                            <ComboBoxItem Background="DarkGoldenrod"/>
-                            <ComboBoxItem Background="Gold"/>
-                            <ComboBoxItem Background="Yellow"/>
-                            <ComboBoxItem Background="Khaki"/>
-                            <ComboBoxItem Background="LemonChiffon"/>
-                            <ComboBoxItem Background="LightYellow"/>
-                            <ComboBoxItem Background="PaleGoldenrod"/>
-                            <ComboBoxItem Background="Moccasin"/>
-                            <ComboBoxItem Background="PeachPuff"/>
-                            <ComboBoxItem Background="NavajoWhite"/>
-                            <ComboBoxItem Background="DarkGreen"/>
-                            <ComboBoxItem Background="Green"/>
-                            <ComboBoxItem Background="ForestGreen"/>
-                            <ComboBoxItem Background="LimeGreen"/>
-                            <ComboBoxItem Background="Lime"/>
-                            <ComboBoxItem Background="SpringGreen"/>
-                            <ComboBoxItem Background="MediumSpringGreen"/>
-                            <ComboBoxItem Background="LightGreen"/>
-                            <ComboBoxItem Background="PaleGreen"/>
-                            <ComboBoxItem Background="SeaGreen"/>
-                            <ComboBoxItem Background="Teal"/>
-                            <ComboBoxItem Background="DarkCyan"/>
-                            <ComboBoxItem Background="LightSeaGreen"/>
-                            <ComboBoxItem Background="CadetBlue"/>
-                            <ComboBoxItem Background="DarkTurquoise"/>
-                            <ComboBoxItem Background="Turquoise"/>
-                            <ComboBoxItem Background="Aqua"/>
-                            <ComboBoxItem Background="Cyan"/>
-                            <ComboBoxItem Background="DeepSkyBlue"/>
-                            <ComboBoxItem Background="DodgerBlue"/>
-                            <ComboBoxItem Background="DarkSlateBlue"/>
-                            <ComboBoxItem Background="MediumSlateBlue"/>
-                            <ComboBoxItem Background="SlateBlue"/>
-                            <ComboBoxItem Background="BlueViolet"/>
-                            <ComboBoxItem Background="DarkOrchid"/>
-                            <ComboBoxItem Background="MediumOrchid"/>
-                            <ComboBoxItem Background="Orchid"/>
-                            <ComboBoxItem Background="Violet"/>
-                            <ComboBoxItem Background="Plum"/>
-                            <ComboBoxItem Background="Magenta"/>
-                            <ComboBoxItem Background="Black"/>
-                            <ComboBoxItem Background="DimGray"/>
-                            <ComboBoxItem Background="Gray"/>
-                            <ComboBoxItem Background="DarkGray"/>
-                            <ComboBoxItem Background="Silver"/>
-                            <ComboBoxItem Background="LightGray"/>
-                            <ComboBoxItem Background="Gainsboro"/>
-                            <ComboBoxItem Background="WhiteSmoke"/>
-                            <ComboBoxItem Background="White"/>
-                        </ComboBox>
-                    </ScrollViewer>
-                </StackPanel>
+                <xctk:ColorPicker x:Name="ColorPicker" Style="{StaticResource colorPicker}" SelectedColorChanged="ColorPicker_SelectedColorChanged"	></xctk:ColorPicker>
 
                 <!-- MyColor Placeholder -->
                 <StackPanel Margin="10,0" Width="100">
