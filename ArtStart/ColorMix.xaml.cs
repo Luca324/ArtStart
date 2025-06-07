@@ -4,6 +4,8 @@ using System.Windows.Media;
 using System;
 using Newtonsoft.Json;
 using System.IO;
+using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace ArtStart
 {
@@ -18,6 +20,7 @@ namespace ArtStart
             InitializeComponent();
             Challenges.Click += Utils.Navigation_Click;
             Paint.Click += Utils.Navigation_Click;
+            renderPalettesFromJSON();
         }
 
 

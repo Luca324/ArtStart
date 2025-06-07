@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:local="clr-namespace:ArtStart"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:ArtStart"
         mc:Ignorable="d"
         Title="Paint" Height="700" Width="1000">
     <Window.Resources>
@@ -77,9 +78,8 @@
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Border Width="20" Height="20" Margin="2"
-                                    Background="{Binding Converter={StaticResource ColorConverter}}"
-                                    BorderBrush="Black" BorderThickness="1">
+                                            <Border Width="20" Height="20"
+                                    Background="{Binding Converter={StaticResource ColorConverter}}">
                                                 <Border.InputBindings>
                                                     <MouseBinding MouseAction="LeftClick" 
                                                   Command="{Binding RelativeSource={RelativeSource AncestorType=ComboBox}, Path=DataContext.SelectColorCommand}"
