@@ -67,15 +67,17 @@ namespace ArtStart
             }
         }
 
-        private void ColorsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var item = colorsComboBox.SelectedItem as ComboBoxItem;
-            if (item?.Background is SolidColorBrush brush && brush.Color != null)
-            {
-                selectedColor = brush.Color;
-            }
-        }
+        
 
+        private void ColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            if (ColorPicker.SelectedColor.HasValue)
+            {
+                selectedColor = ColorPicker.SelectedColor.Value;
+                
+            }
+
+        }
         private void ThicknessSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (thicknessValueText != null)
