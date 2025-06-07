@@ -11,9 +11,10 @@ namespace ArtStart
 {
     public partial class ColorMix : Window
     {
-    private const string filepath = @"../../data.json";
+        private const string filepath = @"../../data.json";
         private System.Windows.Media.Color currentColor = new System.Windows.Media.Color();
-        //private SolidColorBrush currentColor = new SolidColorBrush();
+        private Boolean currentColorExists = false;
+
         public ColorMix()
         {
             InitializeComponent();
@@ -25,7 +26,7 @@ namespace ArtStart
         }
 
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void MixBtn_Click(object sender, RoutedEventArgs e)
         {
             // Проверяем, что оба цвета выбраны
             if (ColorPicker1.SelectedColor.HasValue && ColorPicker2.SelectedColor.HasValue)
@@ -39,33 +40,16 @@ namespace ArtStart
                 var mixedColor = ToMediaColor(System.Drawing.Color.FromArgb(mixedArgb));
 
                 currentColor = mixedColor;
-                Console.WriteLine("new color:", mixedColor);
+                Console.WriteLine($"new color:{mixedColor}");
                 // Устанавливаем фон кнопки
                 result.Background = new SolidColorBrush(mixedColor);
+                currentColorExists = true;
             }
-        }
-
-        // Вспомогательные методы для конвертации цветов
-        private System.Drawing.Color ToDrawingColor(Color mediaColor)
-        {
-            return System.Drawing.Color.FromArgb(
-                mediaColor.A,
-                mediaColor.R,
-                mediaColor.G,
-                mediaColor.B);
-        }
-
-        private Color ToMediaColor(System.Drawing.Color drawingColor)
-        {
-            return Color.FromArgb(
-                drawingColor.A,
-                drawingColor.R,
-                drawingColor.G,
-                drawingColor.B);
         }
 
         private void CreateNewPalette_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(NewPaletteName.Text)) return;
             Console.WriteLine(NewPaletteName.Text);
 
             // Чтение файла
@@ -73,11 +57,6 @@ namespace ArtStart
 
             // Десериализация строки в объект
             var data = JsonConvert.DeserializeObject<FileModel>(json);
-
-            // Изменение данных (пример)
-            data.StringValue = "new value";
-            data.IntValue++;
-            data.ListValue.Add(NewPaletteName.Text);
 
             // создание новой палитры
             Palette newPalette = new Palette();
@@ -96,12 +75,13 @@ namespace ArtStart
             // обновляем список палитр
             renderPalettesFromJSON();
 
+            NewPaletteName.Text = "";
         }
 
         private void renderPalettesFromJSON()
         {
             Palettes.Children.Clear();
-            
+
 
             // Чтение файла
             var json = File.ReadAllText(filepath);
@@ -111,13 +91,14 @@ namespace ArtStart
 
             foreach (var palette in data.Palettes)
             {
-                Console.WriteLine(palette.Name);
                 WrapPanel panel = new WrapPanel();
                 Button button = new Button();
                 button.Content = "+";
-                button.Click += (sender, e) => {
+                button.Click += (sender, e) =>
+                {
+                    Console.WriteLine($"palette name: {palette.Name}");
                     AddCurrentColor(palette.Name);
-                    };
+                };
 
                 TextBlock block = new TextBlock();
                 block.Text = palette.Name;
@@ -143,14 +124,21 @@ namespace ArtStart
 
         private void AddCurrentColor(string palette)
         {
-            Console.WriteLine(palette, currentColor.ToString());
+            if (!currentColorExists) return;
+            // тут проверка, что цвета еще нет в этой палитре, иначе тоже return
+
+            Console.WriteLine($"palette, currentcolor, isthere color: {palette} {currentColor.ToString()}, {string.IsNullOrEmpty(currentColor.ToString())}");
             // Чтение файла
             var json = File.ReadAllText(filepath);
 
             // Десериализация строки в объект
             var data = JsonConvert.DeserializeObject<FileModel>(json);
-            
-            data.Palettes.Find(p => p.Name == palette).Colors.Add(currentColor.ToString());
+
+            var targetPalette = data.Palettes.Find(p => p.Name == palette);
+            Console.WriteLine($"existing colors:{targetPalette.Colors}\n contains: {!targetPalette.Colors.Contains(currentColor.ToString())}");
+            if (targetPalette.Colors.Contains(currentColor.ToString())) return;
+
+            targetPalette.Colors.Add(currentColor.ToString());
 
             // Сериализация объекта в строку
             json = JsonConvert.SerializeObject(data);
@@ -163,6 +151,25 @@ namespace ArtStart
 
         }
 
+
+        // Вспомогательные методы для конвертации цветов
+        private System.Drawing.Color ToDrawingColor(Color mediaColor)
+        {
+            return System.Drawing.Color.FromArgb(
+                mediaColor.A,
+                mediaColor.R,
+                mediaColor.G,
+                mediaColor.B);
+        }
+
+        private Color ToMediaColor(System.Drawing.Color drawingColor)
+        {
+            return Color.FromArgb(
+                drawingColor.A,
+                drawingColor.R,
+                drawingColor.G,
+                drawingColor.B);
+        }
 
     }
     public class FileModel

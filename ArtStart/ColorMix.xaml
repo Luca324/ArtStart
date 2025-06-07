@@ -30,9 +30,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*"  MinWidth="100px"/>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*"  MinWidth="200px"/>
         </Grid.ColumnDefinitions>
         
         <ToolBar Grid.Row="0"  Grid.ColumnSpan="3">
@@ -46,19 +46,27 @@
                 <xctk:ColorPicker x:Name="ColorPicker1" Style="{StaticResource colorPicker}"/>
                 <xctk:ColorPicker x:Name="ColorPicker2" Style="{StaticResource colorPicker}"/>
             </WrapPanel>
-            <Button Name="button1"  Content="Получить результат" Click="button1_Click" />
+            <Button Name="MixBtn"  Content="Получить результат" Click="MixBtn_Click" />
             <TextBlock Name="result"  Style="{StaticResource result}">Результат</TextBlock>
         </StackPanel>
 
         <GridSplitter  Grid.Row="1" Grid.Column="1" ShowsPreview="False" Width="3"
         HorizontalAlignment="Center" VerticalAlignment="Stretch" />
-        
-        <StackPanel Grid.Row="1" Grid.Column="2">
-            <TextBlock>Палитры</TextBlock>
-            <StackPanel Name="Palettes">
+
+        <DockPanel Grid.Row="1" Grid.Column="2" LastChildFill="True">
+        <!-- Верхняя часть с заголовком и палитрами -->
+        <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock>Палитры</TextBlock>
+                <StackPanel Name="Palettes"/>
             </StackPanel>
+        </ScrollViewer>
+        
+        <!-- Нижняя часть с элементами создания палитры -->
+        <StackPanel DockPanel.Dock="Bottom" Margin="0,10,0,0">
+            <TextBox Name="NewPaletteName" MaxLength="40" Margin="0,0,0,5"/>
             <Button Name="CreateNewPalette" Click="CreateNewPalette_Click">Создать палитру</Button>
-            <TextBox Name="NewPaletteName"></TextBox>
         </StackPanel>
+    </DockPanel>
     </Grid>
 </Window>
