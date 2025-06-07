@@ -13,11 +13,14 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 using System.Windows.Media.Imaging;
+using Newtonsoft.Json;
 
 namespace ArtStart
 {
     public partial class Paint : Window
     {
+        private const string PALLETES_PATH = @"../../data.json";
+
         private Tool currentTool;
         private Shape currentShape;
         private Point startPoint;
@@ -44,13 +47,47 @@ namespace ArtStart
             InitializeComponent();
             Challenges.Click += Utils.Navigation_Click;
             ColorMix.Click += Utils.Navigation_Click;
+
+            RenderPalettesFromJSON();
+        }
+
+        private void RenderPalettesFromJSON()
+        {
+            // Чтение файла (замените на ваш путь)
+            var json = File.ReadAllText(PALLETES_PATH);
+            var data = JsonConvert.DeserializeObject<FileModel>(json);
+
+            // Проверка данных перед привязкой
+            if (data?.Palettes != null)
+            {
+                foreach (var palette in data.Palettes)
+                {
+                    Console.WriteLine($"Palette: {palette.Name}, Colors: {palette.Colors.Count}");
+                }
+
+                PaletteCombo.ItemsSource = data.Palettes;
+            }
+            else
+            {
+                MessageBox.Show("Ошибка загрузки палитр");
+            }
         }
 
         private void InitializeTools()
         {
             toolsComboBox.SelectedIndex = 0;
         }
+        private void PaletteCombo_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource is Border border && border.DataContext is string hexColor)
+            {
+                selectedColor = (Color)ColorConverter.ConvertFromString(hexColor);
 
+                // Закрываем ComboBox
+                PaletteCombo.IsDropDownOpen = false;
+                e.Handled = true;
+            }
+        }
         private void ToolsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string toolName = ((ComboBoxItem)toolsComboBox.SelectedItem)?.Tag?.ToString();

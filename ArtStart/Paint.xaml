@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:local="clr-namespace:ArtStart"
         mc:Ignorable="d"
         Title="Paint" Height="700" Width="1000">
     <Window.Resources>
@@ -12,7 +12,8 @@
             <Setter Property="Control.Height" Value="50" />
 
         </Style>
-        
+        <local:StringToColorConverter x:Key="ColorConverter"/>
+
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -59,12 +60,39 @@
                 <!-- Colors -->
                 <xctk:ColorPicker x:Name="ColorPicker" Style="{StaticResource colorPicker}" SelectedColorChanged="ColorPicker_SelectedColorChanged"	></xctk:ColorPicker>
 
-                <!-- MyColor Placeholder -->
-                <StackPanel Margin="10,0" Width="100">
-                    <TextBlock Text="MyColor" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    <Border Width="50" Height="50" Background="LightGray" BorderBrush="Black" BorderThickness="1"
-                            HorizontalAlignment="Center" Margin="0,5,0,0"/>
-                </StackPanel>
+                <ComboBox x:Name="PaletteCombo" Height="30" 
+          IsTextSearchEnabled="False" IsEditable="False" PreviewMouseDown="PaletteCombo_PreviewMouseDown" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" Margin="5">
+                                <!-- Название палитры -->
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+
+                                <!-- Цвета палитры -->
+                                <ItemsControl ItemsSource="{Binding Colors}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Width="20" Height="20" Margin="2"
+                                    Background="{Binding Converter={StaticResource ColorConverter}}"
+                                    BorderBrush="Black" BorderThickness="1">
+                                                <Border.InputBindings>
+                                                    <MouseBinding MouseAction="LeftClick" 
+                                                  Command="{Binding RelativeSource={RelativeSource AncestorType=ComboBox}, Path=DataContext.SelectColorCommand}"
+                                                  CommandParameter="{Binding}"/>
+                                                </Border.InputBindings>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
 
                 <!-- Thickness Slider -->
                 <StackPanel Margin="10,0" Width="120">

@@ -11,7 +11,7 @@ namespace ArtStart
 {
     public partial class ColorMix : Window
     {
-        private const string filepath = @"../../data.json";
+        private const string PALLETES_PATH = @"../../data.json";
         private System.Windows.Media.Color currentColor = new System.Windows.Media.Color();
         private Boolean currentColorExists = false;
 
@@ -53,7 +53,7 @@ namespace ArtStart
             Console.WriteLine(NewPaletteName.Text);
 
             // Чтение файла
-            var json = File.ReadAllText(filepath);
+            var json = File.ReadAllText(PALLETES_PATH);
 
             // Десериализация строки в объект
             var data = JsonConvert.DeserializeObject<FileModel>(json);
@@ -70,7 +70,7 @@ namespace ArtStart
             json = JsonConvert.SerializeObject(data);
 
             // Сохранение строки в файл
-            File.WriteAllText(filepath, json);
+            File.WriteAllText(PALLETES_PATH, json);
 
             // обновляем список палитр
             renderPalettesFromJSON();
@@ -84,7 +84,7 @@ namespace ArtStart
 
 
             // Чтение файла
-            var json = File.ReadAllText(filepath);
+            var json = File.ReadAllText(PALLETES_PATH);
 
             // Десериализация строки в объект
             var data = JsonConvert.DeserializeObject<FileModel>(json);
@@ -129,7 +129,7 @@ namespace ArtStart
 
             Console.WriteLine($"palette, currentcolor, isthere color: {palette} {currentColor.ToString()}, {string.IsNullOrEmpty(currentColor.ToString())}");
             // Чтение файла
-            var json = File.ReadAllText(filepath);
+            var json = File.ReadAllText(PALLETES_PATH);
 
             // Десериализация строки в объект
             var data = JsonConvert.DeserializeObject<FileModel>(json);
@@ -144,7 +144,7 @@ namespace ArtStart
             json = JsonConvert.SerializeObject(data);
 
             // Сохранение строки в файл
-            File.WriteAllText(filepath, json);
+            File.WriteAllText(PALLETES_PATH, json);
 
             // обновляем список палитр
             renderPalettesFromJSON();
@@ -174,16 +174,6 @@ namespace ArtStart
     }
     public class FileModel
     {
-        // примеры разных типов полей
-        [JsonProperty("stringValue")]
-        public string StringValue { get; set; }
-
-        [JsonProperty("numberValue")]
-        public int IntValue { get; set; }
-
-        [JsonProperty("listValue")]
-        public List<object> ListValue { get; set; }
-
         // список палитр
         [JsonProperty("palettes")]
         public List<Palette> Palettes { get; set; }
@@ -192,8 +182,8 @@ namespace ArtStart
 
     public class Palette
     {
-        public string Name;
-        public List<string> Colors;
+        public string Name { get; set; }  // Теперь это свойство, а не поле!
+        public List<string> Colors { get; set; }  // И это тоже свойство
     }
 
 }
