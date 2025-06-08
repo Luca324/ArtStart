@@ -13,6 +13,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 using System.Windows.Media.Imaging;
+
 using Newtonsoft.Json;
 
 namespace ArtStart
@@ -44,7 +45,7 @@ namespace ArtStart
             this.KeyDown += Paint_KeyDown;
             drawingCanvas.Children.Add(textCanvas);
 
-            InitializeComponent();
+
             Challenges.Click += Utils.Navigation_Click;
             ColorMix.Click += Utils.Navigation_Click;
 
@@ -53,11 +54,11 @@ namespace ArtStart
 
         private void RenderPalettesFromJSON()
         {
-            // Чтение файла (замените на ваш путь)
+
             var json = File.ReadAllText(PALLETES_PATH);
             var data = JsonConvert.DeserializeObject<FileModel>(json);
 
-            // Проверка данных перед привязкой
+
             if (data?.Palettes != null)
             {
                 foreach (var palette in data.Palettes)
@@ -174,70 +175,98 @@ namespace ArtStart
             bitmap.CopyPixels(new Int32Rect((int)point.X, (int)point.Y, 1, 1), pixels, 4, 0);
             return Color.FromArgb(pixels[3], pixels[2], pixels[1], pixels[0]);
         }
-
+        private TextBox editableTextBox = null;
+        private bool isAddingText = false;
         private void AddTextButton_Click(object sender, RoutedEventArgs e)
         {
-            string fontFamilyName = ((ComboBoxItem)fontsComboBox.SelectedItem)?.Content?.ToString() ?? "Arial";
-            movingTextBlock = new TextBlock
+            isAddingText = true;
+            Cursor = Cursors.IBeam;
+            drawingCanvas.Cursor = Cursors.IBeam;
+
+            // Подписываемся на клик по Canvas
+            drawingCanvas.MouseDown -= DrawingCanvas_TextStart_MouseDown;
+            drawingCanvas.MouseDown += DrawingCanvas_TextStart_MouseDown;
+        }
+        private void DrawingCanvas_TextStart_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!isAddingText) return;
+
+            Point clickPoint = e.GetPosition(drawingCanvas);
+
+            // Создаем TextBox
+            editableTextBox = new TextBox
             {
-                Text = "New Text",
-                FontFamily = new FontFamily(fontFamilyName),
-                FontSize = 20,
+                Text = "",
+                FontFamily = new FontFamily(((ComboBoxItem)fontsComboBox.SelectedItem)?.Content?.ToString() ?? "Arial"),
+                FontSize = (int)thicknessSlider.Value,
                 Foreground = new SolidColorBrush(selectedColor),
-                IsManipulationEnabled = true,
-                Background = Brushes.Transparent,
+                Background = Brushes.White,
+                BorderBrush = Brushes.LightGray,
+                BorderThickness = new Thickness(1),
+                Width = 200,
+                Height = 30,
                 HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top
+                VerticalAlignment = VerticalAlignment.Top,
+                AcceptsReturn = false
             };
 
-            TranslateTransform transform = new TranslateTransform(100, 100);
-            movingTextBlock.RenderTransform = transform;
-            Canvas.SetLeft(movingTextBlock, 100);
-            Canvas.SetTop(movingTextBlock, 100);
+            TranslateTransform transform = new TranslateTransform(clickPoint.X, clickPoint.Y);
+            editableTextBox.RenderTransform = transform;
 
-            textCanvas.Children.Add(movingTextBlock);
+            textCanvas.Children.Add(editableTextBox);
+            editableTextBox.Focus();
 
-            movingTextBlock.MouseLeftButtonDown += (s, args) =>
+            // Подписываемся на Enter и Esc
+            editableTextBox.KeyDown -= EditableTextBox_KeyDown; // Защита от дублирования
+            editableTextBox.KeyDown += EditableTextBox_KeyDown;
+
+            isAddingText = false;
+            Cursor = Cursors.Arrow;
+            drawingCanvas.Cursor = Cursors.Arrow;
+        }
+        private void EditableTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
             {
-                textCanvas.CaptureMouse();
-                startPoint = args.GetPosition(textCanvas);
+                SaveEditableText();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Escape)
+            {
+                textCanvas.Children.Remove(editableTextBox);
+                editableTextBox = null;
+                e.Handled = true;
+            }
+        }
+        private void SaveEditableText()
+        {
+            if (editableTextBox == null) return;
+
+            string text = editableTextBox.Text.Trim();
+            if (string.IsNullOrEmpty(text))
+            {
+                textCanvas.Children.Remove(editableTextBox);
+                editableTextBox = null;
+                return;
+            }
+
+            var staticText = new TextBlock
+            {
+                Text = text,
+                FontFamily = editableTextBox.FontFamily,
+                FontSize = editableTextBox.FontSize,
+                Foreground = editableTextBox.Foreground
             };
 
-            movingTextBlock.MouseMove += (s, args) =>
-            {
-                if (args.LeftButton == MouseButtonState.Pressed && movingTextBlock != null)
-                {
-                    Point currentPoint = args.GetPosition(textCanvas);
-                    double offsetX = currentPoint.X - startPoint.X;
-                    double offsetY = currentPoint.Y - startPoint.Y;
-                    var t = (TranslateTransform)movingTextBlock.RenderTransform;
-                    t.X += offsetX;
-                    t.Y += offsetY;
-                    startPoint = currentPoint;
-                }
-            };
+            double left = ((TranslateTransform)editableTextBox.RenderTransform).X;
+            double top = ((TranslateTransform)editableTextBox.RenderTransform).Y;
 
-            movingTextBlock.KeyDown += (s, args) =>
-            {
-                if (args.Key == Key.Enter)
-                {
-                    // Переводим в статичный текст
-                    var staticText = new TextBlock
-                    {
-                        Text = movingTextBlock.Text,
-                        FontFamily = movingTextBlock.FontFamily,
-                        FontSize = movingTextBlock.FontSize,
-                        Foreground = movingTextBlock.Foreground,
-                        IsHitTestVisible = false
-                    };
-                    Canvas.SetLeft(staticText, Canvas.GetLeft(movingTextBlock));
-                    Canvas.SetTop(staticText, Canvas.GetTop(movingTextBlock));
-                    drawingCanvas.Children.Add(staticText);
-                    textCanvas.Children.Remove(movingTextBlock);
-                    movingTextBlock = null;
-                    textCanvas.ReleaseMouseCapture();
-                }
-            };
+            Canvas.SetLeft(staticText, left);
+            Canvas.SetTop(staticText, top);
+
+            drawingCanvas.Children.Add(staticText);
+            textCanvas.Children.Remove(editableTextBox);
+            editableTextBox = null;
         }
 
         private void OpenButton_Click(object sender, RoutedEventArgs e)
@@ -260,48 +289,56 @@ namespace ArtStart
             }
         }
 
-        private async void SaveButton_Click(object sender, RoutedEventArgs e)
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Microsoft.Win32.SaveFileDialog
+            try
             {
-                Filter = "PNG Image|*.png",
-                Title = "Сохранить как PNG"
-            };
-
-            if (dialog.ShowDialog() == true)
-            {
-                // Получаем размеры холста
-                int width = (int)drawingCanvas.ActualWidth;
-                int height = (int)drawingCanvas.ActualHeight;
-
-                // Асинхронное сохранение файла
-                await Task.Run(() =>
+                // Диалог сохранения файла
+                var dialog = new Microsoft.Win32.SaveFileDialog
                 {
-                    // Рендерим Canvas в RenderTargetBitmap
-                    var renderBitmap = new RenderTargetBitmap(
-                        width, height,
-                        96d, 96d,
-                        PixelFormats.Pbgra32
-                    );
+                    Filter = "JPEG Image|*.jpg",
+                    Title = "Сохранить как JPG"
+                };
 
-                    // Так как drawingCanvas — это UI-элемент, обращаемся к нему через Dispatcher
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        drawingCanvas.Measure(new Size(width, height));
-                        drawingCanvas.Arrange(new Rect(0, 0, width, height));
-                        renderBitmap.Render(drawingCanvas);
-                    });
+                if (dialog.ShowDialog() != true)
+                    return;
 
-                    // Кодируем в PNG
-                    var encoder = new PngBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create(renderBitmap));
+                // Получаем размеры Canvas
+                int width = (int)Math.Ceiling(drawingCanvas.ActualWidth);
+                int height = (int)Math.Ceiling(drawingCanvas.ActualHeight);
 
-                    // Сохраняем файл
-                    using (var fileStream = new FileStream(dialog.FileName, FileMode.Create))
-                    {
-                        encoder.Save(fileStream);
-                    }
-                });
+                if (width <= 0 || height <= 0)
+                {
+                    MessageBox.Show("Невозможно сохранить изображение: холст имеет нулевой размер.");
+                    return;
+                }
+
+                // Рендерим Canvas в RenderTargetBitmap
+                var renderBitmap = new RenderTargetBitmap(
+                    width, height,
+                    96d, 96d,
+                    PixelFormats.Pbgra32
+                );
+
+                drawingCanvas.Measure(new Size(width, height));
+                drawingCanvas.Arrange(new Rect(0, 0, width, height));
+                renderBitmap.Render(drawingCanvas);
+
+                // Кодируем в JPG
+                var encoder = new JpegBitmapEncoder { QualityLevel = 90 }; // качество 90%
+                encoder.Frames.Add(BitmapFrame.Create(renderBitmap));
+
+                // Сохраняем файл
+                using (var fileStream = new FileStream(dialog.FileName, FileMode.Create))
+                {
+                    encoder.Save(fileStream);
+                }
+
+                MessageBox.Show("Изображение успешно сохранено.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при сохранении: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -323,11 +360,12 @@ namespace ArtStart
 
         private void FontsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Можно использовать для обновления текущего шрифта при добавлении текста
+           
         }
 
         private void Paint_KeyDown(object sender, KeyEventArgs e)
         {
+            // Отмена последнего действия
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Z)
             {
                 if (undoStack.Count > 0)
@@ -340,17 +378,18 @@ namespace ArtStart
                 }
             }
 
-            if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
+            
+            if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.None)
             {
                 foreach (var child in drawingCanvas.Children)
                 {
                     if (child is Shape shape)
                     {
-                        shape.MouseLeftButtonDown += (s, args) =>
+                        if (!shape.IsMouseCaptured)
                         {
-                            if (!selectedElements.Contains(shape))
-                                selectedElements.Add(shape);
-                        };
+                            shape.MouseLeftButtonDown -= Shape_MouseLeftButtonDown_Select; // Чтобы не накапливались события
+                            shape.MouseLeftButtonDown += Shape_MouseLeftButtonDown_Select;
+                        }
                     }
                 }
             }
@@ -360,8 +399,10 @@ namespace ArtStart
                 Clipboard.Clear();
                 foreach (var el in selectedElements)
                 {
-                    if (el is Shape shape)
+                    if (el is Shape shape && shape.Parent != null)
+                    {
                         Clipboard.SetData($"Shape_{shape.GetType().Name}", shape.Clone());
+                    }
                 }
             }
 
@@ -374,13 +415,25 @@ namespace ArtStart
                         if (Clipboard.GetData(format) is Shape shape)
                         {
                             var cloned = shape.Clone() as Shape;
-                            Canvas.SetLeft(cloned, Canvas.GetLeft(cloned) + 10);
-                            Canvas.SetTop(cloned, Canvas.GetTop(cloned) + 10);
-                            drawingCanvas.Children.Add(cloned);
+                            if (cloned != null)
+                            {
+                                Canvas.SetLeft(cloned, Canvas.GetLeft(cloned) + 10);
+                                Canvas.SetTop(cloned, Canvas.GetTop(cloned) + 10);
+                                drawingCanvas.Children.Add(cloned);
+                            }
                         }
                     }
                 }
             }
         }
+
+        private void Shape_MouseLeftButtonDown_Select(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Shape shape && !selectedElements.Contains(shape))
+            {
+                selectedElements.Add(shape);
+            }
+        }
     }
+    
 }
