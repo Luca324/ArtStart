@@ -16,6 +16,7 @@
         <local:StringToColorConverter x:Key="ColorConverter"/>
 
     </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -37,16 +38,18 @@
 
                 <!-- File Buttons -->
                 <StackPanel Margin="5" Width="80">
-                    <TextBlock Text="File" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    <Button Content="Open" Click="OpenButton_Click" Background="#AD48B7" Foreground="White" Margin="0,5,0,0"/>
+                    <TextBlock Text="Файл" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <Button Content="Открыть" Click="OpenButton_Click" Background="#AD48B7" Foreground="White" Margin="0,5,0,0"/>
                     <Button Content="Save" Click="SaveButton_Click" Background="#AD48B7" Foreground="White" Margin="0,5,0,0"/>
                 </StackPanel>
 
                 <!-- Tools -->
                 <StackPanel Margin="10,0" Width="120">
-                    <TextBlock Text="Tool" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    <ComboBox x:Name="toolsComboBox" Background="#AD48B7" Foreground="White"
-                              SelectionChanged="ToolsComboBox_SelectionChanged">
+                    <TextBlock Text="Инструменты" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <ComboBox x:Name="toolsComboBox"
+          Background="White"
+          Foreground="Black"
+          SelectionChanged="ToolsComboBox_SelectionChanged">
                         <ComboBoxItem Tag="Pen">Pen</ComboBoxItem>
                         <ComboBoxItem Tag="Line">Line</ComboBoxItem>
                         <ComboBoxItem Tag="Rectangle">Rectangle</ComboBoxItem>
@@ -97,7 +100,7 @@
                 <!-- Thickness Slider -->
                 <StackPanel Margin="10,0" Width="120">
                     <TextBlock Text="Thickness" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    <Slider x:Name="thicknessSlider" Minimum="1" Maximum="20" Value="5" Margin="0,5,0,0"
+                    <Slider x:Name="thicknessSlider" Minimum="1" Maximum="50" Value="5" Margin="0,5,0,0"
                             ValueChanged="ThicknessSlider_ValueChanged"/>
                     <TextBlock x:Name="thicknessValueText" Text="5" HorizontalAlignment="Center"/>
                 </StackPanel>
@@ -105,8 +108,11 @@
                 <!-- Text Options -->
                 <StackPanel Margin="10,0" Width="150">
                     <TextBlock Text="Text" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    <ComboBox x:Name="fontsComboBox" Background="#AD48B7" Foreground="White" Margin="0,5,0,0"
-                              SelectionChanged="FontsComboBox_SelectionChanged">
+                    <ComboBox x:Name="fontsComboBox"
+          Background="White"
+          Foreground="Black"
+          Margin="0,5,0,0"
+          SelectionChanged="FontsComboBox_SelectionChanged">
                         <ComboBoxItem>Arial</ComboBoxItem>
                         <ComboBoxItem>Times New Roman</ComboBoxItem>
                         <ComboBoxItem>Courier New</ComboBoxItem>
