@@ -83,7 +83,7 @@ namespace ArtStart
                             if (rbIndex == question.CorrectIndex)
                                 rb.Background = Brushes.LightGreen;
                             else if (rb.IsChecked == true)
-                                rb.Background = Brushes.IndianRed;
+                                rb.Background = Brushes.Red;
                         }
 
                         if (questions.All(q => q.SelectedIndex != null))
