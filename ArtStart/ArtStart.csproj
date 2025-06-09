@@ -60,10 +60,21 @@
     <Compile Include="RegWindow.xaml.cs">
       <DependentUpon>RegWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserDataModel.cs" />
+    <Compile Include="Challenges.xaml.cs">
+      <DependentUpon>Challenges.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Challenges2.xaml.cs">
+      <DependentUpon>Challenges2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Challenges3.xaml.cs">
+      <DependentUpon>Challenges3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Question.cs" />
+    <Compile Include="FillTool.cs" />
     <Compile Include="ShapeExtensions.cs" />
     <Compile Include="StarTool.cs" />
     <Compile Include="StringToСolorConverter.cs" />
-    <Compile Include="UserDataModel.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="MainApp.xaml.cs">
       <DependentUpon>MainApp.xaml</DependentUpon>
@@ -72,6 +83,14 @@
       <DependentUpon>AuthWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Challenges.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Challenges2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Challenges3.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -90,9 +109,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Challenges.xaml.cs">
-      <DependentUpon>Challenges.xaml</DependentUpon>
     </Compile>
     <Compile Include="ColorMix.xaml.cs">
       <DependentUpon>ColorMix.xaml</DependentUpon>
@@ -152,6 +168,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ChallengeFolder\" />
     <PackageReference Include="Extended.Wpf.Toolkit">
       <Version>4.7.25104.5739</Version>
     </PackageReference>

@@ -1,35 +1,21 @@
-﻿<Window x:Class="ArtStart.Challenges"
+﻿<Window x:Class="ArtStart.Challenges3"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ArtStart"
-        mc:Ignorable="d"
-        Title="Уровень 1" Height="600" Width="800">
+        Title="Challenges3" Height="600" Width="800">
     <DockPanel>
-        <!-- Панель с результатом и кнопками -->
         <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" HorizontalAlignment="Center" Margin="10">
             <TextBlock x:Name="ResultTextBlock"
                        FontSize="20"
                        FontWeight="Bold"
                        HorizontalAlignment="Center"
                        Margin="0,10"/>
-
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5">
-                <Button x:Name="NextLevelButton"
-                        Content="Следующий уровень"
-                        Click="NextLevelButton_Click"
-                        Visibility="Collapsed"
-                        Margin="5"
-                        Padding="10,5"/>
-
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="RetryButton"
                         Content="Пройти заново"
                         Click="RetryButton_Click"
                         Visibility="Collapsed"
                         Margin="5"
                         Padding="10,5"/>
-
                 <Button Content="На главную"
                         Click="MainMenuButton_Click"
                         Margin="5"
@@ -37,7 +23,6 @@
             </StackPanel>
         </StackPanel>
 
-        <!-- Список вопросов -->
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="QuestionsPanel" Margin="10"/>
         </ScrollViewer>
