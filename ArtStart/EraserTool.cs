@@ -12,7 +12,7 @@ namespace ArtStart
         {
             currentEraser = new Polyline
             {
-                Stroke = new SolidColorBrush(Colors.WhiteSmoke),
+                Stroke = new SolidColorBrush(Colors.White),
                 StrokeThickness = thickness * 2,
                 StrokeLineJoin = PenLineJoin.Round,
                 StrokeStartLineCap = PenLineCap.Round,
