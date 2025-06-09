@@ -6,12 +6,12 @@ using System.Windows.Media;
 
 namespace ArtStart
 {
-    public partial class Challenges : Window
+    public partial class Challenges3 : Window
     {
         private List<Question> questions;
         private int correctAnswers = 0;
 
-        public Challenges()
+        public Challenges3()
         {
             InitializeComponent();
             LoadQuestions();
@@ -22,29 +22,28 @@ namespace ArtStart
         {
             questions = new List<Question>
             {
-                new Question { Text = "Какой цвет считается основным?", Options = new List<string>{ "Зеленый", "Оранжевый", "Синий", "Фиолетовый" }, CorrectIndex = 2 },
-                new Question { Text = "Как называются цвета, противоположные на цветовом круге?", Options = new List<string>{ "Аналогичные", "Холодные", "Теплые", "Комплиментарные" }, CorrectIndex = 3 },
-                new Question { Text = "К каким цветам относится красный?", Options = new List<string>{ "Нейтральным", "Холодным", "Теплым", "Постельным" }, CorrectIndex = 2 },
-                new Question { Text = "Как называется градация одного цвета от светлого к тёмному?", Options = new List<string>{ "Контраст", "Оттенок", "Тон", "Градиент" }, CorrectIndex = 3 },
-                new Question { Text = "Что такое монохромная палитра?", Options = new List<string>{ "Цвета, стоящие рядом на цветовом круге", "Палитра из одного цвета с его оттенками", "Контрастные цвета", "Палитра из тёплых цветов" }, CorrectIndex = 1 },
-                new Question { Text = "Что означает термин «насыщенность» цвета?", Options = new List<string>{ "Яркость и чистота цвета", "Теплота цвета", "Темнота цвета", "Прозрачность цвета" }, CorrectIndex = 0 },
-                new Question { Text = "Какой цвет получается при смешивании всех трёх основных цветов?", Options = new List<string>{ "Белый", "Серый", "Чёрный", "Зеленый" }, CorrectIndex = 2 },
-                new Question { Text = "Какие из этих цветов являются дополнительными?", Options = new List<string>{ "Красный и зелёный", "Жёлтый и оранжевый", "Синий и голубой", "Фиолетовый и розовый" }, CorrectIndex = 0 },
+                new Question { Text = "Что означает термин 'фактура' в живописи?", Options = new List<string>{ "Цветовое решение", "Плотность краски", "Поверхностные свойства материала", "Техника рисования" }, CorrectIndex = 2 },
+                new Question { Text = "Какой из этих стилей относится к модернизму?", Options = new List<string>{ "Барокко", "Импрессионизм", "Рококо", "Готика" }, CorrectIndex = 1 },
+                new Question { Text = "Что такое 'импасто'?", Options = new List<string>{ "Тонкий слой краски", "Пастельный цвет", "Толстый рельефный мазок", "Промежуточный цвет" }, CorrectIndex = 2 },
+                new Question { Text = "Какой материал чаще всего используется в скульптуре?", Options = new List<string>{ "Холст", "Мрамор", "Бумага", "Акварель" }, CorrectIndex = 1 },
+                new Question { Text = "Что такое 'палитра'?", Options = new List<string>{ "Смешение линий", "Набор кистей", "Доска для смешивания красок", "Цветовое пятно" }, CorrectIndex = 2 },
+                new Question { Text = "Что такое 'светотень'?", Options = new List<string>{ "Тень от объекта", "Сочетание света и тени для создания объема", "Светлая часть рисунка", "Контурная линия" }, CorrectIndex = 1 },
+                new Question { Text = "Какой стиль характеризуется строгой симметрией и идеальными пропорциями?", Options = new List<string>{ "Ренессанс", "Кубизм", "Сюрреализм", "Экспрессионизм" }, CorrectIndex = 0 },
+                new Question { Text = "Кто является представителем кубизма?", Options = new List<string>{ "Моне", "Пикассо", "Ван Гог", "Рембрандт" }, CorrectIndex = 1 },
             };
         }
 
         private void GenerateUI()
         {
-            QuestionsPanel.Children.Clear(); // очищаем перед созданием
+            QuestionsPanel.Children.Clear();
             correctAnswers = 0;
             ResultTextBlock.Text = "";
-            NextLevelButton.Visibility = Visibility.Collapsed;
             RetryButton.Visibility = Visibility.Collapsed;
 
             for (int i = 0; i < questions.Count; i++)
             {
                 var question = questions[i];
-                question.SelectedIndex = null; // сбрасываем выбор
+                question.SelectedIndex = null;
 
                 var groupBox = new GroupBox
                 {
@@ -75,7 +74,8 @@ namespace ArtStart
                         question.SelectedIndex = optionIndex;
                         bool isCorrect = optionIndex == question.CorrectIndex;
 
-                        if (isCorrect) correctAnswers++;
+                        if (isCorrect)
+                            correctAnswers++;
 
                         foreach (RadioButton rb in radioGroup.Children)
                         {
@@ -88,14 +88,13 @@ namespace ArtStart
 
                         if (questions.All(q => q.SelectedIndex != null))
                         {
-                            ResultTextBlock.Text = $"Результат: {correctAnswers}/{questions.Count}";
-
                             if (correctAnswers == questions.Count)
                             {
-                                NextLevelButton.Visibility = Visibility.Visible;
+                                ResultTextBlock.Text = "Тесты успешно пройдены!";
                             }
                             else
                             {
+                                ResultTextBlock.Text = $"Результат: {correctAnswers}/{questions.Count}";
                                 RetryButton.Visibility = Visibility.Visible;
                             }
                         }
@@ -112,18 +111,13 @@ namespace ArtStart
 
         private void RetryButton_Click(object sender, RoutedEventArgs e)
         {
-            GenerateUI();
+            GenerateUI(); // сбросить тест
         }
 
         private void MainMenuButton_Click(object sender, RoutedEventArgs e)
         {
-            new MainWindow().Show();
-            this.Close();
-        }
-
-        private void NextLevelButton_Click(object sender, RoutedEventArgs e)
-        {
-            new Challenges2().Show();
+            var main = new MainWindow(); // Замените на ваше главное окно
+            main.Show();
             this.Close();
         }
     }

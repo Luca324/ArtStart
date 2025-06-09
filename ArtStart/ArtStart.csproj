@@ -58,9 +58,23 @@
     <Compile Include="Challenges.xaml.cs">
       <DependentUpon>Challenges.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Challenges2.xaml.cs">
+      <DependentUpon>Challenges2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Challenges3.xaml.cs">
+      <DependentUpon>Challenges3.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Question.cs" />
     <Compile Include="Utils.cs" />
     <Page Include="Challenges.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Challenges2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Challenges3.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

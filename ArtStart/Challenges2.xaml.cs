@@ -6,12 +6,12 @@ using System.Windows.Media;
 
 namespace ArtStart
 {
-    public partial class Challenges : Window
+    public partial class Challenges2 : Window
     {
         private List<Question> questions;
         private int correctAnswers = 0;
 
-        public Challenges()
+        public Challenges2()
         {
             InitializeComponent();
             LoadQuestions();
@@ -22,29 +22,29 @@ namespace ArtStart
         {
             questions = new List<Question>
             {
-                new Question { Text = "Какой цвет считается основным?", Options = new List<string>{ "Зеленый", "Оранжевый", "Синий", "Фиолетовый" }, CorrectIndex = 2 },
-                new Question { Text = "Как называются цвета, противоположные на цветовом круге?", Options = new List<string>{ "Аналогичные", "Холодные", "Теплые", "Комплиментарные" }, CorrectIndex = 3 },
-                new Question { Text = "К каким цветам относится красный?", Options = new List<string>{ "Нейтральным", "Холодным", "Теплым", "Постельным" }, CorrectIndex = 2 },
-                new Question { Text = "Как называется градация одного цвета от светлого к тёмному?", Options = new List<string>{ "Контраст", "Оттенок", "Тон", "Градиент" }, CorrectIndex = 3 },
-                new Question { Text = "Что такое монохромная палитра?", Options = new List<string>{ "Цвета, стоящие рядом на цветовом круге", "Палитра из одного цвета с его оттенками", "Контрастные цвета", "Палитра из тёплых цветов" }, CorrectIndex = 1 },
-                new Question { Text = "Что означает термин «насыщенность» цвета?", Options = new List<string>{ "Яркость и чистота цвета", "Теплота цвета", "Темнота цвета", "Прозрачность цвета" }, CorrectIndex = 0 },
-                new Question { Text = "Какой цвет получается при смешивании всех трёх основных цветов?", Options = new List<string>{ "Белый", "Серый", "Чёрный", "Зеленый" }, CorrectIndex = 2 },
-                new Question { Text = "Какие из этих цветов являются дополнительными?", Options = new List<string>{ "Красный и зелёный", "Жёлтый и оранжевый", "Синий и голубой", "Фиолетовый и розовый" }, CorrectIndex = 0 },
+                new Question { Text = "Что такое перспектива в искусстве?", Options = new List<string>{ "Смешение цветов", "Создание объема", "Изображение глубины на плоскости", "Контрастная композиция" }, CorrectIndex = 2 },
+                new Question { Text = "Какая техника используется в акварели для создания плавных переходов?", Options = new List<string>{ "Лессировка", "Сухая кисть", "Размывка", "Импасто" }, CorrectIndex = 2 },
+                new Question { Text = "Что обозначает термин 'композиция' в живописи?", Options = new List<string>{ "Цветовая гамма", "Расположение элементов", "Техника нанесения краски", "Тип холста" }, CorrectIndex = 1 },
+                new Question { Text = "Что означает термин 'мазок'?", Options = new List<string>{ "Слой краски", "Форма кисти", "Отдельное движение кисти", "Цветовой контраст" }, CorrectIndex = 2 },
+                new Question { Text = "Что такое 'грунт' в живописи?", Options = new List<string>{ "Основной цвет картины", "Поверхность холста", "Подготовительный слой", "Основа для карандаша" }, CorrectIndex = 2 },
+                new Question { Text = "Что обозначает термин 'контур'?", Options = new List<string>{ "Заполнение цвета", "Тень", "Линия, ограничивающая форму", "Имитация света" }, CorrectIndex = 2 },
+                new Question { Text = "Какой материал чаще всего используется в графике?", Options = new List<string>{ "Масло", "Акварель", "Уголь", "Темпера" }, CorrectIndex = 2 },
+                new Question { Text = "Что такое 'натюрморт'?", Options = new List<string>{ "Пейзаж", "Портрет", "Изображение предметов", "Жанровая сцена" }, CorrectIndex = 2 },
             };
         }
 
         private void GenerateUI()
         {
-            QuestionsPanel.Children.Clear(); // очищаем перед созданием
+            QuestionsPanel.Children.Clear();
             correctAnswers = 0;
             ResultTextBlock.Text = "";
-            NextLevelButton.Visibility = Visibility.Collapsed;
             RetryButton.Visibility = Visibility.Collapsed;
+            NextLevelButton.Visibility = Visibility.Collapsed;
 
             for (int i = 0; i < questions.Count; i++)
             {
                 var question = questions[i];
-                question.SelectedIndex = null; // сбрасываем выбор
+                question.SelectedIndex = null;
 
                 var groupBox = new GroupBox
                 {
@@ -75,7 +75,8 @@ namespace ArtStart
                         question.SelectedIndex = optionIndex;
                         bool isCorrect = optionIndex == question.CorrectIndex;
 
-                        if (isCorrect) correctAnswers++;
+                        if (isCorrect)
+                            correctAnswers++;
 
                         foreach (RadioButton rb in radioGroup.Children)
                         {
@@ -112,18 +113,20 @@ namespace ArtStart
 
         private void RetryButton_Click(object sender, RoutedEventArgs e)
         {
-            GenerateUI();
+            GenerateUI(); // сброс интерфейса
         }
 
         private void MainMenuButton_Click(object sender, RoutedEventArgs e)
         {
-            new MainWindow().Show();
+            var main = new MainWindow(); // замените на ваше главное окно
+            main.Show();
             this.Close();
         }
 
         private void NextLevelButton_Click(object sender, RoutedEventArgs e)
         {
-            new Challenges2().Show();
+            var level3 = new Challenges3(); // убедитесь, что окно Challenges3 создано
+            level3.Show();
             this.Close();
         }
     }
