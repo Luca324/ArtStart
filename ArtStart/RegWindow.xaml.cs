@@ -1,0 +1,108 @@
+﻿using System.IO;
+using System.Linq;
+using ArtStart.Models;
+using Newtonsoft.Json;
+using System.Text.RegularExpressions;
+using System.Windows;
+
+namespace ArtStart
+{
+    public partial class RegWindow : Window
+    {
+        private const string USER_DATA_PATH = @"../../registration_data.json";
+
+        public RegWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void Register_Click(object sender, RoutedEventArgs e)
+        {
+            string login = LoginBox.Text.Trim();
+            string password = PasswordBox.Password.Trim();
+            string confirmPassword = ConfirmPasswordBox.Password.Trim();
+            string email = EmailBox.Text.Trim();
+
+            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword) || string.IsNullOrEmpty(email))
+            {
+                ErrorText.Text = "Все поля обязательны к заполнению.";
+                return;
+            }
+
+            if (password != confirmPassword)
+            {
+                ErrorText.Text = "Пароли не совпадают.";
+                return;
+            }
+
+            if (!IsValidEmail(email))
+            {
+                ErrorText.Text = "Некорректный email.";
+                return;
+            }
+
+            var userData = LoadUsers();
+
+            if (userData.Users.Any(u => u.Login == login))
+            {
+                ErrorText.Text = "Пользователь с таким логином уже существует.";
+                return;
+            }
+
+            // Добавляем нового пользователя
+            userData.Users.Add(new User
+            {
+                Login = login,
+                Password = password,
+                IsAuthenticated = true
+            });
+
+            SaveUsers(userData);
+
+            MessageBox.Show("Регистрация успешна!");
+            OpenMainWindow();
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            var regex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+            return regex.IsMatch(email);
+        }
+
+        private void GoToLogin_Click(object sender, RoutedEventArgs e)
+        {
+            var authWindow = new AuthWindow();
+            authWindow.Show();
+            this.Close();
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private UserDataModel LoadUsers()
+        {
+            if (!File.Exists(USER_DATA_PATH))
+            {
+                File.WriteAllText(USER_DATA_PATH, JsonConvert.SerializeObject(new UserDataModel()));
+            }
+
+            string json = File.ReadAllText(USER_DATA_PATH);
+            return JsonConvert.DeserializeObject<UserDataModel>(json);
+        }
+
+        private void SaveUsers(UserDataModel data)
+        {
+            string json = JsonConvert.SerializeObject(data, Formatting.Indented);
+            File.WriteAllText(USER_DATA_PATH, json);
+        }
+
+        private void OpenMainWindow()
+        {
+            var mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
+        }
+    }
+}

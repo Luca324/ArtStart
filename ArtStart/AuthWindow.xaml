@@ -1,0 +1,22 @@
+﻿<Window x:Class="ArtStart.AuthWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Вход" Height="350" Width="400"
+        WindowStartupLocation="CenterScreen"
+        Background="#E6D5F1">
+    <Grid Margin="20">
+        <StackPanel Margin="0,10">
+            <TextBlock Text="Вход в аккаунт" FontSize="20" HorizontalAlignment="Center"/>
+
+            <TextBox x:Name="LoginBox" />
+            <PasswordBox x:Name="PasswordBox" PasswordChar="*" />
+
+            <Button Content="Войти" Click="Login_Click" Background="#AD48B7" Foreground="White"/>
+            <Button Content="Нет аккаунта? Зарегистрироваться" Click="GoToRegister_Click" Background="Transparent" BorderBrush="Black"/>
+
+            <TextBlock x:Name="ErrorText" Foreground="Red" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+
+            <Button Content="Выход" Click="Exit_Click" Background="LightGray" Margin="0,10,0,0"/>
+        </StackPanel>
+    </Grid>
+</Window>

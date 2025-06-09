@@ -99,7 +99,7 @@
 
                 <!-- Thickness Slider -->
                 <StackPanel Margin="10,0" Width="120">
-                    <TextBlock Text="Thickness" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Толщина" FontWeight="Bold" HorizontalAlignment="Center"/>
                     <Slider x:Name="thicknessSlider" Minimum="1" Maximum="50" Value="5" Margin="0,5,0,0"
                             ValueChanged="ThicknessSlider_ValueChanged"/>
                     <TextBlock x:Name="thicknessValueText" Text="5" HorizontalAlignment="Center"/>
@@ -107,7 +107,7 @@
 
                 <!-- Text Options -->
                 <StackPanel Margin="10,0" Width="150">
-                    <TextBlock Text="Text" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Текст" FontWeight="Bold" HorizontalAlignment="Center"/>
                     <ComboBox x:Name="fontsComboBox"
           Background="White"
           Foreground="Black"
@@ -119,12 +119,12 @@
                         <ComboBoxItem>Verdana</ComboBoxItem>
                         <ComboBoxItem>Comic Sans MS</ComboBoxItem>
                     </ComboBox>
-                    <Button Content="Add Text" Click="AddTextButton_Click" Background="#AD48B7" Foreground="White" Margin="0,5,0,0"/>
+                    <Button Content="Добавить текст" Click="AddTextButton_Click" Background="#AD48B7" Foreground="White" Margin="0,5,0,0"/>
                 </StackPanel>
 
                 <!-- Clear Button -->
                 <StackPanel Margin="10,0" Width="80">
-                    <TextBlock Text="Actions" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    
                     <Button Content="Clear" Click="ClearButton_Click" Background="#AD48B7" Foreground="White" Margin="0,5,0,0"/>
                 </StackPanel>
             </StackPanel>

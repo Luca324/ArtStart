@@ -1,0 +1,24 @@
+﻿<Window x:Class="ArtStart.RegWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Регистрация" Height="400" Width="400"
+        WindowStartupLocation="CenterScreen"
+        Background="#E6D5F1">
+    <Grid Margin="20">
+        <StackPanel Margin="0,10">
+            <TextBlock Text="Регистрация" FontSize="20" HorizontalAlignment="Center"/>
+
+            <TextBox x:Name="LoginBox" />
+            <PasswordBox x:Name="PasswordBox" PasswordChar="*" />
+            <PasswordBox x:Name="ConfirmPasswordBox" PasswordChar="*" />
+            <TextBox x:Name="EmailBox" />
+
+            <Button Content="Зарегистрироваться" Click="Register_Click" Background="#AD48B7" Foreground="White"/>
+            <Button Content="Уже есть аккаунт? Войти" Click="GoToLogin_Click" Background="Transparent" BorderBrush="Black"/>
+
+            <TextBlock x:Name="ErrorText" Foreground="Red" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+
+            <Button Content="Выход" Click="Exit_Click" Background="LightGray" Margin="0,10,0,0"/>
+        </StackPanel>
+    </Grid>
+</Window>
