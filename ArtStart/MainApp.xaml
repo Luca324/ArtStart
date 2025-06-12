@@ -1,13 +1,48 @@
-﻿<Window x:Class="ArtStart.Window1"
+﻿<Window x:Class="ArtStart.MainApp"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ArtStart"
-        mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800">
-    <Button Content="Выйти" Name="LogoutBtn" Width="100" Background="White" Foreground="Black" Margin="10,0" Click="LogoutBtn_Click"/>
-    <Grid>
-        
+        Title="Главное окно" Height="450" Width="400"
+        WindowStartupLocation="CenterScreen"
+        Background="#E6D5F1">
+    <!-- Установка фона -->
+
+    <Grid Margin="20">
+        <StackPanel Margin="0,10">
+
+            <!-- Заголовок -->
+            <TextBlock Text="Главное меню" 
+                       FontSize="20" 
+                       HorizontalAlignment="Center" 
+                       Margin="0,0,0,20"/>
+
+            <!-- Кнопка регистрации -->
+            <Button Content="Регистрация" 
+                    Name="RegisterBtn" 
+                    Click="RegisterBtn_Click" 
+                    Background="#AD48B7" 
+                    Foreground="White" 
+                    Width="150" 
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,10"/>
+
+            <!-- Кнопка авторизации -->
+            <Button Content="Авторизация" 
+                    Name="AuthBtn" 
+                    Click="AuthBtn_Click" 
+                    Background="#AD48B7" 
+                    Foreground="White" 
+                    Width="150" 
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,10"/>
+
+            <!-- Кнопка выхода -->
+            <Button Content="Выйти из приложения" 
+                    Name="ExitBtn" 
+                    Click="ExitBtn_Click" 
+                    Background="LightGray" 
+                    Width="150" 
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,10"/>
+        </StackPanel>
     </Grid>
 </Window>

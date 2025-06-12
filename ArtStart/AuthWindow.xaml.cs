@@ -44,7 +44,9 @@ namespace ArtStart
 
             // Успешный вход
             user.IsAuthenticated = true;
+            Session.CurrentUser = user;
             SaveUsers(userData);
+
 
             OpenMainWindow();
         }

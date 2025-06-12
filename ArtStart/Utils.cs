@@ -39,6 +39,7 @@ namespace ArtStart
                     case "ColorMix":
                         window = new ColorMix();
                         break;
+                   
                 }
                 window.Show();
 

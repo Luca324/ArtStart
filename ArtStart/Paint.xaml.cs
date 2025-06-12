@@ -45,9 +45,18 @@ namespace ArtStart
             this.KeyDown += Paint_KeyDown;
             drawingCanvas.Children.Add(textCanvas);
 
+            // Подписываем кнопки с закрытием текущего окна
+            Challenges.Click += (sender, e) =>
+            {
+                Utils.Navigation_Click(sender, e); // открытие целевого окна
+                this.Close(); // закрытие текущего окна Paint
+            };
 
-            Challenges.Click += Utils.Navigation_Click;
-            ColorMix.Click += Utils.Navigation_Click;
+            ColorMix.Click += (sender, e) =>
+            {
+                Utils.Navigation_Click(sender, e); // открытие целевого окна
+                this.Close(); // закрытие текущего окна Paint
+            };
 
             RenderPalettesFromJSON();
         }
@@ -148,13 +157,26 @@ namespace ArtStart
 
         private void DrawingCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (e.LeftButton != MouseButtonState.Pressed || currentShape == null && !(currentTool is SprayTool))
+                return;
+
+            Point currentPoint = e.GetPosition(drawingCanvas);
+
+            // Проверка: находится ли текущая точка внутри Canvas
+            if (currentPoint.X < 0 || currentPoint.Y < 0 ||
+                currentPoint.X > drawingCanvas.ActualWidth ||
+                currentPoint.Y > drawingCanvas.ActualHeight)
             {
-                Point currentPoint = e.GetPosition(drawingCanvas);
-                if (currentTool is SprayTool spray)
-                    spray.OnMouseMove(drawingCanvas, currentPoint);
-                else if (currentShape != null)
-                    currentTool.OnMouseMove(currentShape, startPoint, currentPoint);
+                return; // вышли за границы — не рисуем
+            }
+
+            if (currentTool is SprayTool spray)
+            {
+                spray.OnMouseMove(drawingCanvas, currentPoint);
+            }
+            else if (currentShape != null)
+            {
+                currentTool.OnMouseMove(currentShape, startPoint, currentPoint);
             }
         }
 

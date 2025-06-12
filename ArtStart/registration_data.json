@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "Login": "111",
+      "Password": "11111",
+      "IsAuthenticated": true
+    },
+    {
+      "Login": "ira",
+      "Password": "11111",
+      "IsAuthenticated": true
+    }
+  ]
+}

@@ -60,7 +60,6 @@
     <Compile Include="RegWindow.xaml.cs">
       <DependentUpon>RegWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserDataModel.cs" />
     <Compile Include="Challenges.xaml.cs">
       <DependentUpon>Challenges.xaml</DependentUpon>
     </Compile>
@@ -72,9 +71,11 @@
     </Compile>
     <Compile Include="Question.cs" />
     <Compile Include="FillTool.cs" />
+    <Compile Include="Session.cs" />
     <Compile Include="ShapeExtensions.cs" />
     <Compile Include="StarTool.cs" />
     <Compile Include="StringToСolorConverter.cs" />
+    <Compile Include="UserDataModels.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="MainApp.xaml.cs">
       <DependentUpon>MainApp.xaml</DependentUpon>
@@ -168,7 +169,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ChallengeFolder\" />
     <PackageReference Include="Extended.Wpf.Toolkit">
       <Version>4.7.25104.5739</Version>
     </PackageReference>
@@ -178,6 +178,10 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ChallengeFolder\" />
+    <Folder Include="PALETTES_DIR\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

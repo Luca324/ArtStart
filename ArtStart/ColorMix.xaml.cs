@@ -16,12 +16,23 @@ namespace ArtStart
         private Boolean currentColorExists = false;
 
         public ColorMix()
-        {
-            InitializeComponent();
-            Challenges.Click += Utils.Navigation_Click;
-            Paint.Click += Utils.Navigation_Click;
-            renderPalettesFromJSON();
-        }
+{
+    InitializeComponent();
+
+    Challenges.Click += (sender, e) =>
+    {
+        Utils.Navigation_Click(sender, e);
+        this.Close();
+    };
+
+    Paint.Click += (sender, e) =>
+    {
+        Utils.Navigation_Click(sender, e);
+        this.Close();
+    };
+
+    renderPalettesFromJSON();
+}
 
 
         private void MixBtn_Click(object sender, RoutedEventArgs e)

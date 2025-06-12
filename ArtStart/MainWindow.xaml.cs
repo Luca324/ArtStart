@@ -12,16 +12,17 @@ namespace ArtStart
         public MainWindow()
         {
             InitializeComponent();
+
             Challenges.Click += Utils.Navigation_Click;
             ColorMix.Click += Utils.Navigation_Click;
             Paint.Click += Utils.Navigation_Click;
+          
 
             Challenges.Click += CloseThis;
             ColorMix.Click += CloseThis;
             Paint.Click += CloseThis;
-
+            
         }
-
         private void CloseThis(object sender, RoutedEventArgs e)
         {
             this.Close();

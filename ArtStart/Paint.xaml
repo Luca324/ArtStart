@@ -29,6 +29,7 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <Button Content="Challenges" Name="Challenges" Width="100" Background="White" Foreground="Black" Margin="10,0"/>
                 <Button Content="ColorMix" Name="ColorMix" Width="100" Background="White" Foreground="Black" Margin="10,0"/>
+                
             </StackPanel>
         </Border>
 
@@ -133,10 +134,13 @@
         <!-- Drawing Area -->
         <Border Grid.Row="2" Background="#E6D5F1">
             <Canvas x:Name="drawingCanvas" Background="White" Width="800" Height="500"
-                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                    MouseDown="DrawingCanvas_MouseDown"
-                    MouseMove="DrawingCanvas_MouseMove"
-                    MouseUp="DrawingCanvas_MouseUp">
+        HorizontalAlignment="Center" VerticalAlignment="Center"
+        MouseDown="DrawingCanvas_MouseDown"
+        MouseMove="DrawingCanvas_MouseMove"
+        MouseUp="DrawingCanvas_MouseUp">
+                <Canvas.Clip>
+                    <RectangleGeometry Rect="0,0,800,500"/>
+                </Canvas.Clip>
             </Canvas>
         </Border>
     </Grid>

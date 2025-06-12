@@ -5,39 +5,47 @@ using Newtonsoft.Json;
 
 namespace ArtStart
 {
-    public partial class MainApp : Application
+    public partial class MainApp : Window
     {
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
+        private const string UserDataPath = "registration_data.json";
 
-            // Проверяем файл регистрации
-            if (File.Exists("registration_data.json"))
+        public MainApp()
+        {
+            InitializeComponent();
+        }
+
+        private void RegisterBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var regWindow = new RegWindow();
+            regWindow.Show();
+            this.Close();
+        }
+
+        private void AuthBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (File.Exists(UserDataPath))
             {
-                var json = File.ReadAllText("registration_data.json");
+                var json = File.ReadAllText(UserDataPath);
                 var data = JsonConvert.DeserializeObject<RegistrationData>(json);
 
                 if (data != null && data.IsAuthenticated)
                 {
-                    // Пользователь авторизован - открываем главное окно
                     var mainWindow = new MainWindow();
                     mainWindow.Show();
-                }
-                else
-                {
-                    // Пользователь не авторизован - открываем окно входа
-                    var authWindow = new AuthWindow();
-                    authWindow.Show();
+                    this.Close();
+                    return;
                 }
             }
-            else
-            {
-                // Файла нет - открываем окно регистрации
-                var regWindow = new RegWindow();
-                regWindow.Show();
-            }
+
+            var authWindow = new AuthWindow();
+            authWindow.Show();
+            this.Close();
         }
 
+        private void ExitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 
     public class RegistrationData
@@ -47,23 +55,4 @@ namespace ArtStart
         public string Email { get; set; }
         public bool IsAuthenticated { get; set; }
     }
-
-    private void LogoutBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (File.Exists("registration_data.json"))
-            {
-                var json = File.ReadAllText("registration_data.json");
-                var data = JsonConvert.DeserializeObject<RegistrationData>(json);
-
-                if (data != null)
-                {
-                    data.IsAuthenticated = false;
-                    File.WriteAllText("registration_data.json", JsonConvert.SerializeObject(data));
-                }
-            }
-
-            var authWindow = new AuthWindow();
-            authWindow.Show();
-            this.Close();
-        }
-    }
+}

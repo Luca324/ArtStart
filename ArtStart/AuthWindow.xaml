@@ -6,17 +6,28 @@
         Background="#E6D5F1">
     <Grid Margin="20">
         <StackPanel Margin="0,10">
-            <TextBlock Text="Вход в аккаунт" FontSize="20" HorizontalAlignment="Center"/>
+            <!-- Заголовок -->
+            <TextBlock Text="Вход в аккаунт" FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,10"/>
 
-            <TextBox x:Name="LoginBox" />
-            <PasswordBox x:Name="PasswordBox" PasswordChar="*" />
+            <!-- Логин -->
+            <TextBlock Text="Логин:"/>
+            <TextBox x:Name="LoginBox" Margin="0,0,0,10"/>
 
-            <Button Content="Войти" Click="Login_Click" Background="#AD48B7" Foreground="White"/>
-            <Button Content="Нет аккаунта? Зарегистрироваться" Click="GoToRegister_Click" Background="Transparent" BorderBrush="Black"/>
+            <!-- Пароль -->
+            <TextBlock Text="Пароль:"/>
+            <PasswordBox x:Name="PasswordBox" PasswordChar="*" Margin="0,0,0,10"/>
 
-            <TextBlock x:Name="ErrorText" Foreground="Red" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+            <!-- Кнопка входа -->
+            <Button Content="Войти" Click="Login_Click" Background="#AD48B7" Foreground="White" Margin="0,0,0,10"/>
 
-            <Button Content="Выход" Click="Exit_Click" Background="LightGray" Margin="0,10,0,0"/>
+            <!-- Кнопка регистрации -->
+            <Button Content="Нет аккаунта? Зарегистрироваться" Click="GoToRegister_Click" Background="Transparent" BorderBrush="Black" Margin="0,0,0,10"/>
+
+            <!-- Сообщение об ошибках -->
+            <TextBlock x:Name="ErrorText" Foreground="Red" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+            <!-- Кнопка выхода -->
+            <Button Content="Выход" Click="Exit_Click" Background="LightGray"/>
         </StackPanel>
     </Grid>
 </Window>
