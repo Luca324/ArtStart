@@ -8,11 +8,11 @@ namespace ArtStart
 {
     public partial class AuthWindow : Window
     {
-        private const string USER_DATA_PATH = @"../../registration_data.json";
 
         public AuthWindow()
         {
             InitializeComponent();
+
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
@@ -26,7 +26,7 @@ namespace ArtStart
                 return;
             }
 
-            var userData = LoadUsers();
+            var userData = UserDataModel.LoadUsers();
 
             var user = userData.Users.FirstOrDefault(u => u.Login == login);
 
@@ -43,9 +43,10 @@ namespace ArtStart
             }
 
             // Успешный вход
-            user.IsAuthenticated = true;
+            userData.IsAuthenticated = true;
+            userData.CurrentUser = user;
             Session.CurrentUser = user;
-            SaveUsers(userData);
+            UserDataModel.SaveUsers(userData);
 
 
             OpenMainWindow();
@@ -65,20 +66,15 @@ namespace ArtStart
 
         private UserDataModel LoadUsers()
         {
-            if (!File.Exists(USER_DATA_PATH))
+            if (!File.Exists(UserDataModel.USER_DATA_PATH))
             {
-                File.WriteAllText(USER_DATA_PATH, JsonConvert.SerializeObject(new UserDataModel()));
+                File.WriteAllText(UserDataModel.USER_DATA_PATH, JsonConvert.SerializeObject(new UserDataModel()));
             }
 
-            string json = File.ReadAllText(USER_DATA_PATH);
+            string json = File.ReadAllText(UserDataModel.USER_DATA_PATH);
             return JsonConvert.DeserializeObject<UserDataModel>(json);
         }
 
-        private void SaveUsers(UserDataModel data)
-        {
-            string json = JsonConvert.SerializeObject(data, Formatting.Indented);
-            File.WriteAllText(USER_DATA_PATH, json);
-        }
 
         private void OpenMainWindow()
         {

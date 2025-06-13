@@ -11,19 +11,20 @@ namespace ArtStart
 {
     public partial class ColorMix : Window
     {
-        private const string PALLETES_PATH = @"../../data.json";
+        private const string PALETTES_PATH = @"../../palettes.json";
         private System.Windows.Media.Color currentColor = new System.Windows.Media.Color();
         private Boolean currentColorExists = false;
 
         public ColorMix()
-{
-    InitializeComponent();
+        {
+            InitializeComponent();
 
-    Challenges.Click += Utils.Navigation_Click;
-    Paint.Click += Utils.Navigation_Click;
+            Challenges.Click += Utils.Navigation_Click;
+            Paint.Click += Utils.Navigation_Click;
+            LogOut.Click += Utils.LogOut;
 
-    renderPalettesFromJSON();
-}
+            renderPalettesFromJSON();
+        }
 
 
         private void MixBtn_Click(object sender, RoutedEventArgs e)
@@ -52,10 +53,12 @@ namespace ArtStart
             if (string.IsNullOrEmpty(NewPaletteName.Text)) return;
             Console.WriteLine(NewPaletteName.Text);
 
-            const string filepath = @"../../data.json";
+            const string PALETTES_PATH = @"../../palettes.json";
 
             // Чтение файла
-            var json = File.ReadAllText(PALLETES_PATH);
+            string json = File.Exists(PALETTES_PATH)
+    ? File.ReadAllText(PALETTES_PATH)
+    : "{palettes:[]}";
 
             // Десериализация строки в объект
             var data = JsonConvert.DeserializeObject<FileModel>(json);
@@ -72,7 +75,7 @@ namespace ArtStart
             json = JsonConvert.SerializeObject(data);
 
             // Сохранение строки в файл
-            File.WriteAllText(PALLETES_PATH, json);
+            File.WriteAllText(PALETTES_PATH, json);
 
             // обновляем список палитр
             renderPalettesFromJSON();
@@ -86,7 +89,9 @@ namespace ArtStart
 
 
             // Чтение файла
-            var json = File.ReadAllText(PALLETES_PATH);
+            string json = File.Exists(PALETTES_PATH)
+    ? File.ReadAllText(PALETTES_PATH)
+    : "{palettes:[]}";
 
             // Десериализация строки в объект
             var data = JsonConvert.DeserializeObject<FileModel>(json);
@@ -131,7 +136,9 @@ namespace ArtStart
 
             Console.WriteLine($"palette, currentcolor, isthere color: {palette} {currentColor.ToString()}, {string.IsNullOrEmpty(currentColor.ToString())}");
             // Чтение файла
-            var json = File.ReadAllText(PALLETES_PATH);
+            string json = File.Exists(PALETTES_PATH)
+    ? File.ReadAllText(PALETTES_PATH)
+    : "{palettes:[]}";
 
             // Десериализация строки в объект
             var data = JsonConvert.DeserializeObject<FileModel>(json);
@@ -146,7 +153,7 @@ namespace ArtStart
             json = JsonConvert.SerializeObject(data);
 
             // Сохранение строки в файл
-            File.WriteAllText(PALLETES_PATH, json);
+            File.WriteAllText(PALETTES_PATH, json);
 
             // обновляем список палитр
             renderPalettesFromJSON();
@@ -174,6 +181,15 @@ namespace ArtStart
         }
 
     }
+
+    public class UserModel
+    {
+        // список палитр
+        [JsonProperty("palettes")]
+        public List<Palette> Palettes { get; set; }
+
+    }
+
     public class FileModel
     {
         // список палитр

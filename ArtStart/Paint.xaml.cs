@@ -20,7 +20,7 @@ namespace ArtStart
 {
     public partial class Paint : Window
     {
-        private const string PALLETES_PATH = @"../../data.json";
+        private const string PALETTES_PATH = @"../../palettes.json";
 
         private Tool currentTool;
         private Shape currentShape;
@@ -47,6 +47,7 @@ namespace ArtStart
 
             Challenges.Click += Utils.Navigation_Click;
             ColorMix.Click += Utils.Navigation_Click;
+            LogOut.Click += Utils.LogOut;
 
             RenderPalettesFromJSON();
         }
@@ -54,7 +55,9 @@ namespace ArtStart
         private void RenderPalettesFromJSON()
         {
 
-            var json = File.ReadAllText(PALLETES_PATH);
+            string json = File.Exists(PALETTES_PATH) 
+    ? File.ReadAllText(PALETTES_PATH)
+    : "{palettes:[]}";
             var data = JsonConvert.DeserializeObject<FileModel>(json);
 
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using ArtStart.Models;
 using Newtonsoft.Json;
 
 namespace ArtStart
@@ -12,6 +13,19 @@ namespace ArtStart
         public MainApp()
         {
             InitializeComponent();
+
+            var userData = UserDataModel.LoadUsers();
+
+
+            if (userData.IsAuthenticated == true)
+            {
+                Session.CurrentUser = userData.CurrentUser;
+                Console.WriteLine("is already authenticated");
+                var mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
+
+            }
         }
 
         private void RegisterBtn_Click(object sender, RoutedEventArgs e)
@@ -46,7 +60,19 @@ namespace ArtStart
         {
             Application.Current.Shutdown();
         }
+
+     private UserDataModel LoadUsers()
+        {
+            if (!File.Exists(UserDataModel.USER_DATA_PATH))
+            {
+                File.WriteAllText(UserDataModel.USER_DATA_PATH, JsonConvert.SerializeObject(new UserDataModel()));
+            }
+
+            string json = File.ReadAllText(UserDataModel.USER_DATA_PATH);
+            return JsonConvert.DeserializeObject<UserDataModel>(json);
+        }
     }
+
 
     public class RegistrationData
     {

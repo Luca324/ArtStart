@@ -29,7 +29,8 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <Button Content="Challenges" Name="Challenges" Width="100" Background="White" Foreground="Black" Margin="10,0"/>
                 <Button Content="ColorMix" Name="ColorMix" Width="100" Background="White" Foreground="Black" Margin="10,0"/>
-                
+                <Button Content="Log out"  Name="LogOut" Width="100"/>
+
             </StackPanel>
         </Border>
 

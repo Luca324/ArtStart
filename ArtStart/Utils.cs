@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArtStart.Models;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,12 +13,44 @@ namespace ArtStart
 
             Console.WriteLine($"targetButtonName: {targetButtonName}");
 
+            OpenWindow(targetButtonName);
+        }
+
+        public static void LogOut(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("logging out");
+
+            var userData = UserDataModel.LoadUsers();
+
+            userData.IsAuthenticated = false;
+            userData.CurrentUser = null;
+            Session.CurrentUser = null;
+            UserDataModel.SaveUsers(userData);
+
+            OpenWindow("MainApp");
+
+            // закрываем все окна 
+            foreach (Window window in App.Current.Windows)
+            {
+                var title = window.Title;
+
+                if (title == "Challenges" || title == "ColorMix" || title == "Paint" || title == "MainWindow")
+                {
+                    Console.WriteLine($"closing {title}");
+                    window.Close();
+                }
+            }
+
+        }
+
+        private static void OpenWindow(string targetButtonName)
+        {
             var alreadyOpened = false;
             foreach (Window window in App.Current.Windows)
             {
                 var title = window.Title;
                 Console.WriteLine($"title: {title}");
-                 
+
                 if (title == targetButtonName)
                 {
                     window.Activate();
@@ -30,6 +63,12 @@ namespace ArtStart
                 Window window = null;
                 switch (targetButtonName)
                 {
+                    case "MainApp":
+                        window = new MainApp();
+                        break;
+                    case "MainWindow":
+                        window = new MainWindow();
+                        break;
                     case "Challenges":
                         window = new Challenges();
                         break;
@@ -39,7 +78,7 @@ namespace ArtStart
                     case "ColorMix":
                         window = new ColorMix();
                         break;
-                   
+
                 }
                 window.Show();
 

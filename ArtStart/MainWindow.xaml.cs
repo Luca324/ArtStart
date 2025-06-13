@@ -16,7 +16,7 @@ namespace ArtStart
             Challenges.Click += Utils.Navigation_Click;
             ColorMix.Click += Utils.Navigation_Click;
             Paint.Click += Utils.Navigation_Click;
-          
+            LogOut.Click += Utils.LogOut;
 
             Challenges.Click += CloseThis;
             ColorMix.Click += CloseThis;

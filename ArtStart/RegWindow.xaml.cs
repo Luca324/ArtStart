@@ -9,7 +9,6 @@ namespace ArtStart
 {
     public partial class RegWindow : Window
     {
-        private const string USER_DATA_PATH = @"../../registration_data.json";
 
         public RegWindow()
         {
@@ -41,7 +40,7 @@ namespace ArtStart
                 return;
             }
 
-            var userData = LoadUsers();
+            var userData = UserDataModel.LoadUsers();
 
             if (userData.Users.Any(u => u.Login == login))
             {
@@ -83,19 +82,19 @@ namespace ArtStart
 
         private UserDataModel LoadUsers()
         {
-            if (!File.Exists(USER_DATA_PATH))
+            if (!File.Exists(UserDataModel.USER_DATA_PATH))
             {
-                File.WriteAllText(USER_DATA_PATH, JsonConvert.SerializeObject(new UserDataModel()));
+                File.WriteAllText(UserDataModel.USER_DATA_PATH, JsonConvert.SerializeObject(new UserDataModel()));
             }
 
-            string json = File.ReadAllText(USER_DATA_PATH);
+            string json = File.ReadAllText(UserDataModel.USER_DATA_PATH);
             return JsonConvert.DeserializeObject<UserDataModel>(json);
         }
 
         private void SaveUsers(UserDataModel data)
         {
             string json = JsonConvert.SerializeObject(data, Formatting.Indented);
-            File.WriteAllText(USER_DATA_PATH, json);
+            File.WriteAllText(UserDataModel.USER_DATA_PATH, json);
         }
 
         private void OpenMainWindow()

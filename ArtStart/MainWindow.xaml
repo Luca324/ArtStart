@@ -11,6 +11,7 @@
             <Button Content="Challenges" Name="Challenges" Width="100"/>
             <Button Content="ColorMix" Name="ColorMix"  Width="100"/>
             <Button Content="Paint"  Name="Paint" Width="100"/>
+            <Button Content="Log out"  Name="LogOut" Width="100"/>
 
         </ToolBar>
     </Grid>
