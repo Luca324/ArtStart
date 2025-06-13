@@ -64,18 +64,6 @@ namespace ArtStart
             Application.Current.Shutdown();
         }
 
-        private UserDataModel LoadUsers()
-        {
-            if (!File.Exists(UserDataModel.USER_DATA_PATH))
-            {
-                File.WriteAllText(UserDataModel.USER_DATA_PATH, JsonConvert.SerializeObject(new UserDataModel()));
-            }
-
-            string json = File.ReadAllText(UserDataModel.USER_DATA_PATH);
-            return JsonConvert.DeserializeObject<UserDataModel>(json);
-        }
-
-
         private void OpenMainWindow()
         {
             var mainWindow = new MainWindow();

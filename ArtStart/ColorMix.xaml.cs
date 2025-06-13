@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using System.Windows.Markup;
 
 namespace ArtStart
 {
@@ -23,7 +24,8 @@ namespace ArtStart
             Paint.Click += Utils.Navigation_Click;
             LogOut.Click += Utils.LogOut;
 
-            renderPalettesFromJSON();
+            var data = getPalettesData();
+            renderPalettes(data);
         }
 
 
@@ -56,12 +58,8 @@ namespace ArtStart
             const string PALETTES_PATH = @"../../palettes.json";
 
             // Чтение файла
-            string json = File.Exists(PALETTES_PATH)
-    ? File.ReadAllText(PALETTES_PATH)
-    : "{palettes:[]}";
+            var data = getPalettesData();
 
-            // Десериализация строки в объект
-            var data = JsonConvert.DeserializeObject<FileModel>(json);
 
             // создание новой палитры
             Palette newPalette = new Palette();
@@ -71,30 +69,17 @@ namespace ArtStart
             data.Palettes.Add(newPalette);
 
 
-            // Сериализация объекта в строку
-            json = JsonConvert.SerializeObject(data);
-
-            // Сохранение строки в файл
-            File.WriteAllText(PALETTES_PATH, json);
+            savePalettesData(data);
 
             // обновляем список палитр
-            renderPalettesFromJSON();
+            renderPalettes(data);
 
             NewPaletteName.Text = "";
         }
 
-        private void renderPalettesFromJSON()
+        private void renderPalettes(FileModel data)
         {
             Palettes.Children.Clear();
-
-
-            // Чтение файла
-            string json = File.Exists(PALETTES_PATH)
-    ? File.ReadAllText(PALETTES_PATH)
-    : "{palettes:[]}";
-
-            // Десериализация строки в объект
-            var data = JsonConvert.DeserializeObject<FileModel>(json);
 
             foreach (var palette in data.Palettes)
             {
@@ -132,34 +117,37 @@ namespace ArtStart
         private void AddCurrentColor(string palette)
         {
             if (!currentColorExists) return;
-            // тут проверка, что цвета еще нет в этой палитре, иначе тоже return
 
-            Console.WriteLine($"palette, currentcolor, isthere color: {palette} {currentColor.ToString()}, {string.IsNullOrEmpty(currentColor.ToString())}");
+            var data = getPalettesData();
+
+            var targetPalette = data.Palettes.Find(p => p.Name == palette);
+
+            // если цвет уже есть
+            if (targetPalette.Colors.Contains(currentColor.ToString())) return;
+
+            targetPalette.Colors.Add(currentColor.ToString());
+            savePalettesData(data);
+
+            renderPalettes(data);
+        }
+
+        public static FileModel getPalettesData()
+        {
+
             // Чтение файла
             string json = File.Exists(PALETTES_PATH)
     ? File.ReadAllText(PALETTES_PATH)
     : "{palettes:[]}";
 
             // Десериализация строки в объект
-            var data = JsonConvert.DeserializeObject<FileModel>(json);
-
-            var targetPalette = data.Palettes.Find(p => p.Name == palette);
-            Console.WriteLine($"existing colors:{targetPalette.Colors}\n contains: {!targetPalette.Colors.Contains(currentColor.ToString())}");
-            if (targetPalette.Colors.Contains(currentColor.ToString())) return;
-
-            targetPalette.Colors.Add(currentColor.ToString());
-
-            // Сериализация объекта в строку
-            json = JsonConvert.SerializeObject(data);
-
-            // Сохранение строки в файл
-            File.WriteAllText(PALETTES_PATH, json);
-
-            // обновляем список палитр
-            renderPalettesFromJSON();
-
+            return JsonConvert.DeserializeObject<FileModel>(json);
         }
-
+        public static void savePalettesData(FileModel data)
+        {
+            // обновляем список палитр
+            var json = JsonConvert.SerializeObject(data);
+            File.WriteAllText(PALETTES_PATH, json);
+        }
 
         // Вспомогательные методы для конвертации цветов
         private System.Drawing.Color ToDrawingColor(Color mediaColor)
@@ -179,8 +167,8 @@ namespace ArtStart
                 drawingColor.G,
                 drawingColor.B);
         }
+            }
 
-    }
 
     public class UserModel
     {
