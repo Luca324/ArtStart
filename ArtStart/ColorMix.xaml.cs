@@ -19,17 +19,8 @@ namespace ArtStart
 {
     InitializeComponent();
 
-    Challenges.Click += (sender, e) =>
-    {
-        Utils.Navigation_Click(sender, e);
-        this.Close();
-    };
-
-    Paint.Click += (sender, e) =>
-    {
-        Utils.Navigation_Click(sender, e);
-        this.Close();
-    };
+    Challenges.Click += Utils.Navigation_Click;
+    Paint.Click += Utils.Navigation_Click;
 
     renderPalettesFromJSON();
 }

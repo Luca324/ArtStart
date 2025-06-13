@@ -45,18 +45,8 @@ namespace ArtStart
             this.KeyDown += Paint_KeyDown;
             drawingCanvas.Children.Add(textCanvas);
 
-            // Подписываем кнопки с закрытием текущего окна
-            Challenges.Click += (sender, e) =>
-            {
-                Utils.Navigation_Click(sender, e); // открытие целевого окна
-                this.Close(); // закрытие текущего окна Paint
-            };
-
-            ColorMix.Click += (sender, e) =>
-            {
-                Utils.Navigation_Click(sender, e); // открытие целевого окна
-                this.Close(); // закрытие текущего окна Paint
-            };
+            Challenges.Click += Utils.Navigation_Click;
+            ColorMix.Click += Utils.Navigation_Click;
 
             RenderPalettesFromJSON();
         }
