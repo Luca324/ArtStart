@@ -4,18 +4,19 @@
   "users": [
     {
       "Login": "111",
-      "Password": "11111",
-      "IsAuthenticated": true
+      "Password": "11111"
     },
     {
       "Login": "ira",
-      "Password": "11111",
-      "IsAuthenticated": true
+      "Password": "11111"
     },
     {
       "Login": "1",
-      "Password": "1",
-      "IsAuthenticated": true
+      "Password": "1"
+    },
+    {
+      "Login": "tanya",
+      "Password": "1"
     }
   ]
 }

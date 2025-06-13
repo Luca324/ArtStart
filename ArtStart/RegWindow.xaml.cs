@@ -52,8 +52,7 @@ namespace ArtStart
             userData.Users.Add(new User
             {
                 Login = login,
-                Password = password,
-                IsAuthenticated = true
+                Password = password
             });
 
             SaveUsers(userData);

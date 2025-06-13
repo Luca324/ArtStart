@@ -12,15 +12,14 @@ namespace ArtStart.Models
     {
         public string Login { get; set; }
         public string Password { get; set; }
-        public bool IsAuthenticated { get; set; }
     }
 
     public class UserDataModel
     {
         public const string USER_DATA_PATH = @"../../registration_data.json";
-       public bool IsAuthenticated { get; set; }
-    public User CurrentUser { get; set; }
-        
+        public bool IsAuthenticated { get; set; }
+        public User CurrentUser { get; set; }
+
         [JsonProperty("users")]
         public List<User> Users { get; set; } = new List<User>();
 

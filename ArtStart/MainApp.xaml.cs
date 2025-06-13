@@ -42,7 +42,7 @@ namespace ArtStart
                 var json = File.ReadAllText(UserDataPath);
                 var data = JsonConvert.DeserializeObject<RegistrationData>(json);
 
-                if (data != null && data.IsAuthenticated)
+                if (data != null)
                 {
                     var mainWindow = new MainWindow();
                     mainWindow.Show();
@@ -79,6 +79,5 @@ namespace ArtStart
         public string Login { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-        public bool IsAuthenticated { get; set; }
     }
 }
