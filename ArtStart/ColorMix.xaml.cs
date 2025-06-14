@@ -3,7 +3,8 @@ using Scrtwpns.Mixbox;
 using System.Windows.Media;
 using System;
 using Newtonsoft.Json;
-using System.IO;
+using Newtonsoft.Json;
+using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Markup;
@@ -12,7 +13,6 @@ namespace ArtStart
 {
     public partial class ColorMix : Window
     {
-        private const string PALETTES_PATH = @"../../palettes.json";
         private System.Windows.Media.Color currentColor = new System.Windows.Media.Color();
         private Boolean currentColorExists = false;
 
@@ -24,8 +24,10 @@ namespace ArtStart
             Paint.Click += Utils.Navigation_Click;
             LogOut.Click += Utils.LogOut;
 
-            var data = getPalettesData();
-            renderPalettes(data);
+            var data = PalettesModel.getPalettesData();
+            var user = data.Users.Find(u => u.Login == Session.CurrentUser.Login);
+
+            if (user != null) renderPalettes(user.Palettes);
         }
 
 
@@ -55,33 +57,32 @@ namespace ArtStart
             if (string.IsNullOrEmpty(NewPaletteName.Text)) return;
             Console.WriteLine(NewPaletteName.Text);
 
-            const string PALETTES_PATH = @"../../palettes.json";
-
             // Чтение файла
-            var data = getPalettesData();
+            var data = PalettesModel.getPalettesData();
 
+            var user = data.Users.FirstOrDefault(u => u.Login == Session.CurrentUser.Login);
 
             // создание новой палитры
             Palette newPalette = new Palette();
 
             newPalette.Name = NewPaletteName.Text;
             newPalette.Colors = new List<string>();
-            data.Palettes.Add(newPalette);
+            user.Palettes.Add(newPalette);
 
 
-            savePalettesData(data);
+            PalettesModel.savePalettesData(data);
 
             // обновляем список палитр
-            renderPalettes(data);
+            renderPalettes(user.Palettes);
 
             NewPaletteName.Text = "";
         }
 
-        private void renderPalettes(FileModel data)
+        private void renderPalettes(List<Palette> palettes)
         {
             Palettes.Children.Clear();
 
-            foreach (var palette in data.Palettes)
+            foreach (var palette in palettes)
             {
                 WrapPanel panel = new WrapPanel();
                 Button button = new Button();
@@ -118,36 +119,21 @@ namespace ArtStart
         {
             if (!currentColorExists) return;
 
-            var data = getPalettesData();
+            var data = PalettesModel.getPalettesData();
+            var user = data.Users.FirstOrDefault(u => u.Login == Session.CurrentUser.Login);
 
-            var targetPalette = data.Palettes.Find(p => p.Name == palette);
+            var targetPalette = user.Palettes.Find(p => p.Name == palette);
 
             // если цвет уже есть
             if (targetPalette.Colors.Contains(currentColor.ToString())) return;
 
             targetPalette.Colors.Add(currentColor.ToString());
-            savePalettesData(data);
+            PalettesModel.savePalettesData(data);
 
-            renderPalettes(data);
+            renderPalettes(user.Palettes);
+
         }
 
-        public static FileModel getPalettesData()
-        {
-
-            // Чтение файла
-            string json = File.Exists(PALETTES_PATH)
-    ? File.ReadAllText(PALETTES_PATH)
-    : "{palettes:[]}";
-
-            // Десериализация строки в объект
-            return JsonConvert.DeserializeObject<FileModel>(json);
-        }
-        public static void savePalettesData(FileModel data)
-        {
-            // обновляем список палитр
-            var json = JsonConvert.SerializeObject(data);
-            File.WriteAllText(PALETTES_PATH, json);
-        }
 
         // Вспомогательные методы для конвертации цветов
         private System.Drawing.Color ToDrawingColor(Color mediaColor)
@@ -167,29 +153,6 @@ namespace ArtStart
                 drawingColor.G,
                 drawingColor.B);
         }
-            }
-
-
-    public class UserModel
-    {
-        // список палитр
-        [JsonProperty("palettes")]
-        public List<Palette> Palettes { get; set; }
-
-    }
-
-    public class FileModel
-    {
-        // список палитр
-        [JsonProperty("palettes")]
-        public List<Palette> Palettes { get; set; }
-
-    }
-
-    public class Palette
-    {
-        public string Name { get; set; }  // Теперь это свойство, а не поле!
-        public List<string> Colors { get; set; }  // И это тоже свойство
     }
 
 }

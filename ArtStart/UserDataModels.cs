@@ -22,7 +22,11 @@ namespace ArtStart.Models
 
         [JsonProperty("users")]
         public List<User> Users { get; set; } = new List<User>();
-
+        public UserDataModel()
+        {
+            IsAuthenticated = false;
+            CurrentUser = null;
+        }
         public static UserDataModel LoadUsers()
         {
             if (!File.Exists(USER_DATA_PATH))
@@ -31,6 +35,7 @@ namespace ArtStart.Models
             }
 
             string json = File.ReadAllText(USER_DATA_PATH);
+            Console.WriteLine("user data json:", json);
             return JsonConvert.DeserializeObject<UserDataModel>(json);
         }
 

@@ -58,17 +58,18 @@ namespace ArtStart
             string json = File.Exists(PALETTES_PATH) 
     ? File.ReadAllText(PALETTES_PATH)
     : "{palettes:[]}";
-            var data = JsonConvert.DeserializeObject<FileModel>(json);
+            var data = JsonConvert.DeserializeObject<PalettesFileModel>(json);
+            var user = data.Users.FirstOrDefault(u => u.Login == Session.CurrentUser.Login);
 
 
-            if (data?.Palettes != null)
+            if (user?.Palettes != null)
             {
-                foreach (var palette in data.Palettes)
+                foreach (var palette in user.Palettes)
                 {
                     Console.WriteLine($"Palette: {palette.Name}, Colors: {palette.Colors.Count}");
                 }
 
-                PaletteCombo.ItemsSource = data.Palettes;
+                PaletteCombo.ItemsSource = user.Palettes;
             }
             else
             {
