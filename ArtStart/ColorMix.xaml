@@ -21,25 +21,42 @@
             <Setter Property="TextBlock.TextAlignment" Value="Center" />
             <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
         </Style>
+        
         <ControlTemplate x:Key="RoundedButtonTemplate" TargetType="Button">
             <Border Background="{TemplateBinding Background}"
-            BorderBrush="{TemplateBinding BorderBrush}"
-            BorderThickness="{TemplateBinding BorderThickness}"
-            CornerRadius="15"
-                    Height="30"
-            Padding="5">
+             BorderBrush="{TemplateBinding BorderBrush}"
+             BorderThickness="{TemplateBinding BorderThickness}"
+             Padding="{TemplateBinding Padding}"
+             CornerRadius="10">
                 <ContentPresenter 
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            TextElement.Foreground="{TemplateBinding Foreground}" />
+             HorizontalAlignment="Center"
+             VerticalAlignment="Center"
+             TextElement.Foreground="{TemplateBinding Foreground}" />
             </Border>
         </ControlTemplate>
+        <Style x:Key="violetBtn" TargetType="Button" BasedOn="{StaticResource roundedBtn}">
+            <Setter Property="Background" Value="#AD48B7" />
+            <Setter Property="Foreground" Value="White" />
 
-        <Style x:Key="navBtn" TargetType="Button">
-            <Setter Property="Control.Template" Value="{StaticResource RoundedButtonTemplate}" />
-            <Setter Property="Control.Width" Value="100" />
-            <Setter Property="Control.Background" Value="#AD48B7" />
-            <Setter Property="Control.Foreground" Value="White" />
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#AD48B7" />
+                    <Setter Property="Background" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="roundedBtn" TargetType="Button">
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Background" Value="#AD48B7" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Margin" Value="3" />
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="Padding" Value="2" />
+            <Setter Property="Template" Value="{StaticResource RoundedButtonTemplate}"></Setter>
+
+            
         </Style>
 
     </Window.Resources>
@@ -55,12 +72,12 @@
             <ColumnDefinition Width="*"  MinWidth="200px"/>
         </Grid.ColumnDefinitions>
 
-        <ToolBar Name="NavBar" Grid.Row="0"  Grid.ColumnSpan="3">
-            <Button  Content="Challenges" Name="Challenges" Style="{StaticResource navBtn}"/>
-            <Button  Content="Paint" Name="Paint"  Style="{StaticResource navBtn}"/>
-            <Button Content="Log out"  Name="LogOut" Style="{StaticResource navBtn}"/>
-            <Button  Content="На главную" Name="MainWindow"   Style="{StaticResource navBtn}"/>
-        </ToolBar>
+        <StackPanel Name="NavBar" Grid.Row="0"  Grid.ColumnSpan="3" Orientation="Horizontal" Background="#AD48B7">
+            <Button  Content="Challenges" Name="Challenges" Style="{StaticResource violetBtn}"/>
+            <Button  Content="Paint" Name="Paint"  Style="{StaticResource violetBtn}"/>
+            <Button Content="Log out"  Name="LogOut" Style="{StaticResource violetBtn}"/>
+            <Button  Content="На главную" Name="MainWindow"   Style="{StaticResource violetBtn}"/>
+        </StackPanel>
 
 
         <StackPanel Grid.Row="1" Grid.Column="0">
@@ -81,7 +98,10 @@
 
             <StackPanel DockPanel.Dock="Bottom" Margin="0,10,0,0">
                 <TextBox Name="NewPaletteName" MaxLength="40" Margin="0,0,0,5"/>
-                <Button Name="CreateNewPalette" Click="CreateNewPalette_Click">Создать палитру</Button>
+                <Button Name="CreateNewPalette" 
+                        Click="CreateNewPalette_Click"
+                         Style="{StaticResource violetBtn}"
+                        >Создать палитру</Button>
             </StackPanel>
 
             <ScrollViewer VerticalScrollBarVisibility="Auto">
