@@ -31,7 +31,7 @@ namespace ArtStart
         }
 
 
-        private void MixBtn_Click(object sender, RoutedEventArgs e)
+        private void MixColors(object sender, RoutedEventArgs e)
         {
             // Проверяем, что оба цвета выбраны
             if (ColorPicker1.SelectedColor.HasValue && ColorPicker2.SelectedColor.HasValue)
@@ -47,7 +47,9 @@ namespace ArtStart
                 currentColor = mixedColor;
                 Console.WriteLine($"new color:{mixedColor}");
                 // Устанавливаем фон кнопки
-                result.Background = new SolidColorBrush(mixedColor);
+                var brush = new SolidColorBrush(mixedColor);
+                result.Background = brush;
+                currentColorBlock.Background = brush;
                 currentColorExists = true;
             }
         }

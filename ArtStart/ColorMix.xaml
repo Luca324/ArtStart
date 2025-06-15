@@ -14,6 +14,17 @@
             <Setter Property="Control.Height" Value="100" />
 
         </Style>
+        <Style x:Key="header1">
+            <Setter Property="Control.FontSize" Value="20" />
+            <Setter Property="Control.HorizontalAlignment" Value="Center" />
+            <Setter Property="Control.Margin" Value="5" />
+        </Style>
+        <Style x:Key="symbol">
+            <Setter Property="Control.Width" Value="30" />
+            <Setter Property="Control.Height" Value="30" />
+            <Setter Property="Control.FontSize" Value="30" />
+        </Style>
+
         <Style x:Key="result">
             <Setter Property="Control.Width" Value="100" />
             <Setter Property="Control.Height" Value="100" />
@@ -34,6 +45,18 @@
              TextElement.Foreground="{TemplateBinding Foreground}" />
             </Border>
         </ControlTemplate>
+        <Style x:Key="roundedBtn" TargetType="Button">
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Background" Value="#AD48B7" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Margin" Value="3" />
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="Padding" Value="2" />
+            <Setter Property="Template" Value="{StaticResource RoundedButtonTemplate}"></Setter>
+
+
+        </Style>
         <Style x:Key="violetBtn" TargetType="Button" BasedOn="{StaticResource roundedBtn}">
             <Setter Property="Background" Value="#AD48B7" />
             <Setter Property="Foreground" Value="White" />
@@ -46,18 +69,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="roundedBtn" TargetType="Button">
-            <Setter Property="Width" Value="100" />
-            <Setter Property="Background" Value="#AD48B7" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="Margin" Value="3" />
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="White"/>
-            <Setter Property="Padding" Value="2" />
-            <Setter Property="Template" Value="{StaticResource RoundedButtonTemplate}"></Setter>
-
-            
-        </Style>
+        
 
     </Window.Resources>
     <Grid>
@@ -81,12 +93,18 @@
 
 
         <StackPanel Grid.Row="1" Grid.Column="0">
+            <TextBlock Style="{StaticResource header1}">Цветовая палитра</TextBlock>
             <WrapPanel HorizontalAlignment="Center" >
-                <xctk:ColorPicker x:Name="ColorPicker1" Style="{StaticResource colorPicker}"/>
-                <xctk:ColorPicker x:Name="ColorPicker2" Style="{StaticResource colorPicker}"/>
+                <xctk:ColorPicker x:Name="ColorPicker1" SelectedColorChanged="MixColors" Style="{StaticResource colorPicker}"/>
+                <TextBlock Style="{StaticResource symbol}">+</TextBlock>
+                <xctk:ColorPicker x:Name="ColorPicker2" SelectedColorChanged="MixColors" Style="{StaticResource colorPicker}"/>
+                <TextBlock Style="{StaticResource symbol}">=</TextBlock>
+                <TextBlock Name="result"  Style="{StaticResource result}">Результат</TextBlock>
             </WrapPanel>
-            <Button Name="MixBtn"  Content="Получить результат" Click="MixBtn_Click" />
-            <TextBlock Name="result"  Style="{StaticResource result}">Результат</TextBlock>
+            <TextBlock Style="{StaticResource header1}">Текущий цвет</TextBlock>
+            <TextBlock Name="currentColorBlock"  Style="{StaticResource result}"></TextBlock>
+
+
         </StackPanel>
 
         <GridSplitter  Grid.Row="1" Grid.Column="1" ShowsPreview="False" Width="3"
