@@ -288,7 +288,7 @@ namespace ArtStart
         private void OpenButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.Filter = "Image files (*.png)|*.png";
+            dialog.Filter = "Image Files (*.png, *.jpg)|*.png;*.jpg";
             if (dialog.ShowDialog() == true)
             {
                 try
