@@ -16,6 +16,7 @@ namespace ArtStart
             InitializeComponent();
             LoadQuestions();
             GenerateUI();
+            MainWindow.Click += Utils.Navigation_Click;
         }
 
         private void LoadQuestions()
@@ -113,12 +114,6 @@ namespace ArtStart
         private void RetryButton_Click(object sender, RoutedEventArgs e)
         {
             GenerateUI();
-        }
-
-        private void MainMenuButton_Click(object sender, RoutedEventArgs e)
-        {
-            new MainWindow().Show();
-            this.Close();
         }
 
         private void NextLevelButton_Click(object sender, RoutedEventArgs e)

@@ -43,7 +43,7 @@ namespace ArtStart
 
         }
 
-        private static void OpenWindow(string targetButtonName)
+        public static void OpenWindow(string targetButtonName)
         {
             var alreadyOpened = false;
             foreach (Window window in App.Current.Windows)

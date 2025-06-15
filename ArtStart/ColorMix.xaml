@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:ArtStart"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="ColorMix" Height="450" Width="800">
+        Title="ColorMix" Height="450" Width="800"
+        Background="#E6D5F1">
     <Window.Resources>
         <Style x:Key="colorPicker">
             <Setter Property="Control.Width" Value="100" />
@@ -19,9 +20,28 @@
             <Setter Property="TextBlock.TextAlignment" Value="Center" />
             <Setter Property="TextBlock.TextAlignment" Value="Center" />
             <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
-
-
         </Style>
+        <ControlTemplate x:Key="RoundedButtonTemplate" TargetType="Button">
+            <Border Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="15"
+                    Height="30"
+            Padding="5">
+                <ContentPresenter 
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            TextElement.Foreground="{TemplateBinding Foreground}" />
+            </Border>
+        </ControlTemplate>
+
+        <Style x:Key="navBtn" TargetType="Button">
+            <Setter Property="Control.Template" Value="{StaticResource RoundedButtonTemplate}" />
+            <Setter Property="Control.Width" Value="100" />
+            <Setter Property="Control.Background" Value="#AD48B7" />
+            <Setter Property="Control.Foreground" Value="White" />
+        </Style>
+
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -35,10 +55,11 @@
             <ColumnDefinition Width="*"  MinWidth="200px"/>
         </Grid.ColumnDefinitions>
 
-        <ToolBar Grid.Row="0"  Grid.ColumnSpan="3">
-            <Button  Content="Challenges" Name="Challenges" Width="100"/>
-            <Button  Content="Paint" Name="Paint"  Width="100"/>
-            <Button Content="Log out"  Name="LogOut" Width="100"/>
+        <ToolBar Name="NavBar" Grid.Row="0"  Grid.ColumnSpan="3">
+            <Button  Content="Challenges" Name="Challenges" Style="{StaticResource navBtn}"/>
+            <Button  Content="Paint" Name="Paint"  Style="{StaticResource navBtn}"/>
+            <Button Content="Log out"  Name="LogOut" Style="{StaticResource navBtn}"/>
+            <Button  Content="На главную" Name="MainWindow"   Style="{StaticResource navBtn}"/>
         </ToolBar>
 
 
