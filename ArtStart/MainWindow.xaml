@@ -1,18 +1,87 @@
 ﻿<Window x:Class="ArtStart.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ArtStart"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <ToolBar Grid.Row="0">
-            <Button Content="Challenges" Name="Challenges" Width="100"/>
-            <Button Content="ColorMix" Name="ColorMix"  Width="100"/>
-            <Button Content="Paint"  Name="Paint" Width="100"/>
-            <Button Content="Log out"  Name="LogOut" Width="100"/>
+        Title="MainWindow"
+        Height="500" Width="400"
+        WindowStartupLocation="CenterScreen"
+        Background="#E6D5F1">
 
-        </ToolBar>
+    <!-- Шаблон для овальных кнопок -->
+    <Window.Resources>
+        <ControlTemplate x:Key="RoundedButtonTemplate" TargetType="Button">
+            <Border Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="20"
+                    Padding="10,5">
+                <ContentPresenter 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    TextElement.Foreground="{TemplateBinding Foreground}" />
+            </Border>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <!-- Основной контент -->
+    <Grid Margin="20">
+        <StackPanel HorizontalAlignment="Center">
+
+            <!-- Заголовок ArtStart -->
+            <TextBlock Text="ArtStart"
+                       FontSize="32"
+                       FontWeight="Bold"
+                       FontStyle="Italic"
+                       FontFamily="Segoe Script"
+                       Foreground="#AD48B7"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,30"/>
+
+            <!-- Кнопка Challenges -->
+            <Button x:Name="Challenges"
+                    Content="Challenges"
+                    Width="250"
+                    Height="40"
+                    Background="#AD48B7"
+                    Foreground="White"
+                    FontSize="16"
+                    Template="{StaticResource RoundedButtonTemplate}"
+                    Margin="0,0,0,10"/>
+
+            <!-- Кнопка ColorMix -->
+            <Button x:Name="ColorMix"
+                    Content="ColorMix"
+                    Width="250"
+                    Height="40"
+                    Background="#AD48B7"
+                    Foreground="White"
+                    FontSize="16"
+                    Template="{StaticResource RoundedButtonTemplate}"
+                    Margin="0,0,0,10"/>
+
+            <!-- Кнопка Paint -->
+            <Button x:Name="Paint"
+                    Content="Paint"
+                    Width="250"
+                    Height="40"
+                    Background="#AD48B7"
+                    Foreground="White"
+                    FontSize="16"
+                    Template="{StaticResource RoundedButtonTemplate}"
+                    Margin="0,0,0,10"/>
+
+            <!-- Кнопка Log out -->
+            <Button x:Name="LogOut"
+                    Content="Log out"
+                    Width="250"
+                    Height="40"
+                    Background="#E6D5F1"
+                    Foreground="#AD48B7"
+                    FontSize="16"
+                    BorderBrush="#AD48B7"     
+                    BorderThickness="2"
+                
+                    Template="{StaticResource RoundedButtonTemplate}"
+        Margin="0,0,0,10"/>
+        </StackPanel>
     </Grid>
 </Window>

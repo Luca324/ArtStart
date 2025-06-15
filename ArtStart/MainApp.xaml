@@ -4,45 +4,82 @@
         Title="Главное окно" Height="450" Width="400"
         WindowStartupLocation="CenterScreen"
         Background="#E6D5F1">
-    <!-- Установка фона -->
 
+    <Window.Resources>
+        <ControlTemplate x:Key="RoundedButtonTemplate" TargetType="Button">
+            <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="20"
+                Padding="10,5">
+                <ContentPresenter 
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                TextElement.Foreground="{TemplateBinding Foreground}" />
+            </Border>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <!-- Содержимое окна -->
     <Grid Margin="20">
-        <StackPanel Margin="0,10">
+        <StackPanel Margin="0,10" HorizontalAlignment="Center">
 
-            <!-- Заголовок -->
-            <TextBlock Text="Главное меню" 
-                       FontSize="20" 
-                       HorizontalAlignment="Center" 
-                       Margin="0,0,0,20"/>
+            <!-- Заголовок ArtStart -->
+            <TextBlock Text="ArtStart"
+                       FontSize="40"
+                       FontWeight="Bold"
+                       FontStyle="Italic"
+                       FontFamily="Segoe Script"
+                       Foreground="#AD48B7"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,30"/>
 
             <!-- Кнопка регистрации -->
-            <Button Content="Регистрация" 
-                    Name="RegisterBtn" 
-                    Click="RegisterBtn_Click" 
-                    Background="#AD48B7" 
-                    Foreground="White" 
-                    Width="150" 
+            <Button Content="Регистрация"
+                    Name="RegisterBtn"
+                    Click="RegisterBtn_Click"
+                    Background="#AD48B7"
+                    Foreground="White"
+                    Width="150"
+                    Height="40"
                     HorizontalAlignment="Center"
-                    Margin="0,0,0,10"/>
+                    Margin="0,0,0,10"
+                    FontFamily="Inter"
+                    FontSize="16"
+                    BorderThickness="0"
+                    Template="{StaticResource RoundedButtonTemplate}"/>
 
             <!-- Кнопка авторизации -->
-            <Button Content="Авторизация" 
-                    Name="AuthBtn" 
-                    Click="AuthBtn_Click" 
-                    Background="#AD48B7" 
-                    Foreground="White" 
-                    Width="150" 
+            <Button Content="Авторизация"
+                    Name="AuthBtn"
+                    Click="AuthBtn_Click"
+                    Background="#AD48B7"
+                    Foreground="White"
+                    Width="150"
+                    Height="40"
                     HorizontalAlignment="Center"
-                    Margin="0,0,0,10"/>
+                    Margin="0,0,0,10"
+                    FontFamily="Inter"
+                    FontSize="16"
+                    BorderThickness="0"
+                    Template="{StaticResource RoundedButtonTemplate}"/>
 
             <!-- Кнопка выхода -->
-            <Button Content="Выйти из приложения" 
-                    Name="ExitBtn" 
-                    Click="ExitBtn_Click" 
-                    Background="LightGray" 
-                    Width="150" 
+            <Button Content="Выйти из приложения"
+                    Name="ExitBtn"
+                    Click="ExitBtn_Click"
+                    Background="#E6D5F1"
+                    Foreground="#AD48B7"
+                    Width="150"
+                    Height="40"
                     HorizontalAlignment="Center"
-                    Margin="0,0,0,10"/>
+                    Margin="0,0,0,10"
+                    FontFamily="Inter"
+                    FontSize="12"
+                    BorderBrush="#AD48B7"
+                    BorderThickness="2"
+                    Template="{StaticResource RoundedButtonTemplate}"/>
+
         </StackPanel>
     </Grid>
 </Window>

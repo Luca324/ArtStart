@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
 namespace ArtStart
 {
@@ -13,16 +8,18 @@ namespace ArtStart
         {
             InitializeComponent();
 
+            // Подписываемся на события
             Challenges.Click += Utils.Navigation_Click;
             ColorMix.Click += Utils.Navigation_Click;
             Paint.Click += Utils.Navigation_Click;
             LogOut.Click += Utils.LogOut;
 
+            // Дополнительно: закрытие окна по клику
             Challenges.Click += CloseThis;
             ColorMix.Click += CloseThis;
             Paint.Click += CloseThis;
-            
         }
+
         private void CloseThis(object sender, RoutedEventArgs e)
         {
             this.Close();

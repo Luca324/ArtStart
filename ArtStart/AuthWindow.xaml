@@ -1,33 +1,121 @@
 ﻿<Window x:Class="ArtStart.AuthWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Вход" Height="350" Width="400"
+        Title="Вход" Height="500" Width="400"
         WindowStartupLocation="CenterScreen"
-        Background="#E6D5F1">
-    <Grid Margin="20">
-        <StackPanel Margin="0,10">
+        Background="#E6D5F1"
+        ResizeMode="NoResize">
+
+    <!-- Шаблон для овальных кнопок -->
+    <Window.Resources>
+        <ControlTemplate x:Key="RoundedButtonTemplate" TargetType="Button">
+            <Border Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="20"
+                    Padding="10,5">
+                <ContentPresenter 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    TextElement.Foreground="{TemplateBinding Foreground}" />
+            </Border>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <StackPanel>
+
             <!-- Заголовок -->
-            <TextBlock Text="Вход в аккаунт" FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <TextBlock Text="ArtStart"
+                       FontSize="32"
+                       FontWeight="Bold"
+                       FontStyle="Italic"
+                       FontFamily="Segoe Script"
+                       Foreground="#AD48B7"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,30"/>
 
             <!-- Логин -->
-            <TextBlock Text="Логин:"/>
-            <TextBox x:Name="LoginBox" Margin="0,0,0,10"/>
+            <TextBlock Text="Логин:" 
+           Foreground="#AD48B7" 
+           FontSize="20"
+           HorizontalAlignment="Center"/>
+            <TextBox x:Name="LoginBox"
+         Width="250"
+         Height="35"
+         Background="White"
+         BorderBrush="#AD48B7"
+         BorderThickness="2"
+         Margin="0,0,0,20"
+         HorizontalAlignment="Center"
+         VerticalContentAlignment="Center"
+         Foreground="#3a183d"
+         FontSize="16"
+         TextAlignment="Center"/>
 
             <!-- Пароль -->
-            <TextBlock Text="Пароль:"/>
-            <PasswordBox x:Name="PasswordBox" PasswordChar="*" Margin="0,0,0,10"/>
+            <TextBlock Text="Пароль:" 
+           Foreground="#AD48B7" 
+           FontSize="20"
+           HorizontalAlignment="Center"/>
+            <PasswordBox x:Name="PasswordBox"
+             Width="250"
+             Height="35"
+             Background="White"
+             BorderBrush="#AD48B7"
+             BorderThickness="2"
+             PasswordChar="•"
+             Margin="0,0,0,20"
+             HorizontalAlignment="Center"
+             VerticalContentAlignment="Center"
+             Foreground="#3a183d"
+             FontSize="20"
+             HorizontalContentAlignment="Center"/>
 
             <!-- Кнопка входа -->
-            <Button Content="Войти" Click="Login_Click" Background="#AD48B7" Foreground="White" Margin="0,0,0,10"/>
+            <Button Content="Войти"
+                    Width="250"
+                    Height="40"
+                    Background="#AD48B7"
+                    Foreground="White"
+                    FontSize="16"
+                    Click="Login_Click"
+                    Margin="0,0,0,10"
+                    HorizontalAlignment="Center"
+                    Template="{StaticResource RoundedButtonTemplate}"/>
 
-            <!-- Кнопка регистрации -->
-            <Button Content="Нет аккаунта? Зарегистрироваться" Click="GoToRegister_Click" Background="Transparent" BorderBrush="Black" Margin="0,0,0,10"/>
+            <!-- Регистрация -->
+            <Button Content="Нет аккаунта? Зарегистрироваться"
+                    Width="250"
+                    Height="40"
+                    Background="Transparent"
+                    BorderBrush="#AD48B7"
+                    Foreground="#AD48B7"
+                    FontSize="14"
+                    Click="GoToRegister_Click"
+                    Margin="0,0,0,10"
+                    HorizontalAlignment="Center"
+                    Template="{StaticResource RoundedButtonTemplate}"/>
 
-            <!-- Сообщение об ошибках -->
-            <TextBlock x:Name="ErrorText" Foreground="Red" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <!-- Сообщение об ошибке -->
+            <TextBlock x:Name="ErrorText"
+                       Foreground="Red"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,10"
+                       MaxWidth="250"/>
 
-            <!-- Кнопка выхода -->
-            <Button Content="Выход" Click="Exit_Click" Background="LightGray"/>
+            <!-- Выход -->
+            <Button Content="Выход"
+                    Width="250"
+                    Height="40"
+                    Background="#E6D5F1"
+                    BorderBrush="#AD48B7"
+                    Foreground="#AD48B7"
+                    FontSize="16"
+                    Click="Exit_Click"
+                    HorizontalAlignment="Center"
+                    Template="{StaticResource RoundedButtonTemplate}"/>
         </StackPanel>
     </Grid>
 </Window>
