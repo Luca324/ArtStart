@@ -45,8 +45,8 @@
              TextElement.Foreground="{TemplateBinding Foreground}" />
             </Border>
         </ControlTemplate>
+        
         <Style x:Key="roundedBtn" TargetType="Button">
-            <Setter Property="Width" Value="100" />
             <Setter Property="Background" Value="#AD48B7" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="Margin" Value="3" />
@@ -58,6 +58,7 @@
 
         </Style>
         <Style x:Key="violetBtn" TargetType="Button" BasedOn="{StaticResource roundedBtn}">
+
             <Setter Property="Background" Value="#AD48B7" />
             <Setter Property="Foreground" Value="White" />
 
@@ -70,7 +71,40 @@
             </Style.Triggers>
         </Style>
         
+        <Style x:Key="redBtn" TargetType="Button" BasedOn="{StaticResource roundedBtn}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#F66163" />
+            <Setter Property="BorderBrush" Value="#F66163"/>
+            <Setter Property="Width" Value="150"/>
 
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Background" Value="#F66163" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="navBtn" TargetType="Button" BasedOn="{StaticResource violetBtn}">
+            <Setter Property="Width" Value="100" />
+        </Style>
+        
+        <Style x:Key="addColorBtn" TargetType="Button" BasedOn="{StaticResource roundedBtn}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#AD48B7" />
+            <Setter Property="BorderBrush" Value="#AD48B7"/>
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="0,0,5,0"/>
+            <Setter Property="Padding" Value="0"/>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Background" Value="#AD48B7" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -85,10 +119,10 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Name="NavBar" Grid.Row="0"  Grid.ColumnSpan="3" Orientation="Horizontal" Background="#AD48B7">
-            <Button  Content="Challenges" Name="Challenges" Style="{StaticResource violetBtn}"/>
-            <Button  Content="Paint" Name="Paint"  Style="{StaticResource violetBtn}"/>
-            <Button Content="Log out"  Name="LogOut" Style="{StaticResource violetBtn}"/>
-            <Button  Content="На главную" Name="MainWindow"   Style="{StaticResource violetBtn}"/>
+            <Button  Content="Challenges" Name="Challenges" Style="{StaticResource navBtn}"/>
+            <Button  Content="Paint" Name="Paint"  Style="{StaticResource navBtn}"/>
+            <Button Content="Log out"  Name="LogOut" Style="{StaticResource navBtn}"/>
+            <Button  Content="На главную" Name="MainWindow"   Style="{StaticResource navBtn}"/>
         </StackPanel>
 
 
@@ -99,10 +133,14 @@
                 <TextBlock Style="{StaticResource symbol}">+</TextBlock>
                 <xctk:ColorPicker x:Name="ColorPicker2" SelectedColorChanged="MixColors" Style="{StaticResource colorPicker}"/>
                 <TextBlock Style="{StaticResource symbol}">=</TextBlock>
-                <TextBlock Name="result"  Style="{StaticResource result}">Результат</TextBlock>
+                <TextBlock Name="result"  Style="{StaticResource result}"></TextBlock>
             </WrapPanel>
             <TextBlock Style="{StaticResource header1}">Текущий цвет</TextBlock>
             <TextBlock Name="currentColorBlock"  Style="{StaticResource result}"></TextBlock>
+            <Button Name="DeleteFromPaletteBtn" 
+        Click="DeleteFromPaletteBtn_Click"
+         Style="{StaticResource redBtn}"
+        >Удалить из палитры</Button>
 
 
         </StackPanel>
@@ -112,7 +150,7 @@
 
 
         <DockPanel Grid.Row="1" Grid.Column="2" LastChildFill="True">
-            <TextBlock DockPanel.Dock="Top">Палитры</TextBlock>
+            <TextBlock Style="{StaticResource header1}" DockPanel.Dock="Top">Палитры</TextBlock>
 
             <StackPanel DockPanel.Dock="Bottom" Margin="0,10,0,0">
                 <TextBox Name="NewPaletteName" MaxLength="40" Margin="0,0,0,5"/>
