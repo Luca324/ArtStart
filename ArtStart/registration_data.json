@@ -1,9 +1,6 @@
 {
-  "IsAuthenticated": true,
-  "CurrentUser": {
-    "Login": "1",
-    "Password": "1"
-  },
+  "IsAuthenticated": false,
+  "CurrentUser": null,
   "users": [
     {
       "Login": "1",
@@ -16,6 +13,10 @@
     {
       "Login": "111",
       "Password": "11111"
+    },
+    {
+      "Login": "1111",
+      "Password": "111"
     }
   ]
 }
