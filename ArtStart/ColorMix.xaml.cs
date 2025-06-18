@@ -52,6 +52,7 @@ namespace ArtStart
                 // Устанавливаем фон кнопки
                 var brush = new SolidColorBrush(mixedColor);
                 result.Background = brush;
+                DeleteFromPaletteBtn.IsEnabled = false;
                 currentColorBlock.Background = brush;
                 currentColorExists = true;
             }
@@ -136,6 +137,7 @@ namespace ArtStart
                         currentColorText = color; 
                         currentColorPalette = palette.Name;
                         Console.WriteLine($"current color: {currentColorText}");
+                        DeleteFromPaletteBtn.IsEnabled = true;
 
 
                     };

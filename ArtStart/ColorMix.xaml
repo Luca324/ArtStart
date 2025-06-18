@@ -79,6 +79,10 @@
                     <Setter Property="Foreground" Value="White" />
                     <Setter Property="Background" Value="#F66163" />
                 </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <!-- Скрывать, если отключена -->
+                </Trigger>
             </Style.Triggers>
         </Style>
 
@@ -138,7 +142,8 @@
             <TextBlock Name="currentColorBlock" Style="{StaticResource result}"></TextBlock>
             <Button Name="DeleteFromPaletteBtn" 
                     Click="DeleteFromPaletteBtn_Click"
-                    Style="{StaticResource redBtn}">
+                    Style="{StaticResource redBtn}"
+                    IsEnabled="false">
                 Удалить из палитры
             </Button>
         </StackPanel>
