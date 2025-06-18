@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ArtStart"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
+        Name="ColorMixWindow"
         Title="Смешивание цветов" Height="450" Width="800"
         Background="#E6D5F1">
     <Window.Resources>

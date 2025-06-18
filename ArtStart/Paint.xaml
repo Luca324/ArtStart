@@ -6,7 +6,9 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:ArtStart"
         mc:Ignorable="d"
-        Title="Рисование" Height="700" Width="1000">
+        Title="Рисование"
+        Name="PaintWindow"
+        Height="700" Width="1000">
     <Window.Resources>
         <Style x:Key="colorPicker">
             <Setter Property="Control.Width" Value="50" />

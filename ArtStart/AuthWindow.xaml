@@ -1,6 +1,8 @@
 ﻿<Window x:Class="ArtStart.AuthWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                Name="AuthWindowWindow"
+
         Title="Вход" Height="500" Width="400"
         WindowStartupLocation="CenterScreen"
         Background="#E6D5F1"
