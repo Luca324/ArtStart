@@ -26,6 +26,7 @@ namespace ArtStart
             Challenges.Click += Utils.Navigation_Click;
             Paint.Click += Utils.Navigation_Click;
             LogOut.Click += Utils.LogOut;
+            MainWindow.Click += Utils.Navigation_Click;
 
             var data = PalettesModel.getPalettesData();
             var user = data.Users.Find(u => u.Login == Session.CurrentUser.Login);

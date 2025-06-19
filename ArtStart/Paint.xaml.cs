@@ -47,6 +47,7 @@ namespace ArtStart
 
             Challenges.Click += Utils.Navigation_Click;
             ColorMix.Click += Utils.Navigation_Click;
+            MainWindow.Click += Utils.Navigation_Click;
             LogOut.Click += Utils.LogOut;
 
             RenderPalettesFromJSON();

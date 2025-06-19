@@ -124,8 +124,8 @@
         <StackPanel Name="NavBar" Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" Background="#AD48B7">
             <Button Content="Задания" Name="Challenges" Style="{StaticResource navBtn}"/>
             <Button Content="Рисование" Name="Paint" Style="{StaticResource navBtn}"/>
-            <Button Content="Выход" Name="LogOut" Style="{StaticResource navBtn}"/>
             <Button Content="На главную" Name="MainWindow" Style="{StaticResource navBtn}"/>
+            <Button Content="Выход" Name="LogOut" Style="{StaticResource navBtn}"/>
         </StackPanel>
 
         <!-- Левая панель смешивания цветов -->

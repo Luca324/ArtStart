@@ -65,8 +65,8 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <Button Content="Задания" Name="Challenges" Style="{StaticResource navBtn}"/>
                 <Button Content="Цвета" Name="ColorMix" Style="{StaticResource navBtn}"/>
-                <Button Content="На главную" Name="GoHome" Style="{StaticResource navBtn}"/>
-                <Button Content="Выйти" Name="LogOut" Style="{StaticResource navBtn}"/>
+                <Button Content="На главную" Name="MainWindow" Style="{StaticResource navBtn}"/>
+                <Button Content="Выход" Name="LogOut" Style="{StaticResource navBtn}"/>
             </StackPanel>
         </Border>
         <!-- Панель инструментов -->
