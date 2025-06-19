@@ -2,40 +2,38 @@
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace ArtStart
+namespace ArtStart.Tools
 {
-    public class LineTool : Tool
+    public class PenTool : Tool
     {
+        private Polyline currentPolyline;
+
         public override Shape CreateShape(Color color, double thickness)
         {
-            return new Line
+            currentPolyline = new Polyline
             {
                 Stroke = new SolidColorBrush(color),
                 StrokeThickness = thickness,
-                X1 = 0,
-                Y1 = 0,
-                X2 = 0,
-                Y2 = 0
+                StrokeLineJoin = PenLineJoin.Round,
+                StrokeStartLineCap = PenLineCap.Round,
+                StrokeEndLineCap = PenLineCap.Round
             };
+            return currentPolyline;
         }
 
         public override void OnMouseDown(Shape shape, Point startPoint)
         {
-            if (shape is Line line)
+            if (shape is Polyline polyline)
             {
-                line.X1 = startPoint.X;
-                line.Y1 = startPoint.Y;
-                line.X2 = startPoint.X;
-                line.Y2 = startPoint.Y;
+                polyline.Points.Add(startPoint);
             }
         }
 
         public override void OnMouseMove(Shape shape, Point startPoint, Point currentPoint)
         {
-            if (shape is Line line)
+            if (shape is Polyline polyline)
             {
-                line.X2 = currentPoint.X;
-                line.Y2 = currentPoint.Y;
+                polyline.Points.Add(currentPoint);
             }
         }
     }
