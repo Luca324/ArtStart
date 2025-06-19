@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:ArtStart"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="ColorMix" Height="450" Width="800"
+        Name="ColorMixWindow"
+        Title="Смешивание цветов" Height="450" Width="800"
         Background="#E6D5F1">
     <Window.Resources>
         <Style x:Key="colorPicker">
             <Setter Property="Control.Width" Value="100" />
             <Setter Property="Control.Height" Value="100" />
-
         </Style>
         <Style x:Key="header1">
             <Setter Property="Control.FontSize" Value="20" />
@@ -24,28 +24,28 @@
             <Setter Property="Control.Height" Value="30" />
             <Setter Property="Control.FontSize" Value="30" />
         </Style>
-
         <Style x:Key="result">
             <Setter Property="Control.Width" Value="100" />
             <Setter Property="Control.Height" Value="100" />
             <Setter Property="TextBlock.TextAlignment" Value="Center" />
-            <Setter Property="TextBlock.TextAlignment" Value="Center" />
             <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
         </Style>
-        
+
+        <!-- Шаблон закруглённой кнопки -->
         <ControlTemplate x:Key="RoundedButtonTemplate" TargetType="Button">
             <Border Background="{TemplateBinding Background}"
-             BorderBrush="{TemplateBinding BorderBrush}"
-             BorderThickness="{TemplateBinding BorderThickness}"
-             Padding="{TemplateBinding Padding}"
-             CornerRadius="10">
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="{TemplateBinding Padding}"
+                    CornerRadius="10">
                 <ContentPresenter 
-             HorizontalAlignment="Center"
-             VerticalAlignment="Center"
-             TextElement.Foreground="{TemplateBinding Foreground}" />
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    TextElement.Foreground="{TemplateBinding Foreground}" />
             </Border>
         </ControlTemplate>
-        
+
+        <!-- Базовый стиль для закруглённых кнопок -->
         <Style x:Key="roundedBtn" TargetType="Button">
             <Setter Property="Background" Value="#AD48B7" />
             <Setter Property="Foreground" Value="White" />
@@ -53,16 +53,13 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="White"/>
             <Setter Property="Padding" Value="2" />
-            <Setter Property="Template" Value="{StaticResource RoundedButtonTemplate}"></Setter>
-
-
+            <Setter Property="Template" Value="{StaticResource RoundedButtonTemplate}"/>
         </Style>
-        <Style x:Key="violetBtn" TargetType="Button" BasedOn="{StaticResource roundedBtn}">
 
+        <!-- Фиолетовая кнопка с анимацией при наведении -->
+        <Style x:Key="violetBtn" TargetType="Button" BasedOn="{StaticResource roundedBtn}">
             <Setter Property="Background" Value="#AD48B7" />
             <Setter Property="Foreground" Value="White" />
-
-
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Foreground" Value="#AD48B7" />
@@ -70,25 +67,31 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
+
+        <!-- Красная кнопка -->
         <Style x:Key="redBtn" TargetType="Button" BasedOn="{StaticResource roundedBtn}">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="#F66163" />
             <Setter Property="BorderBrush" Value="#F66163"/>
             <Setter Property="Width" Value="150"/>
-
-
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Foreground" Value="White" />
                     <Setter Property="Background" Value="#F66163" />
                 </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <!-- Скрывать, если отключена -->
+                </Trigger>
             </Style.Triggers>
         </Style>
+
+        <!-- Навигационная кнопка -->
         <Style x:Key="navBtn" TargetType="Button" BasedOn="{StaticResource violetBtn}">
             <Setter Property="Width" Value="100" />
         </Style>
-        
+
+        <!-- Маленькая кнопка добавления цвета -->
         <Style x:Key="addColorBtn" TargetType="Button" BasedOn="{StaticResource roundedBtn}">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="#AD48B7" />
@@ -97,7 +100,6 @@
             <Setter Property="Height" Value="20"/>
             <Setter Property="Margin" Value="0,0,5,0"/>
             <Setter Property="Padding" Value="0"/>
-
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Foreground" Value="White" />
@@ -106,62 +108,64 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"  MinWidth="100px"/>
+            <ColumnDefinition Width="*" MinWidth="100px"/>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*"  MinWidth="200px"/>
+            <ColumnDefinition Width="*" MinWidth="200px"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Name="NavBar" Grid.Row="0"  Grid.ColumnSpan="3" Orientation="Horizontal" Background="#AD48B7">
-            <Button  Content="Challenges" Name="Challenges" Style="{StaticResource navBtn}"/>
-            <Button  Content="Paint" Name="Paint"  Style="{StaticResource navBtn}"/>
-            <Button Content="Log out"  Name="LogOut" Style="{StaticResource navBtn}"/>
-            <Button  Content="На главную" Name="MainWindow"   Style="{StaticResource navBtn}"/>
+        <!-- Верхнее меню -->
+        <StackPanel Name="NavBar" Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" Background="#AD48B7">
+            <Button Content="Задания" Name="Challenges" Style="{StaticResource navBtn}"/>
+            <Button Content="Рисование" Name="Paint" Style="{StaticResource navBtn}"/>
+            <Button Content="На главную" Name="MainWindow" Style="{StaticResource navBtn}"/>
+            <Button Content="Выход" Name="LogOut" Style="{StaticResource navBtn}"/>
         </StackPanel>
 
-
+        <!-- Левая панель смешивания цветов -->
         <StackPanel Grid.Row="1" Grid.Column="0">
             <TextBlock Style="{StaticResource header1}">Цветовая палитра</TextBlock>
-            <WrapPanel HorizontalAlignment="Center" >
+            <WrapPanel HorizontalAlignment="Center">
                 <xctk:ColorPicker x:Name="ColorPicker1" SelectedColorChanged="MixColors" Style="{StaticResource colorPicker}"/>
                 <TextBlock Style="{StaticResource symbol}">+</TextBlock>
                 <xctk:ColorPicker x:Name="ColorPicker2" SelectedColorChanged="MixColors" Style="{StaticResource colorPicker}"/>
                 <TextBlock Style="{StaticResource symbol}">=</TextBlock>
-                <TextBlock Name="result"  Style="{StaticResource result}"></TextBlock>
+                <TextBlock Name="result" Style="{StaticResource result}"></TextBlock>
             </WrapPanel>
             <TextBlock Style="{StaticResource header1}">Текущий цвет</TextBlock>
-            <TextBlock Name="currentColorBlock"  Style="{StaticResource result}"></TextBlock>
+            <TextBlock Name="currentColorBlock" Style="{StaticResource result}"></TextBlock>
             <Button Name="DeleteFromPaletteBtn" 
-        Click="DeleteFromPaletteBtn_Click"
-         Style="{StaticResource redBtn}"
-        >Удалить из палитры</Button>
-
-
+                    Click="DeleteFromPaletteBtn_Click"
+                    Style="{StaticResource redBtn}"
+                    IsEnabled="false">
+                Удалить из палитры
+            </Button>
         </StackPanel>
 
-        <GridSplitter  Grid.Row="1" Grid.Column="1" ShowsPreview="False" Width="3"
-        HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <!-- Разделитель между панелями -->
+        <GridSplitter Grid.Row="1" Grid.Column="1" ShowsPreview="False" Width="3"
+                      HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
 
-
+        <!-- Правая панель палитр -->
         <DockPanel Grid.Row="1" Grid.Column="2" LastChildFill="True">
             <TextBlock Style="{StaticResource header1}" DockPanel.Dock="Top">Палитры</TextBlock>
-
             <StackPanel DockPanel.Dock="Bottom" Margin="0,10,0,0">
                 <TextBox Name="NewPaletteName" MaxLength="40" Margin="0,0,0,5"/>
                 <Button Name="CreateNewPalette" 
                         Click="CreateNewPalette_Click"
-                         Style="{StaticResource violetBtn}"
-                        >Создать палитру</Button>
+                        Style="{StaticResource violetBtn}">
+                    Создать палитру
+                </Button>
             </StackPanel>
-
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Name="Palettes">
+                    <!-- Здесь будут динамически добавляться палитры -->
                 </StackPanel>
             </ScrollViewer>
         </DockPanel>

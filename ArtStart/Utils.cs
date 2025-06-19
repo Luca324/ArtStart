@@ -12,7 +12,6 @@ namespace ArtStart
             string targetButtonName = ((FrameworkElement)sender).Name;
 
             Console.WriteLine($"targetButtonName: {targetButtonName}");
-
             OpenWindow(targetButtonName);
         }
 
@@ -32,9 +31,9 @@ namespace ArtStart
             // закрываем все окна 
             foreach (Window window in App.Current.Windows)
             {
-                var title = window.Title;
+                var title = window.Name;
 
-                if (title == "Challenges" || title == "ColorMix" || title == "Paint" || title == "MainWindow")
+                if (title == "ChallengesWindow" || title == "ColorMixWindow" || title == "PaintWindow" || title == "MainWindowWindow")
                 {
                     Console.WriteLine($"closing {title}");
                     window.Close();
@@ -45,44 +44,48 @@ namespace ArtStart
 
         public static void OpenWindow(string targetButtonName)
         {
-            var alreadyOpened = false;
+
+            Window newWindow = null;
+            switch (targetButtonName)
+            {
+                case "MainApp":
+                    newWindow = new MainApp();
+                    break;
+                case "MainWindow":
+                    newWindow = new MainWindow();
+                    break;
+                case "Challenges":
+                    newWindow = new Challenges();
+                    break;
+                case "Challenges2":
+                    newWindow = new Challenges2();
+                    break;
+                case "Challenges3":
+                    newWindow = new Challenges3();
+                    break;
+                case "Paint":
+                    newWindow = new Paint();
+                    break;
+                case "ColorMix":
+                    newWindow = new ColorMix();
+                    break;
+
+
+            }
+            newWindow.Show();
+
             foreach (Window window in App.Current.Windows)
             {
-                var title = window.Title;
+                var title = window.Name;
                 Console.WriteLine($"title: {title}");
 
-                if (title == targetButtonName)
+                if (title != targetButtonName + "Window")
                 {
-                    window.Activate();
-                    alreadyOpened = true;
-                    break;
+                    Console.WriteLine($"{title} != {targetButtonName}");
+                    window.Close();
                 }
             }
-            if (alreadyOpened == false)
-            {
-                Window window = null;
-                switch (targetButtonName)
-                {
-                    case "MainApp":
-                        window = new MainApp();
-                        break;
-                    case "MainWindow":
-                        window = new MainWindow();
-                        break;
-                    case "Challenges":
-                        window = new Challenges();
-                        break;
-                    case "Paint":
-                        window = new Paint();
-                        break;
-                    case "ColorMix":
-                        window = new ColorMix();
-                        break;
 
-                }
-                window.Show();
-
-            }
         }
     }
 

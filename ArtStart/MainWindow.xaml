@@ -1,7 +1,8 @@
 ﻿<Window x:Class="ArtStart.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow"
+        Name="MainWindowWindow"
+        Title="Главная"
         Height="500" Width="400"
         WindowStartupLocation="CenterScreen"
         Background="#E6D5F1">
@@ -38,7 +39,7 @@
 
             <!-- Кнопка Challenges -->
             <Button x:Name="Challenges"
-                    Content="Challenges"
+                    Content="Задания"
                     Width="250"
                     Height="40"
                     Background="#AD48B7"
@@ -49,7 +50,7 @@
 
             <!-- Кнопка ColorMix -->
             <Button x:Name="ColorMix"
-                    Content="ColorMix"
+                    Content="Цвета"
                     Width="250"
                     Height="40"
                     Background="#AD48B7"
@@ -60,7 +61,7 @@
 
             <!-- Кнопка Paint -->
             <Button x:Name="Paint"
-                    Content="Paint"
+                    Content="Рисование"
                     Width="250"
                     Height="40"
                     Background="#AD48B7"
@@ -71,17 +72,16 @@
 
             <!-- Кнопка Log out -->
             <Button x:Name="LogOut"
-                    Content="Log out"
+                    Content="Выход"
                     Width="250"
                     Height="40"
                     Background="#E6D5F1"
                     Foreground="#AD48B7"
                     FontSize="16"
-                    BorderBrush="#AD48B7"     
+                    BorderBrush="#AD48B7"
                     BorderThickness="2"
-                
                     Template="{StaticResource RoundedButtonTemplate}"
-        Margin="0,0,0,10"/>
+                    Margin="0,0,0,10"/>
         </StackPanel>
     </Grid>
 </Window>

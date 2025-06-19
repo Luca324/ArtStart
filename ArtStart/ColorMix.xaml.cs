@@ -26,6 +26,7 @@ namespace ArtStart
             Challenges.Click += Utils.Navigation_Click;
             Paint.Click += Utils.Navigation_Click;
             LogOut.Click += Utils.LogOut;
+            MainWindow.Click += Utils.Navigation_Click;
 
             var data = PalettesModel.getPalettesData();
             var user = data.Users.Find(u => u.Login == Session.CurrentUser.Login);
@@ -52,6 +53,7 @@ namespace ArtStart
                 // Устанавливаем фон кнопки
                 var brush = new SolidColorBrush(mixedColor);
                 result.Background = brush;
+                DeleteFromPaletteBtn.IsEnabled = false;
                 currentColorBlock.Background = brush;
                 currentColorExists = true;
             }
@@ -136,6 +138,7 @@ namespace ArtStart
                         currentColorText = color; 
                         currentColorPalette = palette.Name;
                         Console.WriteLine($"current color: {currentColorText}");
+                        DeleteFromPaletteBtn.IsEnabled = true;
 
 
                     };
