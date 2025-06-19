@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArtStart.Tools;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,7 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ArtStart
+namespace ArtStart.Tools
 {
     public class FillTool : Tool
     {

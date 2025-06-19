@@ -2,7 +2,7 @@
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace ArtStart
+namespace ArtStart.Tools
 {
     public class EraserTool : Tool
     {
