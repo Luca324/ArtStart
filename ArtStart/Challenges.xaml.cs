@@ -17,6 +17,8 @@ namespace ArtStart
             LoadQuestions();
             GenerateUI();
             MainWindow.Click += Utils.Navigation_Click;
+            Info.Click += Utils.Navigation_Click;
+
         }
 
         private void LoadQuestions()

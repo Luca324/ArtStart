@@ -76,6 +76,10 @@
                     Content="На главную"
                         Margin="5"
                         Padding="10,5" Style="{StaticResource violetBtn}"/>
+                <Button x:Name="Info"
+                    Content="Информация"
+                        Margin="5"
+                        Padding="10,5" Style="{StaticResource violetBtn}"/>
             </StackPanel>
         </StackPanel>
 

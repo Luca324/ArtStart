@@ -50,6 +50,7 @@ namespace ArtStart
             ColorMix.Click += Utils.Navigation_Click;
             MainWindow.Click += Utils.Navigation_Click;
             LogOut.Click += Utils.LogOut;
+            Info.Click += Utils.Navigation_Click;
 
             RenderPalettesFromJSON();
         }
