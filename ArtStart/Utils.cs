@@ -44,7 +44,6 @@ namespace ArtStart
 
         public static void OpenWindow(string targetButtonName)
         {
-
             Window newWindow = null;
             switch (targetButtonName)
             {
@@ -69,24 +68,26 @@ namespace ArtStart
                 case "ColorMix":
                     newWindow = new ColorMix();
                     break;
-
-
+                case "Info":
+                    newWindow = new InfoWindow();
+                    break;
             }
-            newWindow.Show();
 
-            foreach (Window window in App.Current.Windows)
+            if (newWindow != null)
             {
-                var title = window.Name;
-                Console.WriteLine($"title: {title}");
+                newWindow.Show();
 
-                if (title != targetButtonName + "Window")
+                // Закрыть все остальные окна, кроме только что открытого
+                foreach (Window window in App.Current.Windows)
                 {
-                    Console.WriteLine($"{title} != {targetButtonName}");
-                    window.Close();
+                    if (window != newWindow)
+                    {
+                        window.Close();
+                    }
                 }
             }
-
         }
+
     }
 
 }

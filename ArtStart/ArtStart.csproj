@@ -56,6 +56,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Info.xaml.cs">
+      <DependentUpon>Info.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tools\FillTool.cs" />
     <Compile Include="PalettesModel.cs" />
     <Compile Include="RegWindow.xaml.cs">
@@ -96,6 +99,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ColorMix.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Info.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

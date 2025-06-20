@@ -63,14 +63,14 @@
                         Click="NextLevelButton_Click"
                         Visibility="Collapsed"
                         Margin="5"
-                        Padding="10,5"/>
+                        Padding="10,5" Style="{StaticResource violetBtn}"/>
 
                 <Button x:Name="RetryButton"
                         Content="Пройти заново"
                         Click="RetryButton_Click"
                         Visibility="Collapsed"
                         Margin="5"
-                        Padding="10,5"/>
+                        Padding="10,5" Style="{StaticResource violetBtn}"/>
 
                 <Button x:Name="MainWindow"
                     Content="На главную"
