@@ -1,0 +1,178 @@
+﻿<Window x:Class="ArtStart.InfoWindow"
+        Name="InfoWindowWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Height="600" Width="900"
+        Background="#E6D5F1">
+
+    <Window.Resources>
+        <Style x:Key="colorPicker">
+            <Setter Property="Control.Width" Value="100" />
+            <Setter Property="Control.Height" Value="100" />
+        </Style>
+        <Style x:Key="header1">
+            <Setter Property="Control.FontSize" Value="20" />
+            <Setter Property="Control.HorizontalAlignment" Value="Center" />
+            <Setter Property="Control.Margin" Value="5" />
+        </Style>
+        <Style x:Key="symbol">
+            <Setter Property="Control.Width" Value="30" />
+            <Setter Property="Control.Height" Value="30" />
+            <Setter Property="Control.FontSize" Value="30" />
+        </Style>
+        <Style x:Key="result">
+            <Setter Property="Control.Width" Value="100" />
+            <Setter Property="Control.Height" Value="100" />
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+        </Style>
+
+        <!-- Стиль для кнопок -->
+        <Style x:Key="CustomButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#AD48B7" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Padding" Value="10,5" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="10"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+        <!-- Верхняя панель -->
+        <StackPanel Orientation="Horizontal"
+                    DockPanel.Dock="Top"
+                    Margin="10"
+                    HorizontalAlignment="Left">
+            <Button Content="На главную" Name="MainWindowBtn"
+                    Style="{StaticResource CustomButtonStyle}" />
+            <Button Content="Рисование" Name="PaintBtn"
+                    Style="{StaticResource CustomButtonStyle}" />
+            <Button Content="Задания" Name="ChallengeBtn"
+                    Style="{StaticResource CustomButtonStyle}" />
+            <Button Content="Палитра" Name="PaletteBtn"
+                    Style="{StaticResource CustomButtonStyle}" />
+        </StackPanel>
+
+        <!-- Область прокрутки -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10">
+            <StackPanel>
+                <TextBlock TextWrapping="Wrap" FontSize="16" Foreground="Black" Margin="0,0,0,10">
+                    <Run Text="1. Основные цвета" FontWeight="Bold"/><LineBreak/>
+                    В классической колористике основными цветами считаются красный, синий и желтый – они не могут быть получены смешением других оттенков, но сами служат базой для создания всех остальных цветов.
+                    <LineBreak/><LineBreak/>
+                    Почему именно они? Эти три пигмента обладают максимальной химической чистотой, что позволяет при их смешивании получать широкий спектр вторичных и третичных цветов.
+                </TextBlock>
+
+                <TextBlock TextWrapping="Wrap" FontSize="16" Foreground="Black" Margin="0,0,0,10">
+                    <Run Text="2. Цветовой круг и его структура" FontWeight="Bold"/><LineBreak/>
+                    Цветовой круг – это систематизированное представление цветов, помогающее художникам работать с гармонией и контрастами.
+                    <LineBreak/><LineBreak/>
+                    Основные цвета (первичные) – красный, синий, желтый.<LineBreak/>
+                    Вторичные – зеленый (синий + желтый), оранжевый (красный + желтый), фиолетовый (красный + синий).<LineBreak/>
+                    Третичные – смесь первичного и вторичного (например, красно-оранжевый).
+                    <LineBreak/><LineBreak/>
+                    Как использовать?<LineBreak/>
+                    Комплиментарные сочетания (противоположные на круге) создают контраст.<LineBreak/>
+                    Аналогичные (соседние) – мягкие переходы.<LineBreak/>
+                    Триады (три равноудаленных цвета) – динамичные комбинации.
+                </TextBlock>
+
+                <TextBlock TextWrapping="Wrap" FontSize="16" Foreground="Black" Margin="0,0,0,10">
+                    <Run Text="3. Палитра и ее виды" FontWeight="Bold"/><LineBreak/>
+                    Палитра – это подобранный набор цветов для работы.<LineBreak/>
+                    Монохромная – один цвет в разных тональностях.<LineBreak/>
+                    Контрастная – противоположные оттенки (например, синий и оранжевый).<LineBreak/>
+                    Нюансная – близкие по тону (голубой + бирюзовый).<LineBreak/>
+                    Теплая/холодная – желто-красные или сине-зеленые гаммы.
+                    <LineBreak/><LineBreak/>
+                    Зачем это нужно? Разные палитры задают настроение: теплые – энергию, холодные – спокойствие.
+                </TextBlock>
+
+                <TextBlock TextWrapping="Wrap" FontSize="16" Foreground="Black" Margin="0,0,0,10">
+                    <Run Text="4. Смешивание цветов" FontWeight="Bold"/><LineBreak/>
+                    Существует два типа смешения:<LineBreak/>
+                    Аддитивное (RGB) – для света (экранные технологии).<LineBreak/>
+                    Субтрактивное (CMYK) – для красок (печать, живопись).
+                    <LineBreak/><LineBreak/>
+                    Правила смешивания пигментов:<LineBreak/>
+                    Красный + синий → фиолетовый.<LineBreak/>
+                    Желтый + синий → зеленый.<LineBreak/>
+                    Красный + желтый → оранжевый.<LineBreak/>
+                    Черный и белый регулируют насыщенность и светлоту.
+                </TextBlock>
+
+                <TextBlock TextWrapping="Wrap" FontSize="16" Foreground="Black" Margin="0,0,0,10">
+                    <Run Text="5. Перспектива в искусстве" FontWeight="Bold"/><LineBreak/>
+                    Перспектива создает иллюзию глубины.<LineBreak/>
+                    Линейная – схождение параллелей в точке схода (как уходящая вдаль дорога).<LineBreak/>
+                    Воздушная – размытие и осветление дальних планов.<LineBreak/>
+                    Обратная – увеличение объектов к фону (характерно для иконописи).
+                    <LineBreak/><LineBreak/>
+                    Почему важно? Без перспективы изображение выглядит плоским.
+                </TextBlock>
+
+                <TextBlock TextWrapping="Wrap" FontSize="16" Foreground="Black" Margin="0,0,0,10">
+                    <Run Text="6. Материалы в графике" FontWeight="Bold"/><LineBreak/>
+                    Графика использует сухие и жидкие техники:<LineBreak/>
+                    Карандаши (H – твердые, B – мягкие).<LineBreak/>
+                    Тушь, перо, кисть – для контрастных линий.<LineBreak/>
+                    Уголь, сангина, сепия – мягкие, бархатистые штрихи.<LineBreak/>
+                    Бумага (шероховатая – для пастели, гладкая – для туши).
+                </TextBlock>
+
+                <TextBlock TextWrapping="Wrap" FontSize="16" Foreground="Black" Margin="0,0,0,10">
+                    <Run Text="7. Виды картин" FontWeight="Bold"/><LineBreak/>
+                    Станковая живопись – холст, картон, доска.<LineBreak/>
+                    Монументальная – фрески, мозаики, витражи.<LineBreak/>
+                    Декоративная – роспись мебели, посуды.<LineBreak/>
+                    Графика – эстампы, гравюры, рисунки.<LineBreak/>
+                    Цифровая живопись – создается на графических планшетах.
+                </TextBlock>
+
+                <TextBlock TextWrapping="Wrap" FontSize="16" Foreground="Black" Margin="0,0,0,10">
+                    <Run Text="8. Стили живописи" FontWeight="Bold"/><LineBreak/>
+                    Реализм – точное отображение действительности.<LineBreak/>
+                    Импрессионизм – свет, движение, свободные мазки.<LineBreak/>
+                    Экспрессионизм – эмоции через искажение форм.<LineBreak/>
+                    Кубизм – геометризация (Пикассо).<LineBreak/>
+                    Сюрреализм – фантастические образы (Дали).<LineBreak/>
+                    Абстракционизм – отказ от предметности (Кандинский).
+                </TextBlock>
+
+                <TextBlock TextWrapping="Wrap" FontSize="16" Foreground="Black" Margin="0,0,0,10">
+                    <Run Text="9. Характеристика стилей" FontWeight="Bold"/><LineBreak/>
+                    Стиль – Особенности – Примеры художников<LineBreak/>
+                    Реализм – Детализация, естественность – Репин, Курбе<LineBreak/>
+                    Импрессионизм – Мазки, световые эффекты – Моне, Ренуар<LineBreak/>
+                    Кубизм – Геометрические формы, многогранность – Пикассо, Брак<LineBreak/>
+                    Сюрреализм – Иррациональные сюжеты – Дали, Магритт
+                </TextBlock>
+
+                <TextBlock TextWrapping="Wrap" FontSize="16" Foreground="Black">
+                    <Run Text="10. Материалы для скульптуры" FontWeight="Bold"/><LineBreak/>
+                    Глина – пластична, требует обжига.<LineBreak/>
+                    Гипс – быстро твердеет, хрупок.<LineBreak/>
+                    Мрамор – долгая обработка, но долговечность.<LineBreak/>
+                    Бронза – литье, патина.<LineBreak/>
+                    Современные – пластик, эпоксидные смолы.
+                    <LineBreak/><LineBreak/>
+                    Выбор материала влияет на фактуру и стиль скульптуры.
+                </TextBlock>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</Window>

@@ -70,6 +70,17 @@
                     Template="{StaticResource RoundedButtonTemplate}"
                     Margin="0,0,0,10"/>
 
+            <!-- Кнопка Info -->
+            <Button x:Name="Info"
+                    Content="Информация"
+                    Width="250"
+                    Height="40"
+                    Background="#AD48B7"
+                    Foreground="White"
+                    FontSize="16"
+                    Template="{StaticResource RoundedButtonTemplate}"
+                    Margin="0,0,0,10"/>
+
             <!-- Кнопка Log out -->
             <Button x:Name="LogOut"
                     Content="Выход"
