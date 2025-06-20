@@ -42,20 +42,36 @@
 
     </Window.Resources>
     <DockPanel>
+        <!-- Верхняя панель -->
+        <StackPanel Orientation="Horizontal"
+    DockPanel.Dock="Top"
+    Margin="10"
+    HorizontalAlignment="Left">
+            <Button Content="Рисование" Name="Paint"
+    Style="{StaticResource violetBtn}" />
+            <Button Content="Информация" Name="Info"
+    Style="{StaticResource violetBtn}" />
+            <Button Content="Палитра" Name="ColorMix"
+    Style="{StaticResource violetBtn}" />
+            <Button Content="На главную" Name="MainWindow"
+    Style="{StaticResource violetBtn}" />
+            <Button Content="Выход" Name="LogOut" Style="{StaticResource violetBtn}"/>
+
+        </StackPanel>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" HorizontalAlignment="Center" Margin="10">
-            <TextBlock x:Name="ResultTextBlock"
+            <TextBlock x:Name="ResultTextBlock" 
                        FontSize="20"
                        FontWeight="Bold"
                        HorizontalAlignment="Center"
                        Margin="0,10"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5">
-                <Button x:Name="RetryButton"
+                <Button x:Name="RetryButton"  Style="{StaticResource violetBtn}"
                         Content="Пройти заново"
                         Click="RetryButton_Click"
                         Visibility="Collapsed"
                         Margin="5"
                         Padding="10,5"/>
-                <Button x:Name="NextLevelButton"
+                <Button x:Name="NextLevelButton"  Style="{StaticResource violetBtn}"
                         Content="Следующий уровень"
                         Click="NextLevelButton_Click"
                         Visibility="Collapsed"

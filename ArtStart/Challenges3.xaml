@@ -42,6 +42,22 @@
 
     </Window.Resources>
     <DockPanel>
+        <!-- Верхняя панель -->
+        <StackPanel Orientation="Horizontal"
+    DockPanel.Dock="Top"
+    Margin="10"
+    HorizontalAlignment="Left">
+            <Button Content="Рисование" Name="Paint"
+    Style="{StaticResource violetBtn}" />
+            <Button Content="Информация" Name="Info"
+    Style="{StaticResource violetBtn}" />
+            <Button Content="Палитра" Name="ColorMix"
+    Style="{StaticResource violetBtn}" />
+            <Button Content="На главную" Name="MainWindow"
+    Style="{StaticResource violetBtn}" />
+            <Button Content="Выход" Name="LogOut" Style="{StaticResource violetBtn}"/>
+
+        </StackPanel>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" HorizontalAlignment="Center" Margin="10">
             <TextBlock x:Name="ResultTextBlock"
                        FontSize="20"

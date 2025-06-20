@@ -48,6 +48,22 @@
 
     </Window.Resources>
     <DockPanel>
+        <!-- Верхняя панель -->
+        <StackPanel Orientation="Horizontal"
+            DockPanel.Dock="Top"
+            Margin="10"
+            HorizontalAlignment="Left">
+            <Button Content="Рисование" Name="Paint"
+            Style="{StaticResource violetBtn}" />
+            <Button Content="Информация" Name="Info"
+            Style="{StaticResource violetBtn}" />
+            <Button Content="Палитра" Name="ColorMix"
+            Style="{StaticResource violetBtn}" />
+            <Button Content="На главную" Name="MainWindow"
+            Style="{StaticResource violetBtn}" />
+            <Button Content="Выход" Name="LogOut" Style="{StaticResource violetBtn}"/>
+
+        </StackPanel>
         <!-- Панель с результатом и кнопками -->
         <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" HorizontalAlignment="Center" Margin="10">
             
@@ -72,14 +88,7 @@
                         Margin="5"
                         Padding="10,5" Style="{StaticResource violetBtn}"/>
 
-                <Button x:Name="MainWindow"
-                    Content="На главную"
-                        Margin="5"
-                        Padding="10,5" Style="{StaticResource violetBtn}"/>
-                <Button x:Name="Info"
-                    Content="Информация"
-                        Margin="5"
-                        Padding="10,5" Style="{StaticResource violetBtn}"/>
+                
             </StackPanel>
         </StackPanel>
 
@@ -87,5 +96,6 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="QuestionsPanel" Margin="10"/>
         </ScrollViewer>
+
     </DockPanel>
 </Window>

@@ -18,6 +18,9 @@ namespace ArtStart
             GenerateUI();
             MainWindow.Click += Utils.Navigation_Click;
             Info.Click += Utils.Navigation_Click;
+            ColorMix.Click += Utils.Navigation_Click;
+            LogOut.Click += Utils.LogOut;
+            Paint.Click += Utils.Navigation_Click;
 
         }
 

@@ -12,6 +12,7 @@
     <Window.Resources>
         <Style x:Key="colorPicker">
             <Setter Property="Control.Width" Value="100" />
+            <Setter Property="Control.Width" Value="100" />
             <Setter Property="Control.Height" Value="100" />
         </Style>
         <Style x:Key="header1">
